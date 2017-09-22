@@ -1,0 +1,169 @@
+{
+  "intents": [
+    {
+      "name": "AMAZON.CancelIntent",
+      "samples": []
+    },
+    {
+      "name": "AMAZON.HelpIntent",
+      "samples": []
+    },
+    {
+      "name": "AMAZON.StopIntent",
+      "samples": []
+    },
+    {
+      "name": "ExchangeRate",
+      "samples": [
+        "{CURRENCY} {AMOUNT} {DATE}"
+      ],
+      "slots": [
+        {
+          "name": "CURRENCY",
+          "type": "LIST_OF_CURRENCY",
+          "samples": []
+        },
+        {
+          "name": "DATE",
+          "type": "AMAZON.DATE",
+          "samples": []
+        },
+        {
+          "name": "AMOUNT",
+          "type": "AMAZON.NUMBER",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "ExchangeRate_cur",
+      "samples": [
+        "I want {CURRENCY}",
+        "I want {CURRENCY} rate",
+        "give me {CURRENCY}",
+        "give me {CURRENCY} rate"
+      ],
+      "slots": [
+        {
+          "name": "CURRENCY",
+          "type": "LIST_OF_CURRENCY",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "ExchangeRate_date",
+      "samples": [
+        "currency on {DATE}"
+      ],
+      "slots": [
+        {
+          "name": "DATE",
+          "type": "AMAZON.DATE",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "ExchangeRate_mix",
+      "samples": [
+        "What is {CURRENCY} rate on {DATE}"
+      ],
+      "slots": [
+        {
+          "name": "CURRENCY",
+          "type": "LIST_OF_CURRENCY",
+          "samples": []
+        },
+        {
+          "name": "DATE",
+          "type": "AMAZON.DATE",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "GetAccountList",
+      "samples": [
+        "What is my account list",
+        "What is my checking account balance"
+      ],
+      "slots": []
+    }
+  ],
+  "types": [
+    {
+      "name": "LIST_OF_CURRENCY",
+      "values": [
+        {
+          "id": null,
+          "name": {
+            "value": "usd",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "AUD",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "CAD",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "KRW",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "JPY",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "SGD",
+            "synonyms": []
+          }
+        }
+      ]
+    }
+  ],
+  "prompts": [
+    {
+      "id": "Confirm.Intent-GetAccountList",
+      "promptVersion": "1.0",
+      "definitionVersion": "1.0",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "What is your pin number"
+        }
+      ]
+    }
+  ],
+  "dialog": {
+    "version": "1.0",
+    "intents": [
+      {
+        "name": "GetAccountList",
+        "confirmationRequired": true,
+        "prompts": {
+          "confirm": "Confirm.Intent-GetAccountList"
+        },
+        "slots": []
+      }
+    ]
+  }
+}
