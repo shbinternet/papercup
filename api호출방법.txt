@@ -1,0 +1,40 @@
+// 모듈호출
+const GlobalApiClient = require('./GlobalApiClient');
+
+
+    // API호출 옵션설정
+    var globalData = {"domain": "satst.shinhanglobal.com",
+    		          "path": "/global_api/account/list",
+    		          "accessToken": "cd58d4a7a56b4f2682ddb78cd114930d0660babf743e44ac90a4e771adb73ed2e146c1153411409989a174e583319337df6d35f61d8546c9a933f7403dfe31d1af6758500a074202b39fe4f96ed0557141ca8d222fd847ef8f0f9b872a0fc322",
+    		          "personKey": "1234",
+    		          "sndData": {"ccy_c":"USD"}
+    		         };
+    
+    // 호출객체 생성
+    const globalApiClient = new GlobalApiClient(globalData);
+    // 호출 (실제 API 호출됨)
+    let globalApiRequest = globalApiClient.getGlobalApi();              
+    
+    // API 결과처리
+    globalApiRequest.then((globalApiResponse) => {
+        switch(globalApiResponse.statusCode) {
+            case 200: // 정상
+            		console.log("D.H.Koh globalApiResponse.reqData=" + JSON.stringify(globalApiResponse.reqData));
+            		//callback(sessionAttributes,buildSpeechletResponse(CARD_TITLE, speechOutput, repromptText, false));
+                break;
+            case 204: // 정상
+            		console.log("D.H.Koh globalApiResponse.reqData=" + JSON.stringify(globalApiResponse.reqData));
+            		//callback(sessionAttributes,buildSpeechletResponse(CARD_TITLE, speechOutput, repromptText, false));
+                break;
+                break;
+            case 403: // 인증오류
+            	  console.log("The consent token we had wasn't authorized to access the user's address.");
+                break; // 기타오류
+            default:
+            	console.log("Fail");
+
+      }
+
+        console.info("globalApiClient.getGlobalApi()");
+    });    
+    
