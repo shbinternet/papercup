@@ -15,11 +15,9 @@
  * When received, we should retrieve the customer's data from
  * the Address API.
  */
-const GET_ACCOUNT_LIST_GRID_DATA = "account_list_grid_data";
-const GET_ACCOUNT_LIST_COUNT = "account_list_count";
+const GET_ACCOUNT_LIST = "AccountList";
 
 
 module.exports = {
-    "GET_ACCOUNT_LIST_GRID_DATA": GET_ACCOUNT_LIST_GRID_DATA,
-    "GET_ACCOUNT_LIST_COUNT": GET_ACCOUNT_LIST_COUNT  
+    "GET_ACCOUNT_LIST": GET_ACCOUNT_LIST  
 };

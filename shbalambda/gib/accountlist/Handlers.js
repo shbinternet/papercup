@@ -115,15 +115,14 @@ console.log("jsonData.returnCode====================>" + jsonData.returnCode);
 	else if(jsonData.returnCode == '9') speechOutput = CommonMessages.ERROR_NO_0009;
 	// 정상일 경우
 	else if(jsonData.returnCode == '1') {
-		// 전체 요청일 경우
-		if(handlerThis.event.request.intent.name == Intents.GET_ACCOUNT_LIST_GRID_DATA) {
+		// AccountList 일경우
+		if(handlerThis.event.request.intent.name == Intents.GET_ACCOUNT_LIST) {
 			speechOutput = Messages.ACCOUNT_LIST_GUIDE;
 			speechOutput += GibUtil.setSpeechOutputGridDataText(Messages.ACCOUNT_LIST_GRID_DATA,jsonData);
 			
-		// 계좌수 요청일 경우
-		} else if(handlerThis.event.request.intent.name == Intents.GET_ACCOUNT_LIST_COUNT){		
-			jsonData.grid_cnt = jsonData.data.length;		
-			speechOutput = GibUtil.setSpeechOutputText(Messages.ACCOUNT_LIST_COUNT,jsonData);
+		// 일치하는 intent 가 존재하지 않을경우 
+		} else {
+			speechOutput = CommonMessages.UNHANDLED;
 		}
 	// 기타에러 발생시		
 	} else {
@@ -148,7 +147,6 @@ handlers[DefaultIntents.AMAZON_STOP] = DefaultHandlers.amazonStopHandler;
 handlers[DefaultIntents.AMAZON_HELP] = DefaultHandlers.amazonHelpHandler;
 
 // 사용자 intent handlers
-handlers[Intents.GET_ACCOUNT_LIST_GRID_DATA] = getAccountListGridDataHandler;
-handlers[Intents.GET_ACCOUNT_LIST_COUNT] = getAccountListGridDataHandler;
+handlers[Intents.GET_ACCOUNT_LIST] = getAccountListGridDataHandler;
 
 module.exports = handlers;
