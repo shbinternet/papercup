@@ -58,9 +58,8 @@ const getExchangeRateHandler = function() {
 	globalApiRequest.then((globalApiResponse) => {
 		switch(globalApiResponse.statusCode) {
 			case 200:
-				var length = globalApiResponse.reqData.data.length;
 				console.log(">>>>globalApiResponse.reqData=" + JSON.stringify(globalApiResponse.reqData));
-				 if(length==0){
+				 if(globalApiResponse.reqData.data.length==0){
 		            speechOutput = Messages.NO_CURRENCYRATE;
 		        }else{	
 		        	speechOutput = GibUtil.setSpeechOutputText(Messages.EXCHANGE_RATE_DATE,globalApiResponse.reqData);		        	
@@ -89,42 +88,6 @@ const getExchangeRateHandler = function() {
     });
 };
 
-
-/**
- * 환율조회 텍스트 생성
- */
-const makeExchangeRateData = function(handlerThis,jsonData) {
-	
-console.log("Intent Name====================>" + handlerThis.event.request.intent.name);	
-	
-	let speechOutput = "";
-	// Access Token 오류
-	if(jsonData.returnCode == '2') return CommonMessages.ERROR_NO_0002;
-	// 개인인증키 오류
-	if(jsonData.returnCode == '3') return CommonMessages.ERROR_NO_0003;
-	// Access Token 만료
-	if(jsonData.returnCode == '5') return CommonMessages.ERROR_NO_0004;
-	// 처리중 오류
-	if(jsonData.returnCode == '9') return CommonMessages.ERROR_NO_0009;
-	// 기타에러 발생시
-	if(jsonData.returnCode != '1') return CommonMessages.ERROR_NO_0009;
-	
-	// API 정상인증시 returnCode == '1'	
-	// 전체 요청일 경우
-	if(handlerThis.event.request.intent.name == Intents.GET_ACCOUNT_LIST_GRID_DATA) {
-		speechOutput = Messages.ACCOUNT_LIST_GUIDE;
-		speechOutput += GibUtil.setSpeechOutputGridDataText(Messages.ACCOUNT_LIST_GRID_DATA,jsonData);
-		
-	// 계좌수 요청일 경우
-	} else if(handlerThis.event.request.intent.name == Intents.GET_ACCOUNT_LIST_COUNT){		
-		jsonData.grid_cnt = jsonData.data.length;		
-		speechOutput = GibUtil.setSpeechOutputText(Messages.ACCOUNT_LIST_COUNT,jsonData);
-	}
-    
-	handlerThis.emit(":tell", speechOutput);
-};
-
-
 const handlers = {};
 // Add event handlers
 handlers[DefaultEvents.NEW_SESSION] = DefaultHandlers.newSessionRequestHandler;
@@ -137,8 +100,5 @@ handlers[DefaultIntents.AMAZON_CANCEL] = DefaultHandlers.amazonCancelHandler;
 handlers[DefaultIntents.AMAZON_STOP] = DefaultHandlers.amazonStopHandler;
 handlers[DefaultIntents.AMAZON_HELP] = DefaultHandlers.amazonHelpHandler;
 handlers[Intents.GET_EXCHANGERATE] = getExchangeRateHandler;
-// handlers[Intents.GET_EXCHANGERATE_CCY] = getExchangeRateHandler;
-// handlers[Intents.GET_EXCHANGERATE_DATE] = getDateExchangeRateHandler;
-// handlers[Intents.GET_EXCHANGERATE_MIX] = getExchangeRateHandler;
 
 module.exports = handlers;
