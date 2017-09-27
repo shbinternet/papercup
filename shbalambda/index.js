@@ -15,6 +15,9 @@ const Alexa = require('alexa-sdk');
 // 환경설정
 const Config = require('./common/Config');
 
+//공통 Intent
+const CommonHandlers = require('./gib/common/CommonHandlers');
+
 // 환율조회
 const ExchangeRateHandlers = require('./gib/exchangerate/Handlers');
 // 계좌조회
@@ -28,7 +31,7 @@ exports.handler = function (event, context, callback) {
     let alexa = Alexa.handler(event, context);
 
     alexa.appId = APP_ID;
-    alexa.registerHandlers(ExchangeRateHandlers,AccountListHandlers);
+    alexa.registerHandlers(CommonHandlers,ExchangeRateHandlers,AccountListHandlers);
 
     console.log(`Beginning execution for skill with APP_ID=${alexa.appId}`);
     alexa.execute();
