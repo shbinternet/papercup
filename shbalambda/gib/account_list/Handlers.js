@@ -47,14 +47,28 @@ const getAccountListGridDataHandler = function() {
         console.info("Ending getAccount_ListHandler()");
         return;
     }
-*/
+*/	        
+        
+    // 세션 존재여부 확인 persnal Key
+    let personalKey = this.attributes['personalKey'];
+    
+    // personalkey 미존재할경우 personal key 질의
+    if (personalKey == undefined || personalKey == "") {    
+    	
+    	// 이전인텐트 저장
+    	this.attributes['preIntent'] = this.event.request.intent;
+	    this.emit(':askWithCard', CommonMessages.WHAT_IS_YOUR_PERSONALKEY, CommonMessages.PERSONALKEY_INFO, Config.card_title, CommonMessages.WHAT_IS_YOUR_PERSONALKEY);
+	    	    	    
+	    return;
+	    
+    }    
     
     let globalData = Config.openApiConfig;           
     globalData.path = "/global_api/account/list";
+    globalData.personKey = personalKey;
     globalData.sndData = {"filter": {"prdt_c" : "5017000001"}};
 
     const globalApiClient = new GlobalApiClient(globalData);
-
     let globalApiRequest = globalApiClient.getGlobalApi();  
 	globalApiRequest.then((globalApiResponse) => {
 		switch(globalApiResponse.statusCode) {
@@ -64,18 +78,18 @@ const getAccountListGridDataHandler = function() {
 				makeAccountListGridData(this,globalApiResponse.reqData);
 				break;
 			case 204:
-                this.emit(":tellWithCard", DefaultMessages.NO_DATA);
+                this.emit(":tellWithCard", DefaultMessages.NO_DATA, Config.card_title, DefaultMessages.NO_DATA);
                 break;
             case 403:
                 this.emit(":tellWithPermissionCard", DefaultMessages.NOTIFY_MISSING_PERMISSIONS, PERMISSIONS);
                 break;
             default:
-                this.emit(":ask", DefaultMessages.GLOBAL_API_FAILURE, DefaultMessages.GLOBAL_API_FAILURE);		
+                this.emit(":askWithCard", DefaultMessages.GLOBAL_API_FAILURE, "", Config.card_title, DefaultMessages.GLOBAL_API_FAILURE);		
 		}
 	});
 
 	globalApiRequest.catch((error) => {
-        this.emit(":tell", DefaultMessages.ERROR);
+        this.emit(":tellWithCard", DefaultMessages.ERROR, Config.card_title, DefaultMessages.ERROR);
         console.error(error);
         console.info("Ending getAccountListHandler()");
     });
@@ -116,7 +130,7 @@ console.log("jsonData.returnCode====================>" + jsonData.returnCode);
 		speechOutput = CommonMessages.ERROR_NO_0009;		
 	}
 		
-	handlerThis.emit(":tell", speechOutput);
+	handlerThis.emit(":tellWithCard", speechOutput, Config.card_title, speechOutput);
 };
 
 
