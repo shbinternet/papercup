@@ -12,13 +12,19 @@
 
 const ERROR_NO_0002 = "There was an error verifying your app."; // Access Token 오류
 
-const ERROR_NO_0003 = "Your private key does not match. Please re-enter your private key."; // 개인인증키 오류
+const ERROR_NO_0003 = "Your private key does not match. Please re-enter your personal key."; // 개인인증키 오류
 
 const ERROR_NO_0005 = "Your app verification has expired."; // Access Token 만료
 
 const ERROR_NO_0009 = "An error occurred during processing."; // 처리중 오류
 
 const WHAT_IS_YOUR_PERSONALKEY = "What is your personal key?";
+
+const INVALIDATE_PERSONALKEY = "The private key is not valid. Please tell me your personal key again.";
+
+const PERSONALKEY_INFO = "Example Say my personal key is XXXX";
+
+
 
 module.exports = {
 		
@@ -27,6 +33,8 @@ module.exports = {
     "ERROR_NO_0005": ERROR_NO_0005,
     "ERROR_NO_0009": ERROR_NO_0009,
     
-    "WHAT_IS_YOUR_PERSONALKEY": WHAT_IS_YOUR_PERSONALKEY    
+    "WHAT_IS_YOUR_PERSONALKEY": WHAT_IS_YOUR_PERSONALKEY,
+    "PERSONALKEY_INFO": PERSONALKEY_INFO,
+    "INVALIDATE_PERSONALKEY" : INVALIDATE_PERSONALKEY
     
 };
