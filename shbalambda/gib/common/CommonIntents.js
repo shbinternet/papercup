@@ -15,7 +15,7 @@
  * When received, we should retrieve the customer's data from
  * the Address API.
  */
-const SET_PERSONAL_KEY = "set_personal_key";
+const SET_PERSONAL_KEY = "SetPersonalKey";
 
 
 module.exports = {

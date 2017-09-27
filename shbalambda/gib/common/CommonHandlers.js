@@ -26,8 +26,7 @@ const CommonIntents = require('./CommonIntents');
 const CommonMessages = require('./CommonMessages');
 
 //계좌조회
-const AccountListHandlers = require('../account_list/Handlers');
-const AccountListIntents = require('../account_list/Intents');
+const AccountListHandlers = require('../accountlist/Handlers');
 
 /**
  * Personal Key Setting Intent
@@ -36,7 +35,7 @@ const setPersonalKeyHandler = function() {
 	
 console.log("setPersonalKeyHandler START");
 	
-	let persnalKey = this.event.request.intent.slots.PERSONALKEY;
+	let persnalKey = this.event.request.intent.slots.PERSONAL_KEY;
 	
 	// personal key 입력여부 검증
 	if(persnalKey == undefined || persnalKey == "")
@@ -52,6 +51,7 @@ console.log("preIntent.name =====> " + preIntent.name);
 
 	// 이전 업무인텐트 호출
 	this.event.request.intent = preIntent;	
+	
 	AccountListHandlers[preIntent.name].call(this);
 	
 };

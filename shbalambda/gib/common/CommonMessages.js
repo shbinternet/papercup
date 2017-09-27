@@ -12,7 +12,7 @@
 
 const ERROR_NO_0002 = "There was an error verifying your app."; // Access Token 오류
 
-const ERROR_NO_0003 = "Your private key does not match. Please re-enter your personal key."; // 개인인증키 오류
+const ERROR_NO_0003 = "Your personal key does not match. Please re-enter your personal key."; // 개인인증키 오류
 
 const ERROR_NO_0005 = "Your app verification has expired."; // Access Token 만료
 
@@ -22,7 +22,7 @@ const WHAT_IS_YOUR_PERSONALKEY = "What is your personal key?";
 
 const INVALIDATE_PERSONALKEY = "The private key is not valid. Please tell me your personal key again.";
 
-const PERSONALKEY_INFO = "Example Say my personal key is XXXX";
+const PERSONALKEY_INFO = "Example My personal key is XXXX";
 
 
 
