@@ -15,6 +15,8 @@ var Config = {
     appId : '',
     // TODO Add an appropriate welcome message.
     welcome_message : '<WELCOME_MESSAGE>',
+    
+    card_title : 'Global Internet Banking Shinhan America',
 
     // TODO API 송신데이터설정
     openApiConfig : {
