@@ -21,7 +21,7 @@ const CommonHandlers = require('./gib/common/CommonHandlers');
 // 환율조회
 const ExchangeRateHandlers = require('./gib/exchangerate/Handlers');
 // 계좌조회
-const AccountListHandlers = require('./gib/account_list/Handlers');
+const AccountListHandlers = require('./gib/accountlist/Handlers');
 
 
 // skill app 앱ID 설정 (./common/Config.js 에 정의)
