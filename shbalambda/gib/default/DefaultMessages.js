@@ -14,8 +14,6 @@ const WELCOME = "Welcome to Shinhan America.Please tell me what you want.";
 
 const WHAT_DO_YOU_WANT = "What do you want to ask?";
 
-const WHAT_IS_YOUR_PERSONALKEY = "What is your personal key?";
-
 const NOTIFY_MISSING_PERMISSIONS = "Please enable permissions in the Amazon Alexa app.";
 
 const NO_DATA = "Requested data does not exist";
@@ -34,8 +32,7 @@ const STOP = "There is nothing to stop. Did you mean to ask something else?";
 
 module.exports = {
     "WELCOME": WELCOME,
-    "WHAT_DO_YOU_WANT": WHAT_DO_YOU_WANT,
-    "WHAT_IS_YOUR_PERSONALKEY": WHAT_IS_YOUR_PERSONALKEY,    
+    "WHAT_DO_YOU_WANT": WHAT_DO_YOU_WANT,    
     "NOTIFY_MISSING_PERMISSIONS": NOTIFY_MISSING_PERMISSIONS,
     "NO_DATA": NO_DATA,
     "ERROR": ERROR,
