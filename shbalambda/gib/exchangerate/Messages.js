@@ -10,8 +10,16 @@
  * 2017-09-25	고동환	최초작성
  *=============================================================================*/
 
-const ADDRESS_AVAILABLE = "Here is your full address: ";
+const CURRENCY_GUIDE = "Here is your currency request : ";
+const EXCHANGE_RATE_DATE = "As for !~~ntfct_dt~~!, "
+const EXCHANGE_RATE_CCY = "USD to !~~ccy_c~~! is !~~cash_sel_rt~~!";
+const NO_CURRENCYRATE = "Currency rate is not exist.";
+const NO_CURRENCY_APICALL = "currency API is not updated"
 
 module.exports = {
-    "ADDRESS_AVAILABLE": ADDRESS_AVAILABLE
+    "CURRENCY_GUIDE": CURRENCY_GUIDE,
+    "EXCHANGE_RATE_DATE": EXCHANGE_RATE_DATE,
+    "EXCHANGE_RATE_CCY": EXCHANGE_RATE_CCY,
+    "NO_CURRENCYRATE" : NO_CURRENCYRATE,
+    "NO_CURRENCY_APICALL" : NO_CURRENCY_APICALL
 };

@@ -15,9 +15,14 @@
  * When received, we should retrieve the customer's data from
  * the Address API.
  */
-const GET_EXCHANGERATE_DATE = "ExchangeRate_date";
-
+const GET_EXCHANGERATE = "ExchangeRate"
+// const GET_EXCHANGERATE_DATE = "ExchangeRate_date";
+// const GET_EXCHANGERATE_CCY = "ExchangeRate_cur";
+// const GET_EXCHANGERATE_MIX = "ExchangeRate_mix";
 
 module.exports = {
-    "GET_EXCHANGERATE_DATE": GET_EXCHANGERATE_DATE
+    "GET_EXCHANGERATE": GET_EXCHANGERATE
+    // "GET_EXCHANGERATE_DATE": GET_EXCHANGERATE_DATE,
+    // "GET_EXCHANGERATE_CCY": GET_EXCHANGERATE_CCY,
+    // "GET_EXCHANGERATE_MIX": GET_EXCHANGERATE_MIX    
 };

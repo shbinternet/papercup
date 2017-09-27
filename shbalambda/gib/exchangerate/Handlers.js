@@ -31,23 +31,26 @@ const Messages = require('./Messages');
  */
 const getExchangeRateHandler = function() {
     console.info("Starting getExchangeRateHandler()");
-/*
-    const accessToken = this.event.context.user.accessToken;
+    var speechOutput='';
+    var date='';
+    var currency='';
+    var amount ='1.0';
+    var currencySlot = this.event.request.intent.slots.CURRENCY;
+    var dateSlot = this.event.request.intent.slots.DATE;
+    var amountSlot = this.event.request.intent.slots.AMOUNT;        
 
-    // If we have not been provided with a consent token, this means that the user has not
-    // authorized your skill to access this information. In this case, you should prompt them
-    // that you don't have permissions to retrieve their address.
-    if(!accessToken) {
-        this.emit(":tellWithPermissionCard", DefaultMessages.NOTIFY_MISSING_PERMISSIONS, PERMISSIONS);
+    if(currencySlot != undefined) var currencyValue = currencySlot.value;
+    if(dateSlot != undefined) var dateValue = dateSlot.value;
+    if(amountSlot != undefined) var amountValue = amountSlot.value; 
 
-        // Lets terminate early since we can't do anything else.
-        console.log("User did not give us permissions to access their address.");
-        console.info("Ending getExchangeRateHandler()");
-        return;
-    }
-*/
-    let globalData = Config.openApiConfig;        
-    globalData.path = "/global_api/exchangerate";
+    if(currencyValue != undefined) currency = currencyValue.toUpperCase();
+    if(dateValue != undefined) date=dateValue.replace(/-/g,'');
+    if(amountValue != undefined) amount=amountValue;
+
+    console.log(">>>>date"+date+">>>>currency"+currency + ">>>>>amount"+ amount);
+    
+    let globalData = Config.openApiConfig;    
+    globalData.path = "/global_api/exchangerate?date="+date+"&currency="+currency;
 
     const globalApiClient = new GlobalApiClient(globalData);
 
@@ -55,15 +58,18 @@ const getExchangeRateHandler = function() {
 	globalApiRequest.then((globalApiResponse) => {
 		switch(globalApiResponse.statusCode) {
 			case 200:
-				console.log("D.H.Koh globalApiResponse.reqData=" + JSON.stringify(globalApiResponse.reqData));
-				
-				/*
-                const ADDRESS_MESSAGE = Messages.ADDRESS_AVAILABLE +
-                `${address['addressLine1']}, ${address['stateOrRegion']}, ${address['postalCode']}`;
+				var length = globalApiResponse.reqData.data.length;
+				console.log(">>>>globalApiResponse.reqData=" + JSON.stringify(globalApiResponse.reqData));
+				 if(length==0){
+		            speechOutput = Messages.NO_CURRENCYRATE;
+		        }else{	
+		        	speechOutput = GibUtil.setSpeechOutputText(Messages.EXCHANGE_RATE_DATE,globalApiResponse.reqData);		        	
+					speechOutput += GibUtil.setSpeechOutputGridDataText(Messages.EXCHANGE_RATE_CCY,globalApiResponse.reqData);					
+		        }
+		     
 
-                this.emit(":tell", ADDRESS_MESSAGE);				
-				*/
-				this.emit(":tell", JSON.stringify(globalApiResponse.reqData));
+		        console.log (">>>>>>>>>speechOutput " +speechOutput)
+		        this.emit(":tellWithCard", speechOutput, "SHBA", speechOutput, '');
 				break;
 			case 204:
                 this.emit(":tellWithCard", DefaultMessages.NO_DATA);
@@ -76,7 +82,6 @@ const getExchangeRateHandler = function() {
 		
 		}		
 	});
-
 	globalApiRequest.catch((error) => {
         this.emit(":tell", DefaultMessages.ERROR);
         console.error(error);
@@ -131,7 +136,9 @@ handlers[DefaultEvents.UNHANDLED] = DefaultHandlers.unhandledRequestHandler;
 handlers[DefaultIntents.AMAZON_CANCEL] = DefaultHandlers.amazonCancelHandler;
 handlers[DefaultIntents.AMAZON_STOP] = DefaultHandlers.amazonStopHandler;
 handlers[DefaultIntents.AMAZON_HELP] = DefaultHandlers.amazonHelpHandler;
-
-handlers[Intents.GET_EXCHANGERATE_DATE] = getExchangeRateHandler;
+handlers[Intents.GET_EXCHANGERATE] = getExchangeRateHandler;
+// handlers[Intents.GET_EXCHANGERATE_CCY] = getExchangeRateHandler;
+// handlers[Intents.GET_EXCHANGERATE_DATE] = getDateExchangeRateHandler;
+// handlers[Intents.GET_EXCHANGERATE_MIX] = getExchangeRateHandler;
 
 module.exports = handlers;

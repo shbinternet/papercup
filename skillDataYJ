@@ -1,0 +1,225 @@
+{
+  "intents": [
+    {
+      "name": "account_list_grid_data",
+      "samples": [
+        "what is my account balance",
+        "what is my expense account",
+        "what is my {account_type}",
+        "what is my {last_four_digit} account balance",
+        "what is my {account_type} and {last_four_digit} account balance"
+      ],
+      "slots": [
+        {
+          "name": "account_type",
+          "type": "LIST_OF_ACCTYPE",
+          "samples": []
+        },
+        {
+          "name": "last_four_digit",
+          "type": "AMAZON.FOUR_DIGIT_NUMBER",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "account_trx_grid_data",
+      "samples": [
+        "What is my checking account transaction",
+        "I want to know my checking account transaction history",
+        "Tell me my account transaction",
+        "I want to know {trx_type} transaction history for my checking account",
+        "What is {trx_type} transaction history for my checking account",
+        "Tell me {trx_type} transaction history fro my checking account",
+        "I want to know my transaction history on {date}",
+        "Tell me transaction history form my checking account on {date}",
+        "Tell me {period} transaction",
+        "What is transaction history for my checking account on {period}",
+        "Tell me transaction history for my checking account on {period}"
+      ],
+      "slots": [
+        {
+          "name": "trx_type",
+          "type": "LIST_OF_TRXTYPE",
+          "samples": []
+        },
+        {
+          "name": "date",
+          "type": "AMAZON.DATE",
+          "samples": []
+        },
+        {
+          "name": "period",
+          "type": "AMAZON.DATE",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "AMAZON.CancelIntent",
+      "samples": []
+    },
+    {
+      "name": "AMAZON.HelpIntent",
+      "samples": []
+    },
+    {
+      "name": "AMAZON.StopIntent",
+      "samples": []
+    },
+    {
+      "name": "ExchangeRate",
+      "samples": [
+        "{CURRENCY} {AMOUNT} {DATE}",
+        "I want {CURRENCY}",
+        "I want {CURRENCY} rate",
+        "give me {CURRENCY}",
+        "give me {CURRENCY} rate",
+        "currency on {DATE}",
+        "What is {CURRENCY} rate on {DATE}"
+      ],
+      "slots": [
+        {
+          "name": "CURRENCY",
+          "type": "LIST_OF_CURRENCY",
+          "samples": []
+        },
+        {
+          "name": "DATE",
+          "type": "AMAZON.DATE",
+          "samples": []
+        },
+        {
+          "name": "AMOUNT",
+          "type": "AMAZON.NUMBER",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "ExchangeRate_cur",
+      "samples": [],
+      "slots": [
+        {
+          "name": "CURRENCY",
+          "type": "LIST_OF_CURRENCY",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "ExchangeRate_date",
+      "samples": [],
+      "slots": [
+        {
+          "name": "DATE",
+          "type": "AMAZON.DATE",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "ExchangeRate_mix",
+      "samples": [],
+      "slots": [
+        {
+          "name": "CURRENCY",
+          "type": "LIST_OF_CURRENCY",
+          "samples": []
+        },
+        {
+          "name": "DATE",
+          "type": "AMAZON.DATE",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "GetAccountList",
+      "samples": [
+        "What is my account list"
+      ],
+      "slots": []
+    }
+  ],
+  "types": [
+    {
+      "name": "LIST_OF_ACCTYPE",
+      "values": [
+        {
+          "id": null,
+          "name": {
+            "value": "checking account",
+            "synonyms": []
+          }
+        }
+      ]
+    },
+    {
+      "name": "LIST_OF_CURRENCY",
+      "values": [
+        {
+          "id": null,
+          "name": {
+            "value": "usd",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "AUD",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "CAD",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "KRW",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "JPY",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "SGD",
+            "synonyms": []
+          }
+        }
+      ]
+    },
+    {
+      "name": "LIST_OF_TRXTYPE",
+      "values": [
+        {
+          "id": null,
+          "name": {
+            "value": "credit",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "debit",
+            "synonyms": []
+          }
+        }
+      ]
+    }
+  ]
+}
