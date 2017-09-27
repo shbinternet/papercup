@@ -97,44 +97,6 @@
       ]
     },
     {
-      "name": "ExchangeRate_cur",
-      "samples": [],
-      "slots": [
-        {
-          "name": "CURRENCY",
-          "type": "LIST_OF_CURRENCY",
-          "samples": []
-        }
-      ]
-    },
-    {
-      "name": "ExchangeRate_date",
-      "samples": [],
-      "slots": [
-        {
-          "name": "DATE",
-          "type": "AMAZON.DATE",
-          "samples": []
-        }
-      ]
-    },
-    {
-      "name": "ExchangeRate_mix",
-      "samples": [],
-      "slots": [
-        {
-          "name": "CURRENCY",
-          "type": "LIST_OF_CURRENCY",
-          "samples": []
-        },
-        {
-          "name": "DATE",
-          "type": "AMAZON.DATE",
-          "samples": []
-        }
-      ]
-    },
-    {
       "name": "GetAccountList",
       "samples": [
         "What is my account list"
@@ -159,44 +121,54 @@
       "name": "LIST_OF_CURRENCY",
       "values": [
         {
-          "id": null,
-          "name": {
-            "value": "usd",
-            "synonyms": []
-          }
-        },
-        {
-          "id": null,
+          "id": "AUD",
           "name": {
             "value": "AUD",
             "synonyms": []
           }
         },
         {
-          "id": null,
+          "id": "CAD",
           "name": {
             "value": "CAD",
             "synonyms": []
           }
         },
         {
-          "id": null,
+          "id": "KRW",
           "name": {
             "value": "KRW",
-            "synonyms": []
+            "synonyms": [
+              "koreawon",
+              "korea one",
+              "korea money",
+              "korea cash",
+              "south korea",
+              "korea",
+              "korea currency",
+              "korea won",
+              "won"
+            ]
           }
         },
         {
-          "id": null,
+          "id": "JPY",
           "name": {
             "value": "JPY",
             "synonyms": []
           }
         },
         {
-          "id": null,
+          "id": "SGD",
           "name": {
             "value": "SGD",
+            "synonyms": []
+          }
+        },
+        {
+          "id": "USD",
+          "name": {
+            "value": "USD",
             "synonyms": []
           }
         }

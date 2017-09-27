@@ -59,14 +59,18 @@ const getExchangeRateHandler = function() {
 		switch(globalApiResponse.statusCode) {
 			case 200:
 				console.log(">>>>globalApiResponse.reqData=" + JSON.stringify(globalApiResponse.reqData));
+				
 				 if(globalApiResponse.reqData.data.length==0){
 		            speechOutput = Messages.NO_CURRENCYRATE;
 		        }else{	
 		        	speechOutput = GibUtil.setSpeechOutputText(Messages.EXCHANGE_RATE_DATE,globalApiResponse.reqData);		        	
 					speechOutput += GibUtil.setSpeechOutputGridDataText(Messages.EXCHANGE_RATE_CCY,globalApiResponse.reqData);					
+		        	if(amount != 1.0){ 
+		        		convertCurrency(globalApiResponse.reqData,amount);
+		        		speechOutput += GibUtil.setSpeechOutputGridDataText(Messages.EXCHANGE_CONVERT, globalApiResponse.reqData);
+		        	}
+		        	console.log(">>>>>>>checking>>>>"+JSON.stringify(globalApiResponse.reqData));
 		        }
-		     
-
 		        console.log (">>>>>>>>>speechOutput " +speechOutput)
 		        this.emit(":tellWithCard", speechOutput, "SHBA", speechOutput, '');
 				break;
@@ -87,6 +91,16 @@ const getExchangeRateHandler = function() {
         console.info("Ending getAccountListHandler()");
     });
 };
+
+const convertCurrency = function(jsonData, amount){
+	var jsonData =jsonData;
+	var amount = amount;
+	for(let i = 0; i < jsonData.data.length; i++) {
+		jsonData.data[i].amount = amount;	
+		jsonData.data[i].convert_amt= amount * jsonData.data[i].cash_sel_rt ;
+	}
+	console.log(">>>>>>>>>>convertCurrency end >>");
+}
 
 const handlers = {};
 // Add event handlers

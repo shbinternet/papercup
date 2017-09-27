@@ -13,13 +13,15 @@
 const CURRENCY_GUIDE = "Here is your currency request : ";
 const EXCHANGE_RATE_DATE = "As for !~~ntfct_dt~~!, "
 const EXCHANGE_RATE_CCY = "USD to !~~ccy_c~~! is !~~cash_sel_rt~~!";
+const EXCHANGE_CONVERT = "\nand !~~amount~~! !~~ccy_c~~! is !~~convert_amt~~!"
 const NO_CURRENCYRATE = "Currency rate is not exist.";
 const NO_CURRENCY_APICALL = "currency API is not updated"
 
 module.exports = {
     "CURRENCY_GUIDE": CURRENCY_GUIDE,
+    "NO_CURRENCYRATE" : NO_CURRENCYRATE,
+    "NO_CURRENCY_APICALL" : NO_CURRENCY_APICALL,    
     "EXCHANGE_RATE_DATE": EXCHANGE_RATE_DATE,
     "EXCHANGE_RATE_CCY": EXCHANGE_RATE_CCY,
-    "NO_CURRENCYRATE" : NO_CURRENCYRATE,
-    "NO_CURRENCY_APICALL" : NO_CURRENCY_APICALL
+    "EXCHANGE_CONVERT" : EXCHANGE_CONVERT
 };
