@@ -33,9 +33,8 @@ const Messages = require('./Messages');
  */
 const getAccountListGridDataHandler = function() {
     console.info("Starting getAccountListGridDataHandler()");
-/*
-    const accessToken = this.event.context.user.accessToken;
 
+/*
     // If we have not been provided with a consent token, this means that the user has not
     // authorized your skill to access this information. In this case, you should prompt them
     // that you don't have permissions to retrieve their address.
@@ -63,9 +62,28 @@ const getAccountListGridDataHandler = function() {
 	    
     }    
     
+
+    
+       
+    
     let globalData = Config.openApiConfig;           
     globalData.path = "/global_api/account/list";
     globalData.personKey = personalKey;
+
+    // accessToken 설정
+    const accessToken = "";
+    try {
+    	accessToken = this.event.session.user.accessToken;
+    } catch(e) {
+        console.info("accessToken Exception=" + this.event.session);     	
+        console.info("accessToken Exception=" + e);    	
+    }
+       
+    console.info("session accessToken=" + accessToken);    
+    if(accessToken != "") {
+        globalData.accessToken = accessToken;    	
+    }    
+    
     globalData.sndData = {"filter": {"prdt_c" : "5017000001"}};
 
     const globalApiClient = new GlobalApiClient(globalData);
