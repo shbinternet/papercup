@@ -80,7 +80,10 @@
         "give me {CURRENCY} rate",
         "currency on {DATE}",
         "give me currency rate on {DATE}",
-        "What is {CURRENCY} rate on {DATE}"
+        "What is {CURRENCY} rate on {DATE}",
+        "{CURRENCY} {AMOUNT} {DATE}",
+        "{DATE} {AMOUNT} {CURRENCY}",
+        "{AMOUNT} {CURRENCY} {DATE}"
       ],
       "slots": [
         {
@@ -132,42 +135,52 @@
       "name": "LIST_OF_CURRENCY",
       "values": [
         {
-          "id": null,
+          "id": "AUD",
           "name": {
             "value": "AUD",
             "synonyms": []
           }
         },
         {
-          "id": null,
+          "id": "CAD",
           "name": {
             "value": "CAD",
             "synonyms": []
           }
         },
         {
-          "id": null,
+          "id": "KRW",
           "name": {
             "value": "KRW",
-            "synonyms": []
+            "synonyms": [
+              "koreawon",
+              "korea one",
+              "korea money",
+              "korea cash",
+              "south korea",
+              "korea",
+              "korea currency",
+              "korea won",
+              "won"
+            ]
           }
         },
         {
-          "id": null,
+          "id": "JPY",
           "name": {
             "value": "JPY",
             "synonyms": []
           }
         },
         {
-          "id": null,
+          "id": "SGD",
           "name": {
             "value": "SGD",
             "synonyms": []
           }
         },
         {
-          "id": null,
+          "id": "USD",
           "name": {
             "value": "USD",
             "synonyms": []

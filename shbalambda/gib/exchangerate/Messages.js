@@ -11,9 +11,9 @@
  *=============================================================================*/
 
 const CURRENCY_GUIDE = "Here is your currency request : ";
-const EXCHANGE_RATE_DATE = "As for !~~ntfct_dt~~!, "
-const EXCHANGE_RATE_CCY = "USD to !~~ccy_c~~! is !~~cash_sel_rt~~!";
-const EXCHANGE_CONVERT = "\nand !~~amount~~! !~~ccy_c~~! is !~~convert_amt~~!"
+const EXCHANGE_RATE_DATE = "As for <say-as interpret-as='date'>!~~ntfct_dt~~!</say-as>, "
+const EXCHANGE_RATE_CCY = "<break time='0.5s'/> USD to !~~ccy_c~~! is !~~round_cash_sel_rt~~!";
+const EXCHANGE_CONVERT = "\n<break time='0.5s'/>and !~~amount~~! !~~ccy_c~~! is !~~convert_amt~~!"
 const NO_CURRENCYRATE = "Currency rate is not exist.";
 const NO_CURRENCY_APICALL = "currency API is not updated"
 

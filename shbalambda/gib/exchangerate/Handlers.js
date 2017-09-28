@@ -63,6 +63,7 @@ const getExchangeRateHandler = function() {
 				 if(globalApiResponse.reqData.data.length==0){
 		            speechOutput = Messages.NO_CURRENCYRATE;
 		        }else{	
+		        	roundUpCurrency(globalApiResponse.reqData);
 		        	speechOutput = GibUtil.setSpeechOutputText(Messages.EXCHANGE_RATE_DATE,globalApiResponse.reqData);		        	
 					speechOutput += GibUtil.setSpeechOutputGridDataText(Messages.EXCHANGE_RATE_CCY,globalApiResponse.reqData);					
 		        	if(amount != 1.0){ 
@@ -92,12 +93,18 @@ const getExchangeRateHandler = function() {
     });
 };
 
+const roundUpCurrency = function(jsonData){
+	var jsonData = jsonData;
+	for(let i = 0; i < jsonData.data.length; i++) {
+		jsonData.data[i].round_cash_sel_rt = Math.round(jsonData.data[i].cash_sel_rt*1000)/1000;	
+	}
+}
 const convertCurrency = function(jsonData, amount){
 	var jsonData =jsonData;
-	var amount = amount;
+	var amount = amount; 
 	for(let i = 0; i < jsonData.data.length; i++) {
 		jsonData.data[i].amount = amount;	
-		jsonData.data[i].convert_amt= amount * jsonData.data[i].cash_sel_rt ;
+		jsonData.data[i].convert_amt= amount * jsonData.data[i].round_cash_sel_rt ;
 	}
 	console.log(">>>>>>>>>>convertCurrency end >>");
 }
