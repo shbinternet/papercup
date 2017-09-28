@@ -62,27 +62,22 @@ const getAccountListGridDataHandler = function() {
 	    
     }    
     
-
-    
-       
-    
     let globalData = Config.openApiConfig;           
     globalData.path = "/global_api/account/list";
     globalData.personKey = personalKey;
 
     // accessToken 설정
-    const accessToken = "";
+    let accessToken = "";
     try {
-    	accessToken = this.event.session.user.accessToken;
+    	accessToken = this.event.session.user.accessToken;    	
     } catch(e) {
-        console.info("accessToken Exception=" + this.event.session);     	
+        console.info("accessToken Exception=" + JSON.stringify(this.event.session));     	
         console.info("accessToken Exception=" + e);    	
     }
-       
-    console.info("session accessToken=" + accessToken);    
+  
     if(accessToken != "") {
         globalData.accessToken = accessToken;    	
-    }    
+    }      
     
     globalData.sndData = {"filter": {"prdt_c" : "5017000001"}};
 
