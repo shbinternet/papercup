@@ -70,12 +70,16 @@
     {
       "name": "ExchangeRate",
       "samples": [
-        "{CURRENCY} {AMOUNT} {DATE}",
-        "I want {CURRENCY}",
+        "How much is {AMOUNT} {CURRENCY} {DATE}",
+        "How much is {AMOUNT} {CURRENCY} on {DATE}",
+        "give me {AMOUNT} {CURRENCY} rate",
+        "I want to convert {AMOUNT} {CURRENCY} for {DATE} rate",
+        "I want to know {CURRENCY} rate",
         "I want {CURRENCY} rate",
         "give me {CURRENCY}",
         "give me {CURRENCY} rate",
         "currency on {DATE}",
+        "give me currency rate on {DATE}",
         "What is {CURRENCY} rate on {DATE}"
       ],
       "slots": [
