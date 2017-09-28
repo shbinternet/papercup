@@ -1,29 +1,41 @@
 {
   "session": {
-    "new": true,
-    "sessionId": "SessionId.3bd4a716-473b-4d83-9320-2b6a143a9ba4",
+    "new": false,
+    "sessionId": "SessionId.33d59005-8f3a-49f1-aa48-620737b99abc",
     "application": {
       "applicationId": "amzn1.ask.skill.c35d3bc7-a2e5-484c-9d9e-1ee9aef29525"
     },
-    "attributes": {},
+    "attributes": {
+      "preIntent": {
+        "name": "AccountList",
+        "slots": {
+          "ACCOUNT_TYPE": {
+            "name": "ACCOUNT_TYPE"
+          },
+          "LAST_FOUR_DIST": {
+            "name": "LAST_FOUR_DIST"
+          }
+        }
+      }
+    },
     "user": {
       "userId": "amzn1.ask.account.AHXMW3IVSYGWZGNO5K5P7FZJW3P3RYMPXQC757Y6OCXNE3SJJVTLLD4ZLAZ3K46IXDTC7HUUPZGTWCQB2Q43RCXAPBTM5FNQ6ZTPM3WPPZ5PUZT5J4PLHJ22DUNUHFAZ4THDBTUJXBK2DDI6535JIRHBIGYBO7WA6BLB6QQLVVD5M2432AE5S44R4JSUSTAR7EHCEC2XKSAOAMQ"
     }
   },
   "request": {
     "type": "IntentRequest",
-    "requestId": "EdwRequestId.da130049-686a-4d1e-8e37-7634c7f7d8d8",
+    "requestId": "EdwRequestId.ee8f06ee-677a-4375-b0a6-d5dc37042439",
     "intent": {
-      "name": "ExchangeRate_date",
+      "name": "SetPersonalKey",
       "slots": {
-        "DATE": {
-          "name": "DATE",
-          "value": ""
+        "PERSONAL_KEY": {
+          "name": "PERSONAL_KEY",
+          "value": "3456"
         }
       }
     },
     "locale": "en-US",
-    "timestamp": "2017-09-24T23:41:35Z"
+    "timestamp": "2017-09-28T01:07:08Z"
   },
   "context": {
     "AudioPlayer": {
@@ -43,6 +55,5 @@
   },
   "version": "1.0"
 }
-
 
 {"returnCode":"1","date":"20170708","rate":"1","data":[{"ccy_c":"USD","dep_sjt_class":"1","dep_prdt_nm":"FREE CHECKING","dep_acno":"700000282662","prdt_c":"5017000001","itype_due_dt":"","dep_ac_alnm_nm":"","apl_intrt":"0.0000000","pabl_blc":"1304576.20","ttype_due_dt":"","lcl_ac_no":"700000282662","last_cus_trx_dt":"20161025","cus_snm_nm":"********"},{"ccy_c":"USD","dep_sjt_class":"1","dep_prdt_nm":"FREE CHECKING","dep_acno":"700000010609","prdt_c":"5017000001","itype_due_dt":"","dep_ac_alnm_nm":"","apl_intrt":"0.0000000","pabl_blc":"9997016932.27","ttype_due_dt":"","lcl_ac_no":"1111015658","last_cus_trx_dt":"20161101","cus_snm_nm":"********"}]}
