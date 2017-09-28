@@ -1,0 +1,119 @@
+{
+    "state": null,
+    "handler": {
+        "domain": null,
+        "_events": {
+            "NewSession": [
+                null,
+                null,
+                null
+            ],
+            "LaunchRequest": [
+                null,
+                null,
+                null
+            ],
+            "SessionEndedRequest": [
+                null,
+                null,
+                null
+            ],
+            "Unhandled": [
+                null,
+                null,
+                null
+            ],
+            "AMAZON.CancelIntent": [
+                null,
+                null,
+                null
+            ],
+            "AMAZON.StopIntent": [
+                null,
+                null,
+                null
+            ],
+            "AMAZON.HelpIntent": [
+                null,
+                null,
+                null
+            ]
+        },
+        "_eventsCount": 19,
+        "_maxListeners": null
+    },
+    "event": {
+        "version": "1.0",
+        "session": {
+            "new": true,
+            "sessionId": "amzn1.echo-api.session.d8238cf7-b37b-4e30-94c1-a012dc2c9e13",
+            "application": {
+                "applicationId": "amzn1.ask.skill.7f61923c-c01e-4f2d-b544-8426abcff189"
+            },
+            "user": {
+                "userId": "amzn1.ask.account.AGLK5QKCPVFGDYMFYT5OIZTAOBH3TNDCSSFSMINBMDSOH2RNMRGBQUDOZJB5JB2OPIVGJFKIBHMCXC3SBVUSSIZHBRBR6UEYDNRDGYN7L6LADSBZO64KEDZJYGBTH5SRRQ2FBYTAT3OEVVCQUEAK2IXQDGDJALWTWS36DVMUZU2H4KTJAMOQOLSILFTY3MK34SXW3FWMZH2EEUY",
+                "accessToken": "a5bfd118d3ac4cd6a9cdaf0ba6077cdde4063323c07a41eaaea18b9fdc8a0309d48e0c009a0d4c4fa78b806eb6017e3c0e44263f2ecb4b75a60da394f9adc085785ec76691224495b694608f352b5e00c5729b4163bf40f4bf1301f236e093da"
+            },
+            "attributes": {}
+        },
+        "context": {
+            "AudioPlayer": {
+                "playerActivity": "IDLE"
+            },
+            "System": {
+                "application": {
+                    "applicationId": "amzn1.ask.skill.7f61923c-c01e-4f2d-b544-8426abcff189"
+                },
+                "user": {
+                    "userId": "amzn1.ask.account.AGLK5QKCPVFGDYMFYT5OIZTAOBH3TNDCSSFSMINBMDSOH2RNMRGBQUDOZJB5JB2OPIVGJFKIBHMCXC3SBVUSSIZHBRBR6UEYDNRDGYN7L6LADSBZO64KEDZJYGBTH5SRRQ2FBYTAT3OEVVCQUEAK2IXQDGDJALWTWS36DVMUZU2H4KTJAMOQOLSILFTY3MK34SXW3FWMZH2EEUY",
+                    "accessToken": "a5bfd118d3ac4cd6a9cdaf0ba6077cdde4063323c07a41eaaea18b9fdc8a0309d48e0c009a0d4c4fa78b806eb6017e3c0e44263f2ecb4b75a60da394f9adc085785ec76691224495b694608f352b5e00c5729b4163bf40f4bf1301f236e093da"
+                },
+                "device": {
+                    "deviceId": "amzn1.ask.device.AH7PTORCWJTACSOACNA62XICGZI6MB5W6EM45SULWY75E2OOT5BKA6PWDHEJKFV3T44DPHSKTNFIS36WSNOQA4YNP2UIAEBY4KJ5KDS22WEUSLKQ4FXQIBHKK7FQD5BU6YT72EXQGHINSREUXONIRMSN7M6Q",
+                    "supportedInterfaces": {
+                        "AudioPlayer": {}
+                    }
+                },
+                "apiEndpoint": "https://api.amazonalexa.com"
+            }
+        },
+        "request": {
+            "type": "IntentRequest",
+            "requestId": "amzn1.echo-api.request.1c2be86e-5741-482e-addc-2326b42dd5e3",
+            "timestamp": "2017-09-28T06:58:18Z",
+            "locale": "en-US",
+            "intent": {
+                "name": "ExchangeRate",
+                "confirmationStatus": "NONE",
+                "slots": {
+                    "CURRENCY": {
+                        "name": "CURRENCY",
+                        "confirmationStatus": "NONE"
+                    },
+                    "DATE": {
+                        "name": "DATE",
+                        "value": "2017-09-27",
+                        "confirmationStatus": "NONE"
+                    },
+                    "AMOUNT": {
+                        "name": "AMOUNT",
+                        "confirmationStatus": "NONE"
+                    }
+                }
+            }
+        }
+    },
+    "attributes": {},
+    "context": {
+        "callbackWaitsForEmptyEventLoop": true,
+        "logGroupName": "/aws/lambda/sbhba",
+        "logStreamName": "2017/09/28/[$LATEST]2e57dcc9dd4d41fc8d0be1b4a56c1170",
+        "functionName": "sbhba",
+        "memoryLimitInMB": "128",
+        "functionVersion": "$LATEST",
+        "invokeid": "6820bc32-a41a-11e7-ac37-11b0090268cb",
+        "awsRequestId": "6820bc32-a41a-11e7-ac37-11b0090268cb",
+        "invokedFunctionArn": "arn:aws:lambda:us-east-1:284664067128:function:sbhba"
+    },
+    "name": "ExchangeRate"
+}

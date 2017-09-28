@@ -1,0 +1,110 @@
+{
+    "state": null,
+    "handler": {
+        "domain": null,
+        "_events": {
+            "NewSession": [
+                null,
+                null,
+                null
+            ],
+            "LaunchRequest": [
+                null,
+                null,
+                null
+            ],
+            "SessionEndedRequest": [
+                null,
+                null,
+                null
+            ],
+            "Unhandled": [
+                null,
+                null,
+                null
+            ],
+            "AMAZON.CancelIntent": [
+                null,
+                null,
+                null
+            ],
+            "AMAZON.StopIntent": [
+                null,
+                null,
+                null
+            ],
+            "AMAZON.HelpIntent": [
+                null,
+                null,
+                null
+            ]
+        },
+        "_eventsCount": 19,
+        "_maxListeners": null
+    },
+    "event": {
+        "session": {
+            "new": true,
+            "sessionId": "SessionId.b96b63bb-49b6-4e81-b4f2-7947f5100a86",
+            "application": {
+                "applicationId": "amzn1.ask.skill.7f61923c-c01e-4f2d-b544-8426abcff189"
+            },
+            "attributes": {},
+            "user": {
+                "userId": "amzn1.ask.account.AGLK5QKCPVFGDYMFYT5OIZTAOBH3TNDCSSFSMINBMDSOH2RNMRGBQUDOZJB5JB2OPIVGJFKIBHMCXC3SBVUSSIZHBRBR6UEYDNRDGYN7L6LADSBZO64KEDZJYGBTH5SRRQ2FBYTAT3OEVVCQUEAK2IXQDGDJALWTWS36DVMUZU2H4KTJAMOQOLSILFTY3MK34SXW3FWMZH2EEUY",
+                "accessToken": "a5bfd118d3ac4cd6a9cdaf0ba6077cdde4063323c07a41eaaea18b9fdc8a0309d48e0c009a0d4c4fa78b806eb6017e3c0e44263f2ecb4b75a60da394f9adc085785ec76691224495b694608f352b5e00c5729b4163bf40f4bf1301f236e093da"
+            }
+        },
+        "request": {
+            "type": "IntentRequest",
+            "requestId": "EdwRequestId.25713b72-a664-4308-805a-38a4a25f5ce5",
+            "intent": {
+                "name": "ExchangeRate",
+                "slots": {
+                    "CURRENCY": {
+                        "name": "CURRENCY"
+                    },
+                    "DATE": {
+                        "name": "DATE"
+                    },
+                    "AMOUNT": {
+                        "name": "AMOUNT"
+                    }
+                }
+            },
+            "locale": "en-US",
+            "timestamp": "2017-09-28T06:32:33Z"
+        },
+        "context": {
+            "AudioPlayer": {
+                "playerActivity": "IDLE"
+            },
+            "System": {
+                "application": {
+                    "applicationId": "amzn1.ask.skill.7f61923c-c01e-4f2d-b544-8426abcff189"
+                },
+                "user": {
+                    "userId": "amzn1.ask.account.AGLK5QKCPVFGDYMFYT5OIZTAOBH3TNDCSSFSMINBMDSOH2RNMRGBQUDOZJB5JB2OPIVGJFKIBHMCXC3SBVUSSIZHBRBR6UEYDNRDGYN7L6LADSBZO64KEDZJYGBTH5SRRQ2FBYTAT3OEVVCQUEAK2IXQDGDJALWTWS36DVMUZU2H4KTJAMOQOLSILFTY3MK34SXW3FWMZH2EEUY",
+                    "accessToken": "a5bfd118d3ac4cd6a9cdaf0ba6077cdde4063323c07a41eaaea18b9fdc8a0309d48e0c009a0d4c4fa78b806eb6017e3c0e44263f2ecb4b75a60da394f9adc085785ec76691224495b694608f352b5e00c5729b4163bf40f4bf1301f236e093da"
+                },
+                "device": {
+                    "supportedInterfaces": {}
+                }
+            }
+        },
+        "version": "1.0"
+    },
+    "attributes": {},
+    "context": {
+        "callbackWaitsForEmptyEventLoop": true,
+        "logGroupName": "/aws/lambda/sbhba",
+        "logStreamName": "2017/09/28/[$LATEST]8e0a548d2a2941d2affbc95a03e3826e",
+        "functionName": "sbhba",
+        "memoryLimitInMB": "128",
+        "functionVersion": "$LATEST",
+        "invokeid": "00b208da-a417-11e7-a476-8117d2532efb",
+        "awsRequestId": "00b208da-a417-11e7-a476-8117d2532efb",
+        "invokedFunctionArn": "arn:aws:lambda:us-east-1:284664067128:function:sbhba"
+    },
+    "name": "ExchangeRate"
+}
