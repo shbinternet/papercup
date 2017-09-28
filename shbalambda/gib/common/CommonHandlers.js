@@ -25,8 +25,31 @@ const DefaultHandlers = require('../default/DefaultHandlers');
 const CommonIntents = require('./CommonIntents');
 const CommonMessages = require('./CommonMessages');
 
+
+const moduleHandlers = {};
+
 //계좌조회
-const AccountListHandlers = require('../accountlist/Handlers');
+moduleHandlers['accountlist'] = require('../accountlist/Handlers');
+// 환율조회
+moduleHandlers['exchangerate'] = require('../exchangerate/Handlers');
+
+/**
+ * 인텐드명으로 업무핸들러 객체 추출 
+ */
+const getNextHandler = function(intentName) {
+	
+	let handler;	
+	
+	for(let key in moduleHandlers) {
+		try {
+			handler = moduleHandlers[key][intentName];
+			break;
+		} catch(e) {}
+	}	
+	
+	return handler;
+	
+};
 
 /**
  * Personal Key Setting Intent
@@ -52,7 +75,7 @@ console.log("preIntent.name =====> " + preIntent.name);
 	// 이전 업무인텐트 호출
 	this.event.request.intent = preIntent;	
 	
-	AccountListHandlers[preIntent.name].call(this);
+	getNextHandler(preIntent.name).call(this);
 	
 };
 
