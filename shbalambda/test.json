@@ -55,5 +55,3 @@
   },
   "version": "1.0"
 }
-
-{"returnCode":"1","date":"20170708","rate":"1","data":[{"ccy_c":"USD","dep_sjt_class":"1","dep_prdt_nm":"FREE CHECKING","dep_acno":"700000282662","prdt_c":"5017000001","itype_due_dt":"","dep_ac_alnm_nm":"","apl_intrt":"0.0000000","pabl_blc":"1304576.20","ttype_due_dt":"","lcl_ac_no":"700000282662","last_cus_trx_dt":"20161025","cus_snm_nm":"********"},{"ccy_c":"USD","dep_sjt_class":"1","dep_prdt_nm":"FREE CHECKING","dep_acno":"700000010609","prdt_c":"5017000001","itype_due_dt":"","dep_ac_alnm_nm":"","apl_intrt":"0.0000000","pabl_blc":"9997016932.27","ttype_due_dt":"","lcl_ac_no":"1111015658","last_cus_trx_dt":"20161101","cus_snm_nm":"********"}]}
