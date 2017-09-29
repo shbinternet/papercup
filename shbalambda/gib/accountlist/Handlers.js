@@ -12,6 +12,7 @@
 
 //Default imports
 const GlobalApiClient = require('../../common/GlobalApiClient');
+const ApiErrorMessages = require('../../common/ApiErrorMessages.js');
 const Config = require('../../common/Config');
 const GibUtil = require('../../common/GibUtil');
 
@@ -33,7 +34,7 @@ const Messages = require('./Messages');
  */
 const getAccountListGridDataHandler = function() {
     console.info("Starting getAccountListGridDataHandler()");
-
+    
 /*
     // If we have not been provided with a consent token, this means that the user has not
     // authorized your skill to access this information. In this case, you should prompt them
@@ -67,17 +68,12 @@ const getAccountListGridDataHandler = function() {
     globalData.personKey = personalKey;   
 
     // accessToken 설정 (사용자 세션에 존재하지 않을경우 Config.js 설정에 있는 accessToken 설정)
-    let accessToken = "";
-    try {
-    	accessToken = this.event.session.user.accessToken;    	
-    } catch(e) {
-        console.info("accessToken Exception=" + JSON.stringify(this.event.session));     	
-        console.info("accessToken Exception=" + e);    	
-    }
-  
-    if(accessToken != "") {
-        globalData.accessToken = accessToken;    	
-    }      
+    let accessToken = this.event.session.user.accessToken;
+    
+    if(accessToken != undefined) globalData.accessToken = accessToken;
+
+    console.log("globalData.accessToken ====================>" + globalData.accessToken);        
+    
     
     globalData.sndData = {"filter": {"prdt_c" : "5017000001"}};
 
