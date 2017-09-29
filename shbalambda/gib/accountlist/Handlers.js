@@ -64,9 +64,9 @@ const getAccountListGridDataHandler = function() {
     
     let globalData = Config.openApiConfig;           
     globalData.path = "/global_api/account/list";
-    globalData.personKey = personalKey;
+    globalData.personKey = personalKey;   
 
-    // accessToken 설정
+    // accessToken 설정 (사용자 세션에 존재하지 않을경우 Config.js 설정에 있는 accessToken 설정)
     let accessToken = "";
     try {
     	accessToken = this.event.session.user.accessToken;    	
