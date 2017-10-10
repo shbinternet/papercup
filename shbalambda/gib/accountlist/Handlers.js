@@ -50,22 +50,64 @@ const getAccountListGridDataHandler = function() {
 */	        
         
     // 세션 존재여부 확인 persnal Key
-    let personalKey = this.attributes['personalKey'];
+    //let personalKey = this.attributes['personalKey'];
+console.log("this.event.request.intent=" + JSON.stringify(this));     
+
+
+	var updatedIntent = this.event.request.intent;
+    let personKey = updatedIntent.slots.PERSONAL_KEY.value;
+
+
     
-    // personalkey 미존재할경우 personal key 질의
-    if (personalKey == undefined || personalKey == "") {    
+    if (this.event.request.dialogState === "STARTED") { 
+    	   console.log("in Beginning"); 
+    	   var updatedIntent=this.event.request.intent; 
+    	   //optionally pre-fill slots: update the intent object with slot values for which 
+    	   //you have defaults, then return Dialog.Delegate with this updated intent 
+    	   // in the updatedIntent property 
+    	   this.emit(":delegate", updatedIntent); 
+    	 } else if (this.event.request.dialogState !== "COMPLETED") { 
+    	   console.log("in not completed"); 
+    	   // return a Dialog.Delegate directive with no updatedIntent property. 
+    	   this.emit(":delegate"); 
+    	 } else { 
+    	   console.log("in completed"); 
+    	   console.log("returning: "+ JSON.stringify(this.event.request.intent)); 
+    	   // Dialog is now complete and all required slots should be filled, 
+    	   // so call your normal intent handler. 
+     }     
+    
+    
+    
+    
+    if(personKey == undefined) {    	
+    	console.log("personKey Check 1==========>" + personKey);      
     	
-    	// 이전인텐트 저장
-    	this.attributes['preIntent'] = this.event.request.intent;
-	    this.emit(':askWithCard', CommonMessages.WHAT_IS_YOUR_PERSONALKEY, CommonMessages.PERSONALKEY_INFO, Config.card_title, CommonMessages.WHAT_IS_YOUR_PERSONALKEY);
-	    	    	    
-	    return;
-	    
-    }    
+    	try {
+    	
+    		console.log("try elicitSlot====================");
+    		//this.emit(':elicitSlot', 'PERSONAL_KEY', CommonMessages.WHAT_IS_YOUR_PERSONALKEY, CommonMessages.WHAT_IS_YOUR_PERSONALKEY,updatedIntent);
+
+    		
+    		this.response.speak(CommonMessages.WHAT_IS_YOUR_PERSONALKEY); 
+    		this.emit(':responseReady');     		
+    	
+    	} catch(e) {
+
+    		console.log("elicitSlot==========>" + e);
+
+    	}
+    	
+    	return;    	    	
+    }
+    
+	console.log("personKey Check 9999999 ==========>" + personKey);       
+  
     
     let globalData = Config.openApiConfig;           
     globalData.path = "/global_api/account/list";
-    globalData.personKey = personalKey;   
+    //globalData.personKey = personalKey;   
+    globalData.personKey = personKey;
 
     // accessToken 설정 (사용자 세션에 존재하지 않을경우 Config.js 설정에 있는 accessToken 설정)
     let accessToken = this.event.session.user.accessToken;
