@@ -27,7 +27,7 @@ let gibUtil = {
 				
 			for(let key in jsonData) {
 		    	item = "!~~" + key + "~~!";
-		    	value = jsonData[key];
+		    	value = GibAlexaStringFormatUtil.setAlexaformat(key,jsonData[key]);
 		    	messageStr = messageStr.replace(eval("/" + item + "/gi"), value);
 			}
 			 		    
@@ -51,7 +51,7 @@ let gibUtil = {
 				tmpStr = messageStr;				
 				for(let key in jsonData.data[i]) {
 			    	item = "!~~" + key + "~~!";
-			    	value = jsonData.data[i][key];
+			    	value = GibAlexaStringFormatUtil.setAlexaformat(key,jsonData.data[i][key]);
 			    	tmpStr = tmpStr.replace(eval("/" + item + "/gi"), value);
 				}
 				// 순번 replace
@@ -63,6 +63,6 @@ let gibUtil = {
 		    return speechOutPut;
 		}
 			
-}
+};
 
 module.exports = gibUtil;
