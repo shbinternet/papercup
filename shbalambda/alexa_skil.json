@@ -119,6 +119,19 @@
           "samples": []
         }
       ]
+    },
+    {
+      "name": "SetYesNo",
+      "samples": [
+        "{YES_NO}"
+      ],
+      "slots": [
+        {
+          "name": "YES_NO",
+          "type": "LIST_OF_YESNO",
+          "samples": []
+        }
+      ]
     }
   ],
   "types": [
@@ -195,6 +208,25 @@
           "id": null,
           "name": {
             "value": "debit",
+            "synonyms": []
+          }
+        }
+      ]
+    },
+    {
+      "name": "LIST_OF_YESNO",
+      "values": [
+        {
+          "id": null,
+          "name": {
+            "value": "yes",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "no",
             "synonyms": []
           }
         }
