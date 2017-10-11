@@ -17,7 +17,10 @@
  */
 const SET_PERSONAL_KEY = "SetPersonalKey";
 
+const SET_YESNO = "SetYesNo";
+
 
 module.exports = {
-    "SET_PERSONAL_KEY": SET_PERSONAL_KEY  
+    "SET_PERSONAL_KEY": SET_PERSONAL_KEY,
+    "SET_YESNO": SET_YESNO    
 };
