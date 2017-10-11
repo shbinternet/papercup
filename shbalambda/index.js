@@ -22,6 +22,8 @@ const CommonHandlers = require('./gib/common/CommonHandlers');
 const ExchangeRateHandlers = require('./gib/exchangerate/Handlers');
 // 계좌조회
 const AccountListHandlers = require('./gib/accountlist/Handlers');
+// 계좌 거래내역 조회 
+const AccountTrxHandlers = require('./gib/accountTrx/Handlers')
 
 
 // skill app 앱ID 설정 (./common/Config.js 에 정의)
@@ -31,7 +33,7 @@ exports.handler = function (event, context, callback) {
     let alexa = Alexa.handler(event, context);
 
     alexa.appId = APP_ID;
-    alexa.registerHandlers(CommonHandlers,ExchangeRateHandlers,AccountListHandlers);
+    alexa.registerHandlers(CommonHandlers,ExchangeRateHandlers,AccountListHandlers, AccountTrxHandlers);
 
     console.log(`Beginning execution for skill with APP_ID=${alexa.appId}`);
     alexa.execute();

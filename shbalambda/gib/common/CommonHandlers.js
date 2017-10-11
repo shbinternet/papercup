@@ -32,6 +32,9 @@ const moduleHandlers = {};
 moduleHandlers['accountlist'] = require('../accountlist/Handlers');
 // 환율조회
 moduleHandlers['exchangerate'] = require('../exchangerate/Handlers');
+//계좌 거리내역 조회
+moduleHandlers['accountTrx'] = require('../accountTrx/Handlers');
+
 
 /**
  * 인텐드명으로 업무핸들러 객체 추출 
@@ -39,12 +42,9 @@ moduleHandlers['exchangerate'] = require('../exchangerate/Handlers');
 const getNextHandler = function(intentName) {
 	
 	let handler;	
-	
-	for(let key in moduleHandlers) {
-		try {
-			handler = moduleHandlers[key][intentName];
-			break;
-		} catch(e) {}
+	for(let key in moduleHandlers) {		
+		handler = moduleHandlers[key][intentName];
+		if(handler) break;
 	}	
 	
 	return handler;

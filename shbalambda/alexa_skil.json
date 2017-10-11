@@ -1,39 +1,6 @@
 {
   "intents": [
     {
-      "name": "account_trx_grid_data",
-      "samples": [
-        "What is my checking account transaction",
-        "I want to know my checking account transaction history",
-        "Tell me my account transaction",
-        "I want to know {trx_type} transaction history for my checking account",
-        "What is {trx_type} transaction history for my checking account",
-        "Tell me {trx_type} transaction history fro my checking account",
-        "I want to know my transaction history on {date}",
-        "Tell me transaction history form my checking account on {date}",
-        "Tell me {period} transaction",
-        "What is transaction history for my checking account on {period}",
-        "Tell me transaction history for my checking account on {period}"
-      ],
-      "slots": [
-        {
-          "name": "trx_type",
-          "type": "LIST_OF_TRXTYPE",
-          "samples": []
-        },
-        {
-          "name": "date",
-          "type": "AMAZON.DATE",
-          "samples": []
-        },
-        {
-          "name": "period",
-          "type": "AMAZON.DATE",
-          "samples": []
-        }
-      ]
-    },
-    {
       "name": "AccountList",
       "samples": [
         "what is my account balance",
@@ -51,6 +18,39 @@
         {
           "name": "LAST_FOUR_DIST",
           "type": "AMAZON.FOUR_DIGIT_NUMBER",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "AccountTrx",
+      "samples": [
+        "What is my checking account transaction",
+        "I want to know my checking account transaction history",
+        "Tell me my account transaction",
+        "I want to know {TRX_TYPE} transaction history for my checking account",
+        "What is {TRX_TYPE} transaction history for my checking account",
+        "Tell me {TRX_TYPE} transaction history fro my checking account",
+        "I want to know my transaction history on {DATE}",
+        "Tell me transaction history form my checking account on {DATE}",
+        "Tell me {PERIOD} transaction",
+        "What is transaction history for my checking account on {PERIOD}",
+        "Tell me transaction history for my checking account on {PERIOD}"
+      ],
+      "slots": [
+        {
+          "name": "TRX_TYPE",
+          "type": "LIST_OF_TRXTYPE",
+          "samples": []
+        },
+        {
+          "name": "DATE",
+          "type": "AMAZON.DATE",
+          "samples": []
+        },
+        {
+          "name": "PERIOD",
+          "type": "AMAZON.DATE",
           "samples": []
         }
       ]
@@ -83,7 +83,10 @@
         "What is {CURRENCY} rate on {DATE}",
         "{CURRENCY} {AMOUNT} {DATE}",
         "{DATE} {AMOUNT} {CURRENCY}",
-        "{AMOUNT} {CURRENCY} {DATE}"
+        "{AMOUNT} {CURRENCY} {DATE}",
+        "what is {AMOUNT} US dollar to Korea won",
+        "what is {AMOUNT} US dollar to {CURRENCY}",
+        "what is {AMOUNT} US dollar to {CURRENCY} on {DATE}"
       ],
       "slots": [
         {
@@ -116,19 +119,6 @@
           "samples": []
         }
       ]
-    },
-    {
-      "name": "SetYesNo",
-      "samples": [
-        "{YESNO}"
-      ],
-      "slots": [
-        {
-          "name": "YESNO",
-          "type": "LIST_OF_YESNO",
-          "samples": []
-        }
-      ]
     }
   ],
   "types": [
@@ -148,52 +138,42 @@
       "name": "LIST_OF_CURRENCY",
       "values": [
         {
-          "id": "AUD",
+          "id": null,
           "name": {
             "value": "AUD",
             "synonyms": []
           }
         },
         {
-          "id": "CAD",
+          "id": null,
           "name": {
             "value": "CAD",
             "synonyms": []
           }
         },
         {
-          "id": "KRW",
+          "id": null,
           "name": {
             "value": "KRW",
-            "synonyms": [
-              "koreawon",
-              "korea one",
-              "korea money",
-              "korea cash",
-              "south korea",
-              "korea",
-              "korea currency",
-              "korea won",
-              "won"
-            ]
+            "synonyms": []
           }
         },
         {
-          "id": "JPY",
+          "id": null,
           "name": {
             "value": "JPY",
             "synonyms": []
           }
         },
         {
-          "id": "SGD",
+          "id": null,
           "name": {
             "value": "SGD",
             "synonyms": []
           }
         },
         {
-          "id": "USD",
+          "id": null,
           "name": {
             "value": "USD",
             "synonyms": []
@@ -215,25 +195,6 @@
           "id": null,
           "name": {
             "value": "debit",
-            "synonyms": []
-          }
-        }
-      ]
-    },
-    {
-      "name": "LIST_OF_YESNO",
-      "values": [
-        {
-          "id": null,
-          "name": {
-            "value": "yes",
-            "synonyms": []
-          }
-        },
-        {
-          "id": null,
-          "name": {
-            "value": "no",
             "synonyms": []
           }
         }
