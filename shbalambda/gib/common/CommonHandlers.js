@@ -61,19 +61,56 @@ console.log("setPersonalKeyHandler START");
 	let persnalKey = this.event.request.intent.slots.PERSONAL_KEY;
 	
 	// personal key 입력여부 검증
-	if(persnalKey == undefined || persnalKey == "")
+	if(persnalKey == undefined)
 	    this.emit(':askWithCard', CommonMessages.INVALIDATE_PERSONALKEY, CommonMessages.PERSONALKEY_INFO, Config.card_title, CommonMessages.INVALIDATE_PERSONALKEY);
-
-	// personal key 세션저장
-	this.attributes['personalKey'] = persnalKey.value;
 	
 	// 이전 업무인텐트 추출
 	let preIntent = this.attributes['preIntent'];
+	
+	if (preIntent == undefined)
+		this.emit(':askWithCard', CommonMessages.INVALIDATE_PREINTENT, CommonMessages.INVALIDATE_PREINTENT, Config.card_title, CommonMessages.INVALIDATE_PREINTENT);	
 
+	// personal key 세션저장
+	this.attributes['personalKey'] = persnalKey.value;	
+	
 console.log("preIntent.name =====> " + preIntent.name);
 
 	// 이전 업무인텐트 호출
 	this.event.request.intent = preIntent;	
+	
+	getNextHandler(preIntent.name).call(this);
+	
+};
+
+
+/**
+ * Yes,No Setting Intent
+ */
+const setYesNoHandler = function() {
+	
+console.log("setPersonalKeyHandler START");
+	
+	let yesNo = this.event.request.intent.slots.YES_NO;
+	
+	// personal key 입력여부 검증
+	if(yesNo == undefined)
+	    this.emit(':askWithCard', CommonMessages.INVALIDATE_YESNO, CommonMessages.INVALIDATE_YESNO, Config.card_title, CommonMessages.INVALIDATE_YESNO);
+
+	if(yesNo.value == "no" ) {
+		this.attributes['preIntent'] = null;
+	    this.emit(':askWithCard', CommonMessages.YESNO_IS_NO, CommonMessages.YESNO_IS_NO, Config.card_title, CommonMessages.YESNO_IS_NO);
+	}    
+	
+	// 이전 업무인텐트 추출
+	let preIntent = this.attributes['preIntent'];
+	
+	if (preIntent == undefined)
+		this.emit(':askWithCard', CommonMessages.INVALIDATE_PREINTENT, CommonMessages.INVALIDATE_PREINTENT, Config.card_title, CommonMessages.INVALIDATE_PREINTENT);
+	
+console.log("preIntent.name =====> " + preIntent.name);
+
+	// 이전 업무인텐트 호출
+	this.event.request.intent = preIntent;
 	
 	getNextHandler(preIntent.name).call(this);
 	
@@ -95,5 +132,6 @@ handlers[DefaultIntents.AMAZON_HELP] = DefaultHandlers.amazonHelpHandler;
 
 // 사용자 intent handlers
 handlers[CommonIntents.SET_PERSONAL_KEY] = setPersonalKeyHandler;
+handlers[CommonIntents.SET_YESNO] = setYesNoHandler;
 
 module.exports = handlers;

@@ -54,6 +54,9 @@ let gibUtil = {
 			    	value = jsonData.data[i][key];
 			    	tmpStr = tmpStr.replace(eval("/" + item + "/gi"), value);
 				}
+				// 순번 replace
+				tmpStr = tmpStr.replace(eval("/!~~grid_json_no_count~~!/gi"), i+1);
+				
 				speechOutPut += tmpStr;				
 			}
 
