@@ -10,12 +10,17 @@
  * 2017-09-25	고동환	최초작성
  *=============================================================================*/
 
-const ACCOUNT_LIST_GUIDE = "this is your accounts.";
-const ACCOUNT_LIST_GRID_DATA = " !~~lcl_ac_no~~! has !~~ccy_c~~! !~~pabl_blc~~! and last tansaction was !~~last_cus_trx_dt~~!. ";
-const ACCOUNT_LIST_COUNT = "you have !~~grid_cnt~~! accounts";
+const ACCOUNT_LIST_GUIDE = "You have !~~total~~! accounts.";
+const ACCOUNT_LIST_GUIDE_MORE = "You have more than 3 accounts.Do you want to listen the first 3 accounts?";
+const ACCOUNT_LIST_GUIDE_PAGE_MORE = "Do you want to continue to check more account?";
+
+
+const ACCOUNT_LIST_GRID_DATA = "The !~~grid_json_no_count~~! your available !~~dep_sjt_class~~! and last four digit of account number !~~lcl_ac_no~~! is !~~pabl_blc~~!<break time='0.2s'/>";
+
 
 module.exports = {
     "ACCOUNT_LIST_GUIDE": ACCOUNT_LIST_GUIDE,
+    "ACCOUNT_LIST_GUIDE_MORE": ACCOUNT_LIST_GUIDE_MORE,
     "ACCOUNT_LIST_GRID_DATA": ACCOUNT_LIST_GRID_DATA,
-    "ACCOUNT_LIST_COUNT": ACCOUNT_LIST_COUNT,
+    "ACCOUNT_LIST_GUIDE_PAGE_MORE": ACCOUNT_LIST_GUIDE_PAGE_MORE,    
 };
