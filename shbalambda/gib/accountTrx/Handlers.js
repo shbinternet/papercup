@@ -12,6 +12,7 @@
 
 //Default imports
 const GlobalApiClient = require('../../common/GlobalApiClient');
+const ApiErrorMessages = require('../../common/ApiErrorMessages.js');
 const Config = require('../../common/Config');
 const GibUtil = require('../../common/GibUtil');
 
@@ -33,39 +34,32 @@ const Messages = require('./Messages');
  */
 const getAccountTrxHandler = function() {
     console.info("Starting getAccountTrxHandler()");
-   
         
-    // 세션 존재여부 확인 persnal Key
-    // let personalKey = this.attributes['personalKey'];
+    //세션 존재여부 확인 persnal Key
+    let personalKey = this.attributes['personalKey'];
     
-    // // personalkey 미존재할경우 personal key 질의
-    // if (personalKey == undefined || personalKey == "") {    
+    // personalkey 미존재할경우 personal key 질의
+    if (personalKey == undefined || personalKey == "") {    
     	
-    // 	// 이전인텐트 저장
-    // 	this.attributes['preIntent'] = this.event.request.intent;
-	   //  this.emit(':askWithCard', CommonMessages.WHAT_IS_YOUR_PERSONALKEY, CommonMessages.PERSONALKEY_INFO, Config.card_title, CommonMessages.WHAT_IS_YOUR_PERSONALKEY);
+    	// 이전인텐트 저장
+    	this.attributes['preIntent'] = this.event.request.intent;
+	    this.emit(':askWithCard', CommonMessages.WHAT_IS_YOUR_PERSONALKEY, CommonMessages.PERSONALKEY_INFO, Config.card_title, CommonMessages.WHAT_IS_YOUR_PERSONALKEY);
 	    	    	    
-	   //  return;
+	    return;
 	    
-    // }    
-    
+    }    
+   
     let globalData = Config.openApiConfig;           
     globalData.path = "/global_api/account/transaction";
-    globalData.personKey = "1234";   
-
+    globalData.personKey = personalKey;   
+    console.log("globalData.personKey ====================>" + globalData.personKey); 
     // accessToken 설정 (사용자 세션에 존재하지 않을경우 Config.js 설정에 있는 accessToken 설정)
-    let accessToken = "5c3c7fc91b5443f6934d785ee38ded9d53a302ce971f4b1d98e8ce9ba63dd9e9b590b8b756dc4ce0ac53ca459a436b653159af979e764553891e7e5882cdbbbb02a559ce9a5a4d6597b88aaf87abd81b0f90888410384adca27332b65e1d19ff";
-    // try {
-    // 	accessToken = this.event.session.user.accessToken;    	
-    // } catch(e) {
-    //     console.info("accessToken Exception=" + JSON.stringify(this.event.session));     	
-    //     console.info("accessToken Exception=" + e);    	
-    // }
-  
-    // if(accessToken != "") {
-    //     globalData.accessToken = accessToken;    	
-    // }      
-    globalData.accessToken=accessToken;  //임시 
+    let accessToken = this.event.session.user.accessToken;
+    
+    if(accessToken != undefined) globalData.accessToken = accessToken;
+
+    console.log("globalData.accessToken ====================>" + globalData.accessToken);        
+    
 
     var trx_type = isSlotValid(this.event.request, "TRX_TYPE");
     var date= isSlotValid(this.event.request, "DATE");
