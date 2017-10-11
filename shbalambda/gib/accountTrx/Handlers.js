@@ -34,6 +34,7 @@ const Messages = require('./Messages');
  */
 const getAccountTrxHandler = function() {
     console.info("Starting getAccountTrxHandler()");
+ 
         
     //세션 존재여부 확인 persnal Key
     let personalKey = this.attributes['personalKey'];
@@ -66,15 +67,21 @@ const getAccountTrxHandler = function() {
     var st_date= isSlotValid(this.event.request, "START_DATE");
     var end_date= isSlotValid(this.event.request, "END_DATE");
 
+    if(date!=''){
+        st_date=date;
+        end_date=date;
+    }
     
     globalData.sndData = {
         "sdate":st_date,
         "edate":end_date,
-        "cnt" : 5
+        "page" : {
+            "no" : 2,
+            "size" : 5
+        },
     };
 
     if (trx_type!=''){
-        globalData.sndData
         trx_type='C';
     }else if (trx_type=="debit"){
         trx_type='D';
@@ -86,12 +93,15 @@ const getAccountTrxHandler = function() {
         globalData.sndData = {
             "sdate":st_date,
             "edate":end_date,
-            "cnt" : 5,
+            "page" : {
+                "no" : 20,
+                "size" : 5
+            },
             "filter": {"dep_trx_rnp_d" : trx_type}
         }
     }
     
-
+    console.log(">>>>>trx_type : "+trx_type +">>>>>date: "+ date+ ">>>>sdate, edate"+st_date +" "+end_date);
 
     const globalApiClient = new GlobalApiClient(globalData);
     let globalApiRequest = globalApiClient.getGlobalApi();  
@@ -99,8 +109,22 @@ const getAccountTrxHandler = function() {
 		switch(globalApiResponse.statusCode) {
 			case 200:
                 console.log(">>>>>globalApiResponse.reqData"+JSON.stringify(globalApiResponse.reqData));
-            
-				makeAccountTrxData(this,globalApiResponse.reqData);
+                let returnCode=globalApiResponse.reqData.returnCode;
+                let speechOutput = "";
+                // 정상일 경우
+                if(returnCode == '1')  makeAccountTrxData(this,globalApiResponse.reqData);
+                // Access Token 오류 
+                else if(returnCode == '2') speechOutput = CommonMessages.ERROR_NO_0002;
+                // 개인인증키 오류
+                else if(returnCode == '3') speechOutput = CommonMessages.ERROR_NO_0003;
+                // Access Token 만료
+                else if(returnCode == '5') speechOutput = CommonMessages.ERROR_NO_0004;
+                // 처리중 오류
+                else if(returnCode == '9') speechOutput = CommonMessages.ERROR_NO_0009;
+                //그이외 
+                else speechOutput = CommonMessages.ERROR_NO_0009;        
+                    
+                handlerThis.emit(":tellWithCard", speechOutput, Config.card_title, speechOutput);
 				break;
 			case 204:
                 console.log(">>>>case 204");
@@ -129,37 +153,27 @@ const getAccountTrxHandler = function() {
  */
 const makeAccountTrxData = function(handlerThis,jsonData) {
 	
-console.log("Intent Name====================>" + handlerThis.event.request.intent.name);
-console.log("jsonData.returnCode====================>" + jsonData.returnCode);
-	
+    console.log("Intent Name====================>" + handlerThis.event.request.intent.name);
+    	
 	let speechOutput = "";
-	// Access Token 오류
-	if(jsonData.returnCode == '2') speechOutput = CommonMessages.ERROR_NO_0002;
-	// 개인인증키 오류
-	else if(jsonData.returnCode == '3') speechOutput = CommonMessages.ERROR_NO_0003;
-	// Access Token 만료
-	else if(jsonData.returnCode == '5') speechOutput = CommonMessages.ERROR_NO_0004;
-	// 처리중 오류
-	else if(jsonData.returnCode == '9') speechOutput = CommonMessages.ERROR_NO_0009;
-	// 정상일 경우
-	else if(jsonData.returnCode == '1') {
-        for(let i = 0; i < jsonData.data.length; i++) {
-            jsonData.data[i].total = jsonData.data.length;    
+    let page_total= jsonData.page.total;
+    let page_no=jsonData.page.no;
+    let page_size=jsonData.page.size;
+
+    console.log(">>>page_total: "+page_total +">>>>page_no: "+page_no+">>>>page_size"+page_size);
+	
+    if(page_total>0){
+        let total = "!~~total~~!";
+        speechOutput = Messages.ACCOUNT_TRX_COUNT.replace(eval("/" + total + "/gi"), page_total);
+        if(page_total>5){
+            speechOutput += Messages.ACCOUNT_TRX_SPLIT_FIVE +Messages.ACCOUNT_TRX_SPLIT_GUIDE;
         }
-        console.log(">>>total count Ending  "+ JSON.stringify(jsonData));
-		// AccountTrx일경우
-		if(handlerThis.event.request.intent.name == Intents.GET_ACCOUNT_TRX) {
-			speechOutput =  GibUtil.setSpeechOutputGridDataText(Messages.ACCOUNT_TRX_GUIDE,jsonData);
-			speechOutput += GibUtil.setSpeechOutputGridDataText(Messages.ACCOUNT_TRX_DATA,jsonData);
-			
-		// 일치하는 intent 가 존재하지 않을경우 
-		} else {
-			speechOutput = CommonMessages.UNHANDLED;
-		}
-	// 기타에러 발생시		
-	} else {
-		speechOutput = CommonMessages.ERROR_NO_0009;		
-	}
+    }else{
+        speechOutput = Messages.ACCOUNT_TRX_ZERO_COUNT;
+    }
+	speechOutput += GibUtil.setSpeechOutputGridDataText(Messages.ACCOUNT_TRX_DATA,jsonData);
+		
+	
 		
 	handlerThis.emit(":tellWithCard", speechOutput, Config.card_title, speechOutput);
 };
