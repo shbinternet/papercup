@@ -120,7 +120,7 @@ const makeAccountListGridData = function(handlerThis,jsonData) {
 	// 개인인증키 오류
 	else if(jsonData.returnCode == '3') speechOutput = CommonMessages.ERROR_NO_0003;
 	// Access Token 만료
-	else if(jsonData.returnCode == '5') speechOutput = CommonMessages.ERROR_NO_0004;
+	else if(jsonData.returnCode == '5') speechOutput = CommonMessages.ERROR_NO_0005;
 	// 처리중 오류
 	else if(jsonData.returnCode == '9') speechOutput = CommonMessages.ERROR_NO_0009;
 	// 정상일 경우
