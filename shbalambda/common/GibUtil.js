@@ -27,7 +27,7 @@ let gibUtil = {
 				
 			for(let key in jsonData) {
 		    	item = "!~~" + key + "~~!";
-		    	value = jsonData[key];
+		    	value = GibAlexaStringFormatUtil.setAlexaformat(key,jsonData[key]);
 		    	messageStr = messageStr.replace(eval("/" + item + "/gi"), value);
 			}
 			 		    
@@ -51,33 +51,18 @@ let gibUtil = {
 				tmpStr = messageStr;				
 				for(let key in jsonData.data[i]) {
 			    	item = "!~~" + key + "~~!";
-			    	value = jsonData.data[i][key];
+			    	value = GibAlexaStringFormatUtil.setAlexaformat(key,jsonData.data[i][key]);
 			    	tmpStr = tmpStr.replace(eval("/" + item + "/gi"), value);
 				}
+				// 순번 replace
+				tmpStr = tmpStr.replace(eval("/!~~grid_json_no_count~~!/gi"), i+1);
+				
 				speechOutPut += tmpStr;				
 			}
 
 		    return speechOutPut;
-		},
-
-
-		'setSpeechOutputCommon' : function(messageStr,jsonData) {
-			let item = "";
-			let value = "";			
-				
-			for(let key in jsonData.page) {
-		    	item = "!~~" + key + "~~!";
-		    	console.log(">>>>>>item"+ item);
-
-		    	value = jsonData.page[key];
-		    	console.log(">>>>>>value"+ value);
-		    	messageStr = messageStr.replace(eval("/" + item + "/gi"), value);
-			}
-			 		    
-		    return messageStr;
-
 		}
 			
-}
+};
 
 module.exports = gibUtil;
