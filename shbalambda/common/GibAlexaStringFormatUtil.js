@@ -12,8 +12,8 @@
 
 let GibAlexaStringData = {
 		
-		'last_cus_trx_dt' : 'date',
-		'itype_due_dt' : 'date',
+		'lcl_ac_no' : 'last_four_dist',
+		'pabl_blc' : 'amount',
 		'ttype_due_dt' : 'date'
 }
 
@@ -28,24 +28,40 @@ let GibAlexaStringFormatUtil = {
 			
 			for(let key in GibAlexaStringData) {
 				if(key == itemKey) {
+					// 날짜 형식 변환
 					if(GibAlexaStringData[key] == "date") {
-						itemValue = itemValue
+						itemValue = getDateformat(itemValue);
+					// 금액 소수점 반올림처리	
+					} else if(GibAlexaStringData[key] == "amount") {
+						itemValue = getRoundUpCurrency(itemValue);						
+					} else if(GibAlexaStringData[key] == "last_four_dist") {
+						itemValue = getLastFourDist(itemValue);						
 					}
-						
 				}
 			}			
 		    return itemValue;
-		},			
-		
-		/**
-	     * Alexa 날짜형식변환
-	     * @param str : 원본데이터
-	     */
-		'getDateformat' : function(str) {						
-			str = "<say-as interpret-as='date'>" + str + "</say-as>"; 		    
-		    return str;
 		}
 
 }
+
+/**
+ * Alexa 날짜형식변환
+ */
+const getDateformat = function(str) {
+    return "<say-as interpret-as='date'>" + str + "</say-as>";	
+};
+/**
+ * Alexa 날짜형식변환
+ */
+const getRoundUpCurrency = function(amount){
+	return amount = (amount*1000)/1000;	
+};
+
+/**
+ * Alexa 계좌번호 끝 4자리 반환
+ */
+const getLastFourDist = function(account){
+	return account = account.substr(account.length-4,account.length);	
+};
 
 module.exports = GibAlexaStringFormatUtil;
