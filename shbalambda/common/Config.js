@@ -22,7 +22,7 @@ var Config = {
     openApiConfig : {
     	"domain": "satst.shinhanglobal.com",
     	"path": "/global_api/account/list",
-    	"accessToken": "4362164349254bdbbd10f5f973253e17ba751a65174b49168549d8a6dea8cf4cc0f492da087f4eb4a0e0f3626a9925601716953ab17f4ab096075b8ab6a962bde6068aea68d7431b864fb411a6477fab3b26f6104cb64fbfa503efe75a9ae5fe",
+    	"accessToken": "1c5e8aaff7bf46dfb93eaf2f1ffbfa1e83c1725bc4ea4230ae0852f0d1b8a6b1ee7b9b76fa6d434788c23070691fa08a3d33a50721b6427e866e3810532b9a9a797dcc6358cc41e7b8398032546f4b7c2aff3568a83b48569916efc6312e940d",
     	"personKey": "",
     	"sndData": {}    	    	
     }
