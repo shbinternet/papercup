@@ -148,15 +148,25 @@ const makeAccountListGridData = function(handlerThis,jsonData) {
 		// 다음내역조회일경우	
 		} else {
 			
-			speechOutput = GibUtil.setSpeechOutputGridDataText(Messages.ACCOUNT_LIST_GRID_DATA,jsonData);
-			speechOutput += Messages.ACCOUNT_LIST_GUIDE_PAGE_MORE;
+			speechOutput = GibUtil.setSpeechOutputGridDataText(Messages.ACCOUNT_LIST_GRID_DATA,jsonData);			
 			
 			// 이전인텐트 저장
-			handlerThis.attributes['preIntent'] = handlerThis.event.request.intent;
+			handlerThis.attributes['preIntent'] = handlerThis.event.request.intent;					
 			
-			// 다음페이지 조회요청
-			jsonData.page.no = Number(jsonData.page.no) + 1;
-			handlerThis.attributes['preIntent'].page = jsonData.page;			
+			// 남은 건수 계산
+			let currentCount = jsonData.page.total - (jsonData.page.no * 3);									
+			
+			// 남은 조회건수가 3건 미만이면 조회종료
+			if(currentCount <= 0) {
+				handlerThis.attributes['preIntent'] = null;
+			} else {
+				
+				// 다음페이지 조회요청
+				jsonData.page.no = jsonData.page.no + 1;
+				
+				speechOutput += Messages.ACCOUNT_LIST_GUIDE_PAGE_MORE;			
+				handlerThis.attributes['preIntent'].page = jsonData.page;
+			}
 		}
 		/***************** Alexa 메시지 조립 END *****************/	    
 
