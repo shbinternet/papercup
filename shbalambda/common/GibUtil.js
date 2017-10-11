@@ -58,6 +58,24 @@ let gibUtil = {
 			}
 
 		    return speechOutPut;
+		},
+
+
+		'setSpeechOutputCommon' : function(messageStr,jsonData) {
+			let item = "";
+			let value = "";			
+				
+			for(let key in jsonData.page) {
+		    	item = "!~~" + key + "~~!";
+		    	console.log(">>>>>>item"+ item);
+
+		    	value = jsonData.page[key];
+		    	console.log(">>>>>>value"+ value);
+		    	messageStr = messageStr.replace(eval("/" + item + "/gi"), value);
+			}
+			 		    
+		    return messageStr;
+
 		}
 			
 }

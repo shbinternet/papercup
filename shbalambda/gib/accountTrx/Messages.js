@@ -10,11 +10,23 @@
  * 2017-10-10	최윤주	최초작성
  *=============================================================================*/
 
-const ACCOUNT_TRX_GUIDE = "There is !~~total~~! transaction history.";
-const ACCOUNT_TRX_DATA = " !~~dep_ac_ledg_trx_amt~~! !~~trx_ccy_c~~! was tranfered on <break time='0.2s'/><say-as interpret-as='date'>!~~oprt_dt~~!</say-as> with memo <break time='0.4s'/>!~~dep_trx_memo_ctt1~~! ";
+const ACCOUNT_TRX_COUNT = "There is !~~total~~! transaction history.";
+const ACCOUNT_TRX_SPLIT_FIVE = "<break time='0.2s'/>Let me tell you five recent transaction first.";
+const ACCOUNT_TRX_SPLIT_GUIDE = "<break time='0.2s'/>You can say <emphasis level='strong'>next</emphasis> to check next 5 recent history";
+const ACCOUNT_TRX_ZERO_COUNT = "<break time='0.2s'/>There is no transaction history.";
+
+const ACCOUNT_TRX_DATA = " !~~dep_ac_ledg_trx_amt~~! !~~trx_ccy_c~~! was tranfered on "
+						+"<break time='0.2s'/><say-as interpret-as='date'>!~~oprt_dt~~!</say-as>"
+						+"<break time='0.4s'/><say-as interpret-as='digits'>!~~dep_trx_memo_ctt1~~! </say-as>";
+
+const ACCOUNT_BALANCE_DATA ="Now you have !~~dep_ac_blc~~! on your account. "
 
 
 module.exports = {
-    "ACCOUNT_TRX_GUIDE": ACCOUNT_TRX_GUIDE,
+    "ACCOUNT_TRX_COUNT": ACCOUNT_TRX_COUNT,
+    "ACCOUNT_TRX_SPLIT_FIVE": ACCOUNT_TRX_SPLIT_FIVE,
+    "ACCOUNT_TRX_SPLIT_GUIDE" : ACCOUNT_TRX_SPLIT_GUIDE,
     "ACCOUNT_TRX_DATA": ACCOUNT_TRX_DATA,
+    "ACCOUNT_TRX_ZERO_COUNT" : ACCOUNT_TRX_ZERO_COUNT,
+    "ACCOUNT_BALANCE_DATA" : ACCOUNT_BALANCE_DATA
 };

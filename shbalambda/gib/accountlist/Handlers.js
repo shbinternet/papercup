@@ -41,7 +41,6 @@ const getAccountListGridDataHandler = function() {
     // that you don't have permissions to retrieve their address.
     if(!accessToken) {
         this.emit(":tellWithPermissionCard", Messages.NOTIFY_MISSING_PERMISSIONS, PERMISSIONS);
-
         // Lets terminate early since we can't do anything else.
         console.log("User did not give us permissions to access their address.");
         console.info("Ending getAccount_ListHandler()");

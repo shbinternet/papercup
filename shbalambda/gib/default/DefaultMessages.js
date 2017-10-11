@@ -10,25 +10,25 @@
  * 2017-09-25	고동환	최초작성
  *=============================================================================*/
 
-const WELCOME = "Welcome to Shinhan America.Please tell me what you want.";
+const WELCOME = "Welcome to Shinhan America Please tell me what you want";
 
 const WHAT_DO_YOU_WANT = "What do you want to ask?";
 
-const NOTIFY_MISSING_PERMISSIONS = "Please enable permissions in the Amazon Alexa app.";
+const NOTIFY_MISSING_PERMISSIONS = "Please enable permissions in the Amazon Alexa app";
 
 const NO_DATA = "Requested data does not exist";
 
-const ERROR = "Uh Oh. Looks like something went wrong.";
+const ERROR = "Uh Oh. Looks like something went wrong";
 
-const GLOBAL_API_FAILURE = "There was an error with the Shinhan Global open API. Please try again.";
+const GLOBAL_API_FAILURE = "There was an error with the Shinhan Global open API. Please try again";
 
 const GOODBYE = "Bye! Thanks for using the Shinhan America!";
 
 const UNHANDLED = "This skill doesn't support that. Please ask something else.";
 
-const HELP = "You can use this skill by asking something like: I want to konw my account";
+const HELP = "You can use this skill by asking something like I want to konw my account";
 
-const STOP = "There is nothing to stop. Did you mean to ask something else?";
+const STOP = "There is nothing to stop Did you mean to ask something else?";
 
 module.exports = {
     "WELCOME": WELCOME,
