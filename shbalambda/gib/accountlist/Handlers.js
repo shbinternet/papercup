@@ -90,7 +90,7 @@ const getAccountListGridDataHandler = function() {
 		// 4자리 계좌번호 조회조건으로 올경우
 		} else if (slotAccountType.value == undefined && slotLastFourDist.value != undefined) {
 			
-			filterLastFourDist = "like " + slotLastFourDist.value + "%";	
+			filterLastFourDist = "like %" + slotLastFourDist.value;	
 			globalData.sndData.filter = {"lcl_ac_no" : filterLastFourDist};		
 			
 	    // 계좌타입,4자리계좌번호 모두 조회조건이 올경우 		
@@ -100,11 +100,11 @@ const getAccountListGridDataHandler = function() {
 			else if(slotAccountType == "saving account") filterAccountType = "saving";		
 			
 			filterAccountType = "like %" + filterAccountType + "%";		
-			filterLastFourDist = "like " + slotLastFourDist.value + "%";
+			filterLastFourDist = "like %" + slotLastFourDist.value;
 			
 			globalData.sndData.filter = {
 											"dep_prdt_nm" : filterAccountType,
-											"dep_prdt_nm" : filterLastFourDist												                    
+											"lcl_ac_no" : filterLastFourDist												                    
 										};			
 		}	
 	}
