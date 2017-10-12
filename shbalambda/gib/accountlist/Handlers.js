@@ -66,7 +66,9 @@ const getAccountListGridDataHandler = function() {
 		pageNo = 1;
 	else
 		pageNo = pageData.no;
-
+	
+	// 이전조회조건 초기화
+	globalData.sndData = {};	
 	globalData.sndData.page = {"no" : pageNo,"size" : 3};
 	
 	
@@ -74,13 +76,13 @@ const getAccountListGridDataHandler = function() {
 	let slotLastFourDist = this.event.request.intent.slots["LAST_FOUR_DIST"];	
 	let filterAccountType = "";
 	let filterLastFourDist = "";	
-	
+
 	// 슬롯 정상설정확인
 	if(slotAccountType != undefined && slotLastFourDist != undefined ) {
 	
 		// 계좌타입만 조회조건으로 올경우
 		if (slotAccountType.value != undefined && slotLastFourDist.value == undefined) {		
-			
+				
 			if(slotAccountType.value == "checking account") filterAccountType = "CHECKING";
 			else if(slotAccountType.value == "saving account") filterAccountType = "saving";
 			
@@ -95,7 +97,7 @@ const getAccountListGridDataHandler = function() {
 			
 	    // 계좌타입,4자리계좌번호 모두 조회조건이 올경우 		
 		} else if (slotAccountType.value != undefined && slotLastFourDist.value != undefined) {
-	
+
 			if(slotAccountType == "checking account") filterAccountType = "CHECKING";
 			else if(slotAccountType == "saving account") filterAccountType = "saving";		
 			
@@ -108,6 +110,9 @@ const getAccountListGridDataHandler = function() {
 										};			
 		}	
 	}
+	
+	// 이전 preIntent 초기화
+	this.attributes['preIntent'] = null;
     /***************** Open Api 송신설정 END *****************/
 
     const globalApiClient = new GlobalApiClient(globalData);
@@ -160,9 +165,7 @@ const makeAccountListGridData = function(handlerThis,jsonData) {
 		let pageCount = Number(jsonData.page.total);
 		
 		// 최초조회여부 검증
-		let pageData = handlerThis.event.request.intent.page;
-		
-console.log("pageData===================>" + JSON.stringify(pageData));		
+		let pageData = handlerThis.event.request.intent.page;		
 		
 		if(pageCount == 0) {
 			speechOutput = Messages.ACCOUNT_LIST_NO_DATA;			
