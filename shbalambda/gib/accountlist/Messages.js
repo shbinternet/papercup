@@ -15,7 +15,7 @@ const ACCOUNT_LIST_GUIDE_MORE = "You have more than 3 accounts.Do you want to li
 const ACCOUNT_LIST_GUIDE_PAGE_MORE = "Do you want to continue to check more account?";
 
 
-const ACCOUNT_LIST_GRID_DATA = "The !~~grid_json_no_count~~! your available !~~dep_sjt_class~~! and last four digit of account number !~~lcl_ac_no~~! is !~~pabl_blc~~!<break time='0.2s'/>";
+const ACCOUNT_LIST_GRID_DATA = "The !~~grid_json_no_count~~! your available !~~dep_prdt_nm~~! and last four digit of account number !~~lcl_ac_no~~! is !~~pabl_blc~~!<break time='0.2s'/>";
 
 
 module.exports = {

@@ -12,8 +12,9 @@
 
 let GibAlexaStringData = {
 		
-		'lcl_ac_no' : 'last_four_dist',
+		'lcl_ac_no' : 'lastfourdist',
 		'pabl_blc' : 'amount',
+		'grid_json_no_count' : 'englishordinal',		
 		'ttype_due_dt' : 'date'
 }
 
@@ -33,9 +34,11 @@ let GibAlexaStringFormatUtil = {
 						itemValue = getDateformat(itemValue);
 					// 금액 소수점 반올림처리	
 					} else if(GibAlexaStringData[key] == "amount") {
-						itemValue = getRoundUpCurrency(itemValue);						
-					} else if(GibAlexaStringData[key] == "last_four_dist") {
+						itemValue = getNumberCurrency(itemValue);						
+					} else if(GibAlexaStringData[key] == "lastfourdist") {
 						itemValue = getLastFourDist(itemValue);						
+					} else if(GibAlexaStringData[key] == "englishordinal") {
+						itemValue = getEnglishOrdinalNumber(itemValue);						
 					}
 				}
 			}			
@@ -51,10 +54,11 @@ const getDateformat = function(str) {
     return "<say-as interpret-as='date'>" + str + "</say-as>";	
 };
 /**
- * Alexa 날짜형식변환
+ * Alexa 금액 소수점 제거
  */
-const getRoundUpCurrency = function(amount){
-	return amount = (amount*1000)/1000;	
+const getNumberCurrency = function(amount){
+	//return amount = (amount*1000)/1000;	
+	return Number(amount);
 };
 
 /**
@@ -62,6 +66,27 @@ const getRoundUpCurrency = function(amount){
  */
 const getLastFourDist = function(account){
 	return account = account.substr(account.length-4,account.length);	
+};
+
+/**
+ * 영어 서수 변환
+ */
+const getEnglishOrdinalNumber = function(num){
+	
+	let str = "";
+	
+	switch(num) {
+		case 1 : str = "first"; break;
+		case 2 : str = "second"; break;
+		case 3 : str = "third"; break;
+		case 4 : str = "fourth"; break;
+		case 5 : str = "sixth"; break;
+		case 7 : str = "seventh"; break;
+		case 8 : str = "eighth"; break;
+		case 9 : str = "nineth"; break;
+		case 10 : str = "tenth"; break;			
+	}
+	return str;
 };
 
 module.exports = GibAlexaStringFormatUtil;

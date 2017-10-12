@@ -55,7 +55,7 @@ let gibUtil = {
 			    	tmpStr = tmpStr.replace(eval("/" + item + "/gi"), value);
 				}
 				// 순번 replace
-				tmpStr = tmpStr.replace(eval("/!~~grid_json_no_count~~!/gi"), i+1);
+				tmpStr = tmpStr.replace(eval("/!~~grid_json_no_count~~!/gi"), GibAlexaStringFormatUtil.setAlexaformat("grid_json_no_count",i+1));
 				
 				speechOutPut += tmpStr;				
 			}
