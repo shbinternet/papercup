@@ -66,19 +66,48 @@ const getAccountListGridDataHandler = function() {
 		pageNo = 1;
 	else
 		pageNo = pageData.no;
+
+	globalData.sndData.page = {"no" : pageNo,"size" : 3};
 	
-    globalData.sndData = {
-			 "page" : {
-				 		"no" : pageNo,
-				 		"size" : 3
-				 	  }
-/*
-			,"filter" : {
-						 "prdt_c" : "5017000001"
-						}
-*/
-    };	
 	
+	let slotAccountType = this.event.request.intent.slots["ACCOUNT_TYPE"];
+	let slotLastFourDist = this.event.request.intent.slots["LAST_FOUR_DIST"];	
+	let filterAccountType = "";
+	let filterLastFourDist = "";	
+	
+	// 슬롯 정상설정확인
+	if(slotAccountType != undefined && slotLastFourDist != undefined ) {
+	
+		// 계좌타입만 조회조건으로 올경우
+		if (slotAccountType.value != undefined && slotLastFourDist.value == undefined) {		
+			
+			if(slotAccountType.value == "checking account") filterAccountType = "CHECKING";
+			else if(slotAccountType.value == "saving account") filterAccountType = "saving";
+			
+			filterAccountType = "like %" + filterAccountType + "%";		
+			globalData.sndData.filter = {"dep_prdt_nm" : filterAccountType};
+			
+		// 4자리 계좌번호 조회조건으로 올경우
+		} else if (slotAccountType.value == undefined && slotLastFourDist.value != undefined) {
+			
+			filterLastFourDist = "like " + slotLastFourDist.value + "%";	
+			globalData.sndData.filter = {"lcl_ac_no" : filterLastFourDist};		
+			
+	    // 계좌타입,4자리계좌번호 모두 조회조건이 올경우 		
+		} else if (slotAccountType.value != undefined && slotLastFourDist.value != undefined) {
+	
+			if(slotAccountType == "checking account") filterAccountType = "CHECKING";
+			else if(slotAccountType == "saving account") filterAccountType = "saving";		
+			
+			filterAccountType = "like %" + filterAccountType + "%";		
+			filterLastFourDist = "like " + slotLastFourDist.value + "%";
+			
+			globalData.sndData.filter = {
+											"dep_prdt_nm" : filterAccountType,
+											"dep_prdt_nm" : filterLastFourDist												                    
+										};			
+		}	
+	}
     /***************** Open Api 송신설정 END *****************/
 
     const globalApiClient = new GlobalApiClient(globalData);
@@ -133,39 +162,45 @@ const makeAccountListGridData = function(handlerThis,jsonData) {
 		// 최초조회여부 검증
 		let pageData = handlerThis.event.request.intent.page;
 		
-	    // 최초조회일경우
-	    if (pageData == undefined) {   		
-		 
-			if(pageCount <= 3) {				
-				speechOutput = GibUtil.setSpeechOutputGridDataText(Messages.ACCOUNT_LIST_GRID_DATA,jsonData);
+console.log("pageData===================>" + JSON.stringify(pageData));		
+		
+		if(pageCount == 0) {
+			speechOutput = Messages.ACCOUNT_LIST_NO_DATA;			
+		} else {		
+		    // 최초조회일경우
+		    if (pageData == undefined) {   		
+			 
+				if(pageCount <= 3) {				
+					speechOutput = GibUtil.setSpeechOutputGridDataText(Messages.ACCOUNT_LIST_GRID_DATA,jsonData);
+				} else {
+					speechOutput = GibUtil.setSpeechOutputText(Messages.ACCOUNT_LIST_GUIDE,jsonData.page);
+					speechOutput += Messages.ACCOUNT_LIST_GUIDE_MORE;						
+					// 이전인텐트 저장
+					handlerThis.attributes['preIntent'] = handlerThis.event.request.intent;												
+					handlerThis.attributes['preIntent'].page = jsonData.page;				
+				}
+			// 다음내역조회일경우	
 			} else {
-				speechOutput = GibUtil.setSpeechOutputText(Messages.ACCOUNT_LIST_GUIDE,jsonData.page);
-				speechOutput += Messages.ACCOUNT_LIST_GUIDE_MORE;						
+				
+				speechOutput = GibUtil.setSpeechOutputGridDataText(Messages.ACCOUNT_LIST_GRID_DATA,jsonData);			
+				
 				// 이전인텐트 저장
-				handlerThis.attributes['preIntent'] = handlerThis.event.request.intent;												
-				handlerThis.attributes['preIntent'].page = jsonData.page;				
-			}
-		// 다음내역조회일경우	
-		} else {
-			
-			speechOutput = GibUtil.setSpeechOutputGridDataText(Messages.ACCOUNT_LIST_GRID_DATA,jsonData);			
-			
-			// 이전인텐트 저장
-			handlerThis.attributes['preIntent'] = handlerThis.event.request.intent;					
-			
-			// 남은 건수 계산
-			let currentCount = jsonData.page.total - (jsonData.page.no * 3);									
-			
-			// 남은 조회건수가 3건 미만이면 조회종료
-			if(currentCount <= 0) {
-				handlerThis.attributes['preIntent'] = null;
-			} else {
+				handlerThis.attributes['preIntent'] = handlerThis.event.request.intent;					
 				
-				// 다음페이지 조회요청
-				jsonData.page.no = jsonData.page.no + 1;
+				// 남은 건수 계산
+				let currentCount = jsonData.page.total - (jsonData.page.no * 3);									
 				
-				speechOutput += Messages.ACCOUNT_LIST_GUIDE_PAGE_MORE;			
-				handlerThis.attributes['preIntent'].page = jsonData.page;
+				// 남은 조회건수가 3건 미만이면 조회종료
+				if(currentCount <= 0) {
+					handlerThis.attributes['preIntent'] = null;
+				} else {
+					
+					// 다음페이지 조회요청
+					jsonData.page.no = jsonData.page.no + 1;
+					
+					speechOutput += Messages.ACCOUNT_LIST_GUIDE_PAGE_MORE;			
+					handlerThis.attributes['preIntent'].page = jsonData.page;
+				}
 			}
 		}
 		/***************** Alexa 메시지 조립 END *****************/	    
