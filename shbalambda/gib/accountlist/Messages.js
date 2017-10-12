@@ -16,11 +16,12 @@ const ACCOUNT_LIST_GUIDE_PAGE_MORE = "Do you want to continue to check more acco
 
 
 const ACCOUNT_LIST_GRID_DATA = "The !~~grid_json_no_count~~! your available !~~dep_prdt_nm~~! and last four digit of account number !~~lcl_ac_no~~! is !~~pabl_blc~~!<break time='0.2s'/>";
-
+const ACCOUNT_LIST_NO_DATA = "You don't have any account balance.";
 
 module.exports = {
     "ACCOUNT_LIST_GUIDE": ACCOUNT_LIST_GUIDE,
     "ACCOUNT_LIST_GUIDE_MORE": ACCOUNT_LIST_GUIDE_MORE,
     "ACCOUNT_LIST_GRID_DATA": ACCOUNT_LIST_GRID_DATA,
     "ACCOUNT_LIST_GUIDE_PAGE_MORE": ACCOUNT_LIST_GUIDE_PAGE_MORE,    
+    "ACCOUNT_LIST_NO_DATA":ACCOUNT_LIST_NO_DATA
 };
