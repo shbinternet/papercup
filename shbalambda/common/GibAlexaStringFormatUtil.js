@@ -58,7 +58,7 @@ const getDateformat = function(str) {
  */
 const getNumberCurrency = function(amount){
 	//return amount = (amount*1000)/1000;	
-	return Number(amount);
+	return parseInt(amount);
 };
 
 /**
