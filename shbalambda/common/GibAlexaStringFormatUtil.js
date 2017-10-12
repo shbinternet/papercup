@@ -56,16 +56,17 @@ const getDateformat = function(str) {
 /**
  * Alexa 금액 소수점 제거
  */
-const getNumberCurrency = function(amount){
-	//return amount = (amount*1000)/1000;	
-	return parseInt(amount);
+const getNumberCurrency = function(amount){	
+	
+	return amount = Math.round((amount*1000))/1000;	
+	//return parseInt(amount);
 };
 
 /**
  * Alexa 계좌번호 끝 4자리 반환
  */
 const getLastFourDist = function(account){
-	return account = account.substr(account.length-4,account.length);	
+	return account = "<say-as interpret-as='digits'>" + account.substr(account.length-4,account.length) + "</say-as>";	
 };
 
 /**
