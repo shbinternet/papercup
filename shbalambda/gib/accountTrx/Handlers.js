@@ -180,7 +180,6 @@ const makeAccountTrxData = function(handlerThis,jsonData) {
 
 function isSlotValid(request, slotName){
     var slot = request.intent.slots[slotName];
-    //console.log("request = "+JSON.stringify(request)); //uncomment if you want to see the request
     var slotValue;
     console.log(">>>isSlotValid, slot " + JSON.stringify(slot));
     //if we have a slot, get the text and store it into speechOutput

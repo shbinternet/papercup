@@ -76,7 +76,8 @@ const getAccountListGridDataHandler = function() {
 	let slotLastFourDist = this.event.request.intent.slots["LAST_FOUR_DIST"];	
 	let filterAccountType = "";
 	let filterLastFourDist = "";	
-
+	
+	
 	// 슬롯 정상설정확인
 	if(slotAccountType != undefined && slotLastFourDist != undefined ) {
 	
