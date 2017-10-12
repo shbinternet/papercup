@@ -144,7 +144,14 @@
             "value": "checking account",
             "synonyms": []
           }
-        }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "saving account",
+            "synonyms": []
+          }
+        }        
       ]
     },
     {
