@@ -24,6 +24,7 @@ const DefaultHandlers = require('../default/DefaultHandlers');
 
 // Common
 const CommonMessages = require('../common/CommonMessages');
+const CommonIntents = require('../common/CommonIntents');
 
 // Internal imports
 const Intents = require('./Intents');
@@ -44,6 +45,7 @@ const getAccountTrxHandler = function() {
     	
     	// 이전인텐트 저장
     	this.attributes['preIntent'] = this.event.request.intent;
+    	this.attributes['preIntent'].commonIntent = CommonIntents.SET_PERSONAL_KEY;
 	    this.emit(':askWithCard', CommonMessages.WHAT_IS_YOUR_PERSONALKEY, CommonMessages.PERSONALKEY_INFO, Config.card_title, CommonMessages.WHAT_IS_YOUR_PERSONALKEY);
 	    	    	    
 	    return;
