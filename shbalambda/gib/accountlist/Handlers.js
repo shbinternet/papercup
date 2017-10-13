@@ -151,6 +151,7 @@ const getAccountListGridDataHandler = function() {
  */
 const makeAccountListGridData = function(handlerThis,jsonData) {
 	
+	let emitSpeechOrder = "";
 	let speechOutput = "";
 	// Access Token 오류
 	if(jsonData.returnCode == '2') speechOutput = CommonMessages.ERROR_NO_0002;
@@ -218,7 +219,7 @@ const makeAccountListGridData = function(handlerThis,jsonData) {
 		speechOutput = CommonMessages.ERROR_NO_0009;		
 	}
 		
-	handlerThis.emit(":tellWithCard", speechOutput, Config.card_title, speechOutput);
+	handlerThis.emit(":askWithCard", speechOutput, Config.card_title, speechOutput);
 };
 
 

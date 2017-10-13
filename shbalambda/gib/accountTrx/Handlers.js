@@ -219,7 +219,7 @@ const makeAccountTrxData = function(handlerThis,jsonData) {
 		
 	
 		
-	handlerThis.emit(":tellWithCard", speechOutput, Config.card_title, speechOutput);
+	handlerThis.emit(":askWithCard", speechOutput, Config.card_title, speechOutput);
 };
 
 function isSlotValid(request, slotName){
