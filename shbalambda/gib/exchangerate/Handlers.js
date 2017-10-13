@@ -73,7 +73,7 @@ const getExchangeRateHandler = function() {
 		        	console.log(">>>>>>>checking>>>>"+JSON.stringify(globalApiResponse.reqData));
 		        }
 		        console.log (">>>>>>>>>speechOutput " +speechOutput)
-		        this.emit(":tellWithCard", speechOutput, "SHBA", speechOutput, '');
+		        this.emit(":askWithCard", speechOutput, "SHBA", speechOutput, '');
 				break;
 			case 204:
                 this.emit(":tellWithCard", DefaultMessages.NO_DATA);
