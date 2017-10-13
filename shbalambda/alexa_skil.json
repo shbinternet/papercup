@@ -28,13 +28,15 @@
         "I want to know my checking account transaction history",
         "Tell me my account transaction",
         "I want to know {TRX_TYPE} transaction history for my checking account",
-        "What is {TRX_TYPE} transaction history for my checking account",
-        "Tell me {TRX_TYPE} transaction history fro my checking account",
+        "What is {TRX_TYPE} transaction history from my checking account",
+        "Tell me {TRX_TYPE} transaction history from my checking account",
         "I want to know my transaction history on {DATE}",
         "Tell me transaction history form my checking account on {DATE}",
         "Tell me {PERIOD} transaction",
         "What is transaction history for my checking account on {PERIOD}",
-        "Tell me transaction history for my checking account on {PERIOD}"
+        "Tell me transaction history for my checking account on {PERIOD}",
+        "Tell me transaction history from {START_DATE}",
+        "Tell me transaction history from {START_DATE} to {END_DATE}"
       ],
       "slots": [
         {
@@ -49,6 +51,16 @@
         },
         {
           "name": "PERIOD",
+          "type": "AMAZON.DATE",
+          "samples": []
+        },
+        {
+          "name": "START_DATE",
+          "type": "AMAZON.DATE",
+          "samples": []
+        },
+        {
+          "name": "END_DATE",
           "type": "AMAZON.DATE",
           "samples": []
         }
