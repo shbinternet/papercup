@@ -67,6 +67,10 @@ console.log("setPersonalKeyHandler START");
 	// 이전 업무인텐트 추출
 	let preIntent = this.attributes['preIntent'];
 	
+	// 이전 업무인텐트의 공용 인텐트 호출이 동일한지 검증
+	if(preIntent.commonIntent != CommonIntents.SET_PERSONAL_KEY)
+	    this.emit(':askWithCard', CommonMessages.TRY_AGAIN, CommonMessages.TRY_AGAIN, Config.card_title, CommonMessages.TRY_AGAIN);	
+	
 	if (preIntent == undefined)
 		this.emit(':askWithCard', CommonMessages.INVALIDATE_PREINTENT, CommonMessages.INVALIDATE_PREINTENT, Config.card_title, CommonMessages.INVALIDATE_PREINTENT);	
 
@@ -83,31 +87,27 @@ console.log("preIntent.name =====> " + preIntent.name);
 };
 
 
-/**
- * Yes,No Setting Intent
- */
-const setYesNoHandler = function() {
-	
-console.log("setPersonalKeyHandler START");
-	
-	let yesNo = this.event.request.intent.slots.YES_NO;
-	
-	// personal key 입력여부 검증
-	if(yesNo == undefined)
-	    this.emit(':askWithCard', CommonMessages.INVALIDATE_YESNO, CommonMessages.INVALIDATE_YESNO, Config.card_title, CommonMessages.INVALIDATE_YESNO);
 
-	if(yesNo.value == "no" ) {
-		this.attributes['preIntent'] = null;
-	    this.emit(':askWithCard', CommonMessages.YESNO_IS_NO, CommonMessages.YESNO_IS_NO, Config.card_title, CommonMessages.YESNO_IS_NO);
-	}    
+/**
+ * Yes Setting Intent
+ */
+const setYesHandler = function() {
 	
+console.log("setYesHandler START");
+		
 	// 이전 업무인텐트 추출
 	let preIntent = this.attributes['preIntent'];
 	
 	if (preIntent == undefined)
 		this.emit(':askWithCard', CommonMessages.INVALIDATE_PREINTENT, CommonMessages.INVALIDATE_PREINTENT, Config.card_title, CommonMessages.INVALIDATE_PREINTENT);
+
 	
 console.log("preIntent.name =====> " + preIntent.name);
+
+	// 이전 업무인텐트의 공용 인텐트 호출이 동일한지 검증
+	if(preIntent.commonIntent != CommonIntents.SET_YES)
+	    this.emit(':askWithCard', CommonMessages.TRY_AGAIN, CommonMessages.TRY_AGAIN, Config.card_title, CommonMessages.TRY_AGAIN);
+
 
 	// 이전 업무인텐트 호출
 	this.event.request.intent = preIntent;
@@ -116,6 +116,17 @@ console.log("preIntent.name =====> " + preIntent.name);
 	
 };
 
+/**
+ * No Setting Intent
+ */
+const setNoHandler = function() {
+	
+console.log("setNoHandler START");
+	
+	this.attributes['preIntent'] = null;
+	this.emit(':askWithCard', CommonMessages.YESNO_IS_NO, CommonMessages.YESNO_IS_NO, Config.card_title, CommonMessages.YESNO_IS_NO);
+    	
+};
 
 const handlers = {};
 
@@ -132,6 +143,7 @@ handlers[DefaultIntents.AMAZON_HELP] = DefaultHandlers.amazonHelpHandler;
 
 // 사용자 intent handlers
 handlers[CommonIntents.SET_PERSONAL_KEY] = setPersonalKeyHandler;
-handlers[CommonIntents.SET_YESNO] = setYesNoHandler;
+handlers[CommonIntents.SET_YES] = setYesHandler;
+handlers[CommonIntents.SET_NO] = setNoHandler;
 
 module.exports = handlers;

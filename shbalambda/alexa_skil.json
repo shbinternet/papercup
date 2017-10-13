@@ -4,7 +4,6 @@
       "name": "AccountList",
       "samples": [
         "what is my account balance",
-        "what is my expense account balance",
         "what is my {ACCOUNT_TYPE} balance",
         "what is my {LAST_FOUR_DIST} account balance",
         "what is my {ACCOUNT_TYPE} and {LAST_FOUR_DIST} account balance"
@@ -107,9 +106,16 @@
       ]
     },
     {
+      "name": "SetNo",
+      "samples": [
+        "no",
+        "negative"
+      ],
+      "slots": []
+    },
+    {
       "name": "SetPersonalKey",
       "samples": [
-        "My personal key is {PERSONAL_KEY}",
         "{PERSONAL_KEY}"
       ],
       "slots": [
@@ -121,17 +127,13 @@
       ]
     },
     {
-      "name": "SetYesNo",
+      "name": "SetYes",
       "samples": [
-        "{YES_NO}"
+        "yes",
+        "next",
+        "positive"
       ],
-      "slots": [
-        {
-          "name": "YES_NO",
-          "type": "LIST_OF_YESNO",
-          "samples": []
-        }
-      ]
+      "slots": []
     }
   ],
   "types": [
@@ -151,7 +153,7 @@
             "value": "saving account",
             "synonyms": []
           }
-        }        
+        }
       ]
     },
     {
@@ -215,25 +217,6 @@
           "id": null,
           "name": {
             "value": "debit",
-            "synonyms": []
-          }
-        }
-      ]
-    },
-    {
-      "name": "LIST_OF_YESNO",
-      "values": [
-        {
-          "id": null,
-          "name": {
-            "value": "yes",
-            "synonyms": []
-          }
-        },
-        {
-          "id": null,
-          "name": {
-            "value": "no",
             "synonyms": []
           }
         }

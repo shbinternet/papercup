@@ -24,6 +24,7 @@ const DefaultHandlers = require('../default/DefaultHandlers');
 
 // Common
 const CommonMessages = require('../common/CommonMessages');
+const CommonIntents = require('../common/CommonIntents');
 
 // Internal imports
 const Intents = require('./Intents');
@@ -43,6 +44,7 @@ const getAccountListGridDataHandler = function() {
     if (personalKey == undefined) {        	
     	// 이전인텐트 저장
     	this.attributes['preIntent'] = this.event.request.intent;
+    	this.attributes['preIntent'].commonIntent = CommonIntents.SET_PERSONAL_KEY;
 	    this.emit(':askWithCard', CommonMessages.WHAT_IS_YOUR_PERSONALKEY, CommonMessages.PERSONALKEY_INFO, Config.card_title, CommonMessages.WHAT_IS_YOUR_PERSONALKEY);	    
     }    
     /***************** Personal Key 검증 END *****************/
@@ -180,7 +182,8 @@ const makeAccountListGridData = function(handlerThis,jsonData) {
 					speechOutput = GibUtil.setSpeechOutputText(Messages.ACCOUNT_LIST_GUIDE,jsonData.page);
 					speechOutput += Messages.ACCOUNT_LIST_GUIDE_MORE;						
 					// 이전인텐트 저장
-					handlerThis.attributes['preIntent'] = handlerThis.event.request.intent;												
+					handlerThis.attributes['preIntent'] = handlerThis.event.request.intent;
+					handlerThis.attributes['preIntent'].commonIntent = CommonIntents.SET_YES;
 					handlerThis.attributes['preIntent'].page = jsonData.page;				
 				}
 			// 다음내역조회일경우	
@@ -189,7 +192,8 @@ const makeAccountListGridData = function(handlerThis,jsonData) {
 				speechOutput = GibUtil.setSpeechOutputGridDataText(Messages.ACCOUNT_LIST_GRID_DATA,jsonData);			
 				
 				// 이전인텐트 저장
-				handlerThis.attributes['preIntent'] = handlerThis.event.request.intent;					
+				handlerThis.attributes['preIntent'] = handlerThis.event.request.intent;	
+				handlerThis.attributes['preIntent'].commonIntent = CommonIntents.SET_YES;
 				
 				// 남은 건수 계산
 				let currentCount = jsonData.page.total - (jsonData.page.no * 3);									

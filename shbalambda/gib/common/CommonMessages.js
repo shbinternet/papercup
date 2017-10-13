@@ -30,7 +30,7 @@ const INVALIDATE_YESNO = "Please tell me again.";
 
 const YESNO_IS_NO = "Please tell me another order.";
 
-
+const TRY_AGAIN = "please try tell me again";
 
 
 module.exports = {
@@ -45,6 +45,7 @@ module.exports = {
     "PERSONALKEY_INFO": PERSONALKEY_INFO,
     "INVALIDATE_PERSONALKEY" : INVALIDATE_PERSONALKEY,
     "INVALIDATE_YESNO" : INVALIDATE_YESNO,
-    "YESNO_IS_NO" : YESNO_IS_NO,    
+    "YESNO_IS_NO" : YESNO_IS_NO,
+    "TRY_AGAIN" : TRY_AGAIN        
     
 };
