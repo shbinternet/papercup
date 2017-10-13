@@ -79,6 +79,7 @@ class GlobalApiClient {
         });    
         
         req.write(JSON.stringify(this.sndData));
+        console.log(">>>> __handleGlobalApiRequest :"+JSON.stringify(this.sndData));
         req.end();
     }
 

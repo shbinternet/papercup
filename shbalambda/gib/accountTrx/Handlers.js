@@ -31,7 +31,7 @@ const Intents = require('./Intents');
 const Messages = require('./Messages');
 
 /**
- * 예금계좌 목록조회
+ * 예금거래내역 목록조회
  */
 const getAccountTrxHandler = function() {
     console.info("Starting getAccountTrxHandler()");
@@ -51,38 +51,45 @@ const getAccountTrxHandler = function() {
 	    return;
 	    
     }    
-   
+
+    /***************** Open Api 송신설정 START *****************/
+    
     let globalData = Config.openApiConfig;           
     globalData.path = "/global_api/account/transaction";
     globalData.personKey = personalKey;   
     console.log("globalData.personKey ====================>" + globalData.personKey); 
     // accessToken 설정 (사용자 세션에 존재하지 않을경우 Config.js 설정에 있는 accessToken 설정)
     let accessToken = this.event.session.user.accessToken;
-    
     if(accessToken != undefined) globalData.accessToken = accessToken;
-
     console.log("globalData.accessToken ====================>" + globalData.accessToken);        
     
+    // 최초조회여부 검증
+    let pageData = this.event.request.intent.page;
+    let pageNo = "";
+    
+    if (pageData == undefined) 
+        pageNo = 1;
+    else
+        pageNo = pageData.no;
+    
+    // 이전조회조건 초기화
+    globalData.sndData = {};    
+    globalData.sndData.page = {"no" : pageNo,"size" : 3};
 
     var trx_type = isSlotValid(this.event.request, "TRX_TYPE");
     var date= isSlotValid(this.event.request, "DATE");
     var st_date= isSlotValid(this.event.request, "START_DATE");
     var end_date= isSlotValid(this.event.request, "END_DATE");
 
+    //특정일자 조회 : 시작일, 종료일이 같다 
     if(date!=''){
         st_date=date;
         end_date=date;
     }
     
-    globalData.sndData = {
-        "sdate":st_date,
-        "edate":end_date,
-        "page" : {
-            "no" : 2,
-            "size" : 5
-        },
-    };
 
+    globalData.sndData.sdate = st_date;
+    globalData.sndData.edate = end_date;
     if (trx_type!=''){
         trx_type='C';
     }else if (trx_type=="debit"){
@@ -92,24 +99,21 @@ const getAccountTrxHandler = function() {
     }
 
     if(trx_type != ''){
-        globalData.sndData = {
-            "sdate":st_date,
-            "edate":end_date,
-            "page" : {
-                "no" : 20,
-                "size" : 5
-            },
-            "filter": {"dep_trx_rnp_d" : trx_type}
-        }
+        globalData.sndData.filter = {"dep_trx_rnp_d" : trx_type}
     }
     
     console.log(">>>>>trx_type : "+trx_type +">>>>>date: "+ date+ ">>>>sdate, edate"+st_date +" "+end_date);
+    console.log(">>>>>this this.attributes['preIntent']" +  JSON.stringify(this.attributes['preIntent']));
+    // 이전 preIntent 초기화
+    this.attributes['preIntent'] = null;
 
+    /***************** Open Api 송신설정 END *****************/
     const globalApiClient = new GlobalApiClient(globalData);
     let globalApiRequest = globalApiClient.getGlobalApi();  
 	globalApiRequest.then((globalApiResponse) => {
 		switch(globalApiResponse.statusCode) {
 			case 200:
+                console.log(">>>>status 200:::::::");
                 console.log(">>>>>globalApiResponse.reqData"+JSON.stringify(globalApiResponse.reqData));
                 let returnCode=globalApiResponse.reqData.returnCode;
                 let speechOutput = "";
@@ -158,22 +162,60 @@ const makeAccountTrxData = function(handlerThis,jsonData) {
     console.log("Intent Name====================>" + handlerThis.event.request.intent.name);
     	
 	let speechOutput = "";
-    let page_total= jsonData.page.total;
-    let page_no=jsonData.page.no;
+    let pageCount= Number(jsonData.page.total); // 전체거래내역수 조회
+    let pageNo=Number(jsonData.page.no);
     let page_size=jsonData.page.size;
 
-    console.log(">>>page_total: "+page_total +">>>>page_no: "+page_no+">>>>page_size"+page_size);
+    // 최초조회여부 검증
+    let pageData = handlerThis.event.request.intent.page;   
+
+    console.log(">>>pageCount: "+pageCount +">>>>pageNo: "+pageNo+">>>>page_size"+page_size);
 	
-    if(page_total>0){
+    if(pageCount>0){
         let total = "!~~total~~!";
-        speechOutput = Messages.ACCOUNT_TRX_COUNT.replace(eval("/" + total + "/gi"), page_total);
-        if(page_total>5){
-            speechOutput += Messages.ACCOUNT_TRX_SPLIT_FIVE +Messages.ACCOUNT_TRX_SPLIT_GUIDE;
+        speechOutput = Messages.ACCOUNT_TRX_COUNT.replace(eval("/" + total + "/gi"), pageCount);
+        if(pageCount>3){
+            speechOutput += Messages.ACCOUNT_TRX_SPLIT_FIRST_THREE +Messages.ACCOUNT_TRX_SPLIT_GUIDE;
         }
+
+         // 최초조회일경우
+        if (pageData == undefined) {        
+            speechOutput = Messages.ACCOUNT_TRX_COUNT.replace(eval("/" + total + "/gi"), pageCount);
+            if(pageCount <= 3){
+                speechOutput += GibUtil.setSpeechOutputGridDataText(Messages.ACCOUNT_TRX_DATA,jsonData);
+            }else{
+                speechOutput += Messages.ACCOUNT_TRX_SPLIT_FIRST_THREE + Messages.ACCOUNT_TRX_SPLIT_GUIDE; //Let me tell you three recent transactions first.
+                // 이전인텐트 저장
+                handlerThis.attributes['preIntent'] = handlerThis.event.request.intent;
+                handlerThis.attributes['preIntent'].commonIntent = CommonIntents.SET_YES;
+                handlerThis.attributes['preIntent'].page = jsonData.page;
+            }
+        }else{// 다음내역조회일경우
+            speechOutput = GibUtil.setSpeechOutputGridDataText(Messages.ACCOUNT_TRX_DATA,jsonData);           
+                
+                // 이전인텐트 저장
+                handlerThis.attributes['preIntent'] = handlerThis.event.request.intent; 
+                handlerThis.attributes['preIntent'].commonIntent = CommonIntents.SET_YES;
+                
+                // 남은 건수 계산
+                let currentCount = pageCount - (pageNo * 3);                                    
+                
+                // 남은 조회건수가 3건 미만이면 조회종료
+                if(currentCount <= 0) {
+                    handlerThis.attributes['preIntent'] = null;
+                } else {
+                    
+                    // 다음페이지 조회요청
+                    jsonData.page.no = pageNo + 1;
+                    speechOutput += Messages.ACCOUNT_TRX_SPLIT_GUIDE;          
+                    handlerThis.attributes['preIntent'].page = jsonData.page;
+                }
+        }
+
     }else{
         speechOutput = Messages.ACCOUNT_TRX_ZERO_COUNT;
     }
-	speechOutput += GibUtil.setSpeechOutputGridDataText(Messages.ACCOUNT_TRX_DATA,jsonData);
+	//speechOutput += GibUtil.setSpeechOutputGridDataText(Messages.ACCOUNT_TRX_DATA,jsonData);
 		
 	
 		
