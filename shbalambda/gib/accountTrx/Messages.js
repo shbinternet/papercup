@@ -15,7 +15,7 @@ const ACCOUNT_TRX_SPLIT_FIRST_THREE = "<break time='0.2s'/>Let me tell you three
 const ACCOUNT_TRX_SPLIT_GUIDE = "<break time='0.2s'/>You can say <emphasis level='strong'>next</emphasis> to check next 3 transaction history";
 const ACCOUNT_TRX_ZERO_COUNT = "<break time='0.2s'/>There is no transaction history.";
 
-const ACCOUNT_TRX_DATA = " !~~dep_ac_ledg_trx_amt~~! !~~trx_ccy_c~~! was tranfered on "
+const ACCOUNT_TRX_DATA = " !~~dep_ac_ledg_trx_amt~~! !~~trx_ccy_c~~! was tranfered <break time='0.1s'/>on "
 						+"<break time='0.2s'/><say-as interpret-as='date'>!~~oprt_dt~~!</say-as>"
 						+"<break time='0.4s'/><say-as interpret-as='digits'>!~~dep_trx_memo_ctt1~~! </say-as>";
 
