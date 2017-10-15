@@ -30,6 +30,9 @@ const CommonIntents = require('../common/CommonIntents');
 const Intents = require('./Intents');
 const Messages = require('./Messages');
 
+//isFuture
+let isFuture = false;
+
 /**
  * 예금거래내역 목록조회
  */
@@ -85,9 +88,17 @@ const getAccountTrxHandler = function() {
     if(date!=''){
         st_date=date;
         end_date=date;
+        var year=date.substring(0,4);
+        var month= date.substring(4,6);
+        var day= date.substring(6,8);
+        var d = new Date(year, month-1, day);
+        console.log(">>>>>date: "+d+">>>>today : "+new Date());
+        if (d > new Date()){//특정일자가 미래일자라면, 최근 일주일 조회한다고 말함 
+            isFuture = true;
+            console.log(">>>>%%%%isFuture : true")
+      }  
     }
     
-
     globalData.sndData.sdate = st_date;
     globalData.sndData.edate = end_date;
     if (trx_type!=''){
@@ -170,10 +181,12 @@ const makeAccountTrxData = function(handlerThis,jsonData) {
     let pageData = handlerThis.event.request.intent.page;   
 
     console.log(">>>pageCount: "+pageCount +">>>>pageNo: "+pageNo+">>>>page_size"+page_size);
-	
+	if(isFuture){
+        speechOutput = Messages.ACCOUNT_TRX_FUTURE_DATE;
+    }
     if(pageCount>0){
         let total = "!~~total~~!";
-        speechOutput = Messages.ACCOUNT_TRX_COUNT.replace(eval("/" + total + "/gi"), pageCount);
+        speechOutput += Messages.ACCOUNT_TRX_COUNT.replace(eval("/" + total + "/gi"), pageCount);
         if(pageCount>3){
             speechOutput += Messages.ACCOUNT_TRX_SPLIT_FIRST_THREE +Messages.ACCOUNT_TRX_SPLIT_GUIDE;
         }
@@ -213,7 +226,7 @@ const makeAccountTrxData = function(handlerThis,jsonData) {
         }
 
     }else{
-        speechOutput = Messages.ACCOUNT_TRX_ZERO_COUNT;
+        speechOutput += Messages.ACCOUNT_TRX_ZERO_COUNT;
     }
 	//speechOutput += GibUtil.setSpeechOutputGridDataText(Messages.ACCOUNT_TRX_DATA,jsonData);
 		
