@@ -135,6 +135,45 @@ console.log("setNoHandler START");
 const getShinhanInfo =function (){
     this.emit(":askWithCard", CommonMessages.SHINHAN_INFO, "", CommonMessages.SHINHAN_TITLE, CommonMessages.SHINHAN_INFO);       
 };
+/**
+신한은행 지점조회
+**/
+const getBranchInfo = function(){
+    this.emit(":askWithCard", CommonMessages.BRANCH_INFO, "", CommonMessages.SHINHAN_TITLE, CommonMessages.BRANCH_INFO);       
+};
+/**
+신한은행 지점 상세조회
+**/
+const getBranchDetail = function(){
+	console.log(">>>getBranchDetail starts()");
+
+	var branches = {
+	    "manhattan" : {
+	        "address": "313 Fifth AVE New York, 10016",
+	        "hour": "Monday to Friday  09:00am  to 5:00pm",
+	        "telno" :"646-843-7333"
+		},	
+		"new york" :{
+			"address": "330 Fifth AVE 4FL New York,10001",
+	        "hour": "Monday to Friday  09:00am  to 5:00pm",
+	        "telno" :"646-843-7300"
+		}
+	} 
+	var branch = this.event.request.intent.slots.BRANCH_NAME.value.toLowerCase();
+
+    if (!branches[branch]) {
+        var speechOutput = CommonMessages.BRANCH_NOT_EXIST + CommonMessages.BRANCH_INFO;
+    } else {
+        var address = branches[branch].address;
+        var hour = branches[branch].hour;
+        var telno = branches[branch].telno;
+        var speechOutput = branch + " is located at <break time='0.1s'/>"+address 
+        				+ "<break time='0.1s'/>It is open " +hour
+        				+"<break time='0.1s'/> telephone number is " +telno;
+    }
+    this.emit(":askWithCard", speechOutput, "", CommonMessages.SHINHAN_TITLE, ""); 
+
+};
 
 const handlers = {};
 
@@ -154,5 +193,7 @@ handlers[CommonIntents.SET_PERSONAL_KEY] = setPersonalKeyHandler;
 handlers[CommonIntents.SET_YES] = setYesHandler;
 handlers[CommonIntents.SET_NO] = setNoHandler;
 handlers[CommonIntents.SHINHAN_INFO] = getShinhanInfo;
+handlers[CommonIntents.BRANCH_INFO] = getBranchInfo;
+handlers[CommonIntents.BRANCH_DETAIL] = getBranchDetail;
 
 module.exports = handlers;

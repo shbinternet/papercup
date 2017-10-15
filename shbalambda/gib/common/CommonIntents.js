@@ -22,10 +22,15 @@ const SET_NO = "SetNo";
 
 const SHINHAN_INFO = "ShinhanInfo";
 
+const BRANCH_INFO= "BranchInfo";
+const BRANCH_DETAIL= "BranchDetail";
+
 
 module.exports = {
     "SET_PERSONAL_KEY": SET_PERSONAL_KEY,
     "SET_YES": SET_YES,
     "SET_NO": SET_NO,
-    "SHINHAN_INFO": SHINHAN_INFO     
+    "SHINHAN_INFO": SHINHAN_INFO,
+    "BRANCH_INFO" : BRANCH_INFO,
+    "BRANCH_DETAIL":BRANCH_DETAIL
 };
