@@ -79,6 +79,26 @@
       "samples": []
     },
     {
+      "name": "BranchDetail",
+      "samples": [
+        "I want to know more about {BRANCH_NAME}"
+      ],
+      "slots": [
+        {
+          "name": "BRANCH_NAME",
+          "type": "LIST_OF_BRANCH",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "BranchInfo",
+      "samples": [
+        "Tell me about branch"
+      ],
+      "slots": []
+    },
+    {
       "name": "ExchangeRate",
       "samples": [
         "How much is {AMOUNT} {CURRENCY} {DATE}",
@@ -146,6 +166,15 @@
         "positive"
       ],
       "slots": []
+    },
+    {
+      "name": "ShinhanInfo",
+      "samples": [
+        "Tell me about shinhan bank ",
+        "What is shinhan bank ",
+        "Tell me more about shinhan bank"
+      ],
+      "slots": []
     }
   ],
   "types": [
@@ -163,6 +192,32 @@
           "id": null,
           "name": {
             "value": "saving account",
+            "synonyms": []
+          }
+        }
+      ]
+    },
+    {
+      "name": "LIST_OF_BRANCH",
+      "values": [
+        {
+          "id": null,
+          "name": {
+            "value": "new york",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "manhattan",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "flushing",
             "synonyms": []
           }
         }
