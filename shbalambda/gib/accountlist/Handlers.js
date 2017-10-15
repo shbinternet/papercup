@@ -219,7 +219,7 @@ const makeAccountListGridData = function(handlerThis,jsonData) {
 		speechOutput = CommonMessages.ERROR_NO_0009;		
 	}
 		
-	handlerThis.emit(":askWithCard", speechOutput, Config.card_title, speechOutput);
+	handlerThis.emit(":askWithCard", speechOutput, speechOutput, Config.card_title, speechOutput);
 };
 
 
