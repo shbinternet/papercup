@@ -32,6 +32,11 @@ const YESNO_IS_NO = "Please tell me another order.";
 
 const TRY_AGAIN = "please try tell me again";
 
+const SHINHAN_TITLE="SHINHAN BANK AMERICA";
+
+const SHINHAN_INFO ="After Shinhan Bank America’s inception in 1990, with your steadfast devotion and support, we have been able to spread our services to 7 branches in the New York / New Jersey region, 5 branches in California, 2 branches in Georgia and 1 branch in Texas. Furthermore, as our total asset closes in on the $1 billion, we have now grown as one of the leaders in the banking industry.";
+
+
 
 module.exports = {
 		
@@ -46,6 +51,8 @@ module.exports = {
     "INVALIDATE_PERSONALKEY" : INVALIDATE_PERSONALKEY,
     "INVALIDATE_YESNO" : INVALIDATE_YESNO,
     "YESNO_IS_NO" : YESNO_IS_NO,
-    "TRY_AGAIN" : TRY_AGAIN        
-    
+    "TRY_AGAIN" : TRY_AGAIN,        
+    "SHINHAN_TITLE" : SHINHAN_TITLE,
+    "SHINHAN_INFO" : SHINHAN_INFO
+
 };

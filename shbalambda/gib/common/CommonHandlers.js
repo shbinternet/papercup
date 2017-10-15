@@ -128,6 +128,14 @@ console.log("setNoHandler START");
     	
 };
 
+
+/**
+ 신한은행 정보조회
+**/
+const getShinhanInfo =function (){
+    this.emit(":askWithCard", CommonMessages.SHINHAN_INFO, "", CommonMessages.SHINHAN_TITLE, CommonMessages.SHINHAN_INFO);       
+};
+
 const handlers = {};
 
 // Add event handlers
@@ -145,5 +153,6 @@ handlers[DefaultIntents.AMAZON_HELP] = DefaultHandlers.amazonHelpHandler;
 handlers[CommonIntents.SET_PERSONAL_KEY] = setPersonalKeyHandler;
 handlers[CommonIntents.SET_YES] = setYesHandler;
 handlers[CommonIntents.SET_NO] = setNoHandler;
+handlers[CommonIntents.SHINHAN_INFO] = getShinhanInfo;
 
 module.exports = handlers;

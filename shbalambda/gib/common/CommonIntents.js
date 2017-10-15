@@ -20,9 +20,12 @@ const SET_PERSONAL_KEY = "SetPersonalKey";
 const SET_YES = "SetYes";
 const SET_NO = "SetNo";
 
+const SHINHAN_INFO = "ShinhanInfo";
+
 
 module.exports = {
     "SET_PERSONAL_KEY": SET_PERSONAL_KEY,
     "SET_YES": SET_YES,
-    "SET_NO": SET_NO    
+    "SET_NO": SET_NO,
+    "SHINHAN_INFO": SHINHAN_INFO     
 };
