@@ -167,7 +167,7 @@ const getBranchDetail = function(){
         var address = branches[branch].address;
         var hour = branches[branch].hour;
         var telno = branches[branch].telno;
-        var speechOutput = branch + " is located at <break time='0.1s'/>"+address 
+        var speechOutput = branch + "branch is located at <break time='0.1s'/>"+address 
         				+ "<break time='0.1s'/>It is open " +hour
         				+"<break time='0.1s'/> telephone number is " +telno;
     }
