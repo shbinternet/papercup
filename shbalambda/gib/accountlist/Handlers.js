@@ -34,20 +34,7 @@ const Messages = require('./Messages');
  * 예금계좌 목록조회
  */
 const getAccountListGridDataHandler = function() {
-    console.info("Starting getAccountListGridDataHandler()");
-    
-    console.info("GibUtil.getCurrentDate=====>" + GibUtil.getCurrentDate());
-    console.info("GibUtil.getPreNextDate=====>" + GibUtil.getPreNextDate(GibUtil.getCurrentDate(),20));
-    console.info("GibUtil.getPreNextDate=====>" + GibUtil.getPreNextDate(GibUtil.getCurrentDate(),-20));     
-
-    console.info("GibUtil.getPreNextCurrentDate=====>" + GibUtil.getPreNextCurrentDate(20));
-    console.info("GibUtil.getPreNextCurrentDate=====>" + GibUtil.getPreNextCurrentDate(-20));        
-
-    console.info("GibUtil.getPreNextMonth=====>" + GibUtil.getPreNextMonth(GibUtil.getCurrentDate(),2));
-    console.info("GibUtil.getPreNextMonth=====>" + GibUtil.getPreNextMonth(GibUtil.getCurrentDate(),-10));      
-    
-    console.info("GibUtil.getPreNextCurrentMonth=====>" + GibUtil.getPreNextCurrentMonth(2));
-    console.info("GibUtil.getPreNextCurrentMonth=====>" + GibUtil.getPreNextCurrentMonth(-10));      
+    console.info("Starting getAccountListGridDataHandler()");  
     
     /***************** Personal Key 검증 START *****************/ 
     // 세션 존재여부 확인 persnal Key
