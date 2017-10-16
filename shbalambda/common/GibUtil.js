@@ -13,7 +13,6 @@
 const GibAlexaStringFormatUtil = require('./GibAlexaStringFormatUtil');
 
 let gibUtil = {
-
 		
 	    /**
 	     * 응답 json 데이터 형식변환
@@ -61,8 +60,82 @@ let gibUtil = {
 			}
 
 		    return speechOutPut;
-		}
-			
+		},
+		
+	    /**
+	     * 현재일자 계산 (형식 YYYYMMDD)
+	     */
+		'getCurrentDate' : function() {
+						    	        
+	        return getCurrentDate();  
+	        
+		},
+		
+	    /**
+	     * 과거 or 미래일자 계산 (형식 YYYYMMDD)
+	     */
+		'getPreNextCurrentDate' : function(nextday) {
+			        
+	        return getPreNextDate(getCurrentDate(),nextday);    
+	        
+		},				
+		
+	    /**
+	     * 과거 or 미래일자 계산 (형식 YYYYMMDD)
+	     */
+		'getPreNextDate' : function(fixedDate,nextday) {
+			        
+	        return getPreNextDate(fixedDate,nextday);    
+	        
+		}		
+					
+};
+
+
+/**
+ * 현재일자 계산 (형식 YYYYMMDD)
+ */
+const getCurrentDate = function() {
+				
+    let date = new Date();
+    
+    let str = setFillZeros(date.getFullYear(), 4) + setFillZeros(date.getMonth() + 1, 2) + setFillZeros(date.getDate(), 2);    	        
+    return str;  
+    
+};
+
+/**
+ * 과거 or 미래일자 계산 (형식 YYYYMMDD)
+ */
+const getPreNextDate = function(fixedDate,nextday) {
+	
+	let year = Number(fixedDate.substr(0,4));
+	let month = Number(fixedDate.substr(4,2))-1;
+	let day = Number(fixedDate.substr(6,2));
+	
+    let date = new Date(year,month,day);  
+    
+    date.setDate(date.getDate() + nextday);
+    
+    let str = setFillZeros(date.getFullYear(), 4) + setFillZeros(date.getMonth() + 1, 2) + setFillZeros(date.getDate(), 2);    	        
+    return str;    
+    
+};
+
+/**
+ * digit 지정 문자 앞에 0문자 추가
+ */
+const setFillZeros = function(n,digits) {
+	
+    let zero = '';  
+    n = n.toString();  
+
+    if (n.length < digits) {  
+        for (let i = 0; i < digits - n.length; i++)  
+            zero += '0';  
+    }  
+    return zero + n;  	
+		
 };
 
 module.exports = gibUtil;
