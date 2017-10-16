@@ -12,7 +12,7 @@
 
 //Default imports
 const GlobalApiClient = require('../../common/GlobalApiClient');
-const ApiErrorMessages = require('../../common/ApiErrorMessages.js');
+const ApiErrorMessages = require('../../common/ApiErrorMessages');
 const Config = require('../../common/Config');
 const GibUtil = require('../../common/GibUtil');
 
@@ -34,7 +34,7 @@ const Messages = require('./Messages');
  * 예금계좌 목록조회
  */
 const getAccountListGridDataHandler = function() {
-    console.info("Starting getAccountListGridDataHandler()");  
+    console.info("Starting getAccountListGridDataHandler()");      
     
     /***************** Personal Key 검증 START *****************/ 
     // 세션 존재여부 확인 persnal Key
@@ -153,16 +153,8 @@ const makeAccountListGridData = function(handlerThis,jsonData) {
 	
 	let emitSpeechOrder = "";
 	let speechOutput = "";
-	// Access Token 오류
-	if(jsonData.returnCode == '2') speechOutput = CommonMessages.ERROR_NO_0002;
-	// 개인인증키 오류
-	else if(jsonData.returnCode == '3') speechOutput = CommonMessages.ERROR_NO_0003;
-	// Access Token 만료
-	else if(jsonData.returnCode == '5') speechOutput = CommonMessages.ERROR_NO_0005;
-	// 처리중 오류
-	else if(jsonData.returnCode == '9') speechOutput = CommonMessages.ERROR_NO_0009;
-	// 정상일 경우
-	else if(jsonData.returnCode == '1') {
+	
+	if(jsonData.returnCode == '1') {
 		
 		/***************** Alexa 메시지 조립 START *****************/
 		// 전체계좌수 조회
@@ -214,9 +206,16 @@ const makeAccountListGridData = function(handlerThis,jsonData) {
 		}
 		/***************** Alexa 메시지 조립 END *****************/	    
 
-	// 기타에러 발생시		
+	// 에러발생시	
 	} else {
-		speechOutput = CommonMessages.ERROR_NO_0009;		
+		
+	    console.info("jsonData.returnCode======> "  + jsonData.returnCode);
+	    console.info("ApiErrorMessages======> "  + ApiErrorMessages[jsonData.returnCode]);	    
+		
+		if(jsonData.returnCode != "" || jsonData.returnCode != undefined)
+			speechOutput = ApiErrorMessages[jsonData.returnCode];
+		else
+			speechOutput = ApiErrorMessages["1027"];			
 	}
 		
 	handlerThis.emit(":askWithCard", speechOutput, CommonMessages.TRY_AGAIN, Config.card_title, speechOutput);
