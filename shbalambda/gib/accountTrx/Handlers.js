@@ -30,9 +30,6 @@ const CommonIntents = require('../common/CommonIntents');
 const Intents = require('./Intents');
 const Messages = require('./Messages');
 
-//isFuture
-let isFuture = false;
-
 /**
  * 예금거래내역 목록조회
  */
@@ -83,22 +80,14 @@ const getAccountTrxHandler = function() {
     var date= isSlotValid(this.event.request, "DATE");
     var st_date= isSlotValid(this.event.request, "START_DATE");
     var end_date= isSlotValid(this.event.request, "END_DATE");
+    var period =  isSlotValid(this.event.request, "PERIOD");
 
     //특정일자 조회 : 시작일, 종료일이 같다 
     if(date!=''){
         st_date=date;
         end_date=date;
-        var year=date.substring(0,4);
-        var month= date.substring(4,6);
-        var day= date.substring(6,8);
-        var d = new Date(year, month-1, day);
-        console.log(">>>>>date: "+d+">>>>today : "+new Date());
-        if (d > new Date()){//특정일자가 미래일자라면, 최근 일주일 조회한다고 말함 
-            isFuture = true;
-            console.log(">>>>%%%%isFuture : true")
-      }  
     }
-    
+
     globalData.sndData.sdate = st_date;
     globalData.sndData.edate = end_date;
     if (trx_type!=''){
@@ -113,6 +102,14 @@ const getAccountTrxHandler = function() {
         globalData.sndData.filter = {"dep_trx_rnp_d" : trx_type}
     }
     
+    if(period!=''){
+        globalData.sndData.sdate= getDateFromPeriod(period);
+    }
+
+
+
+
+
     console.log(">>>>>trx_type : "+trx_type +">>>>>date: "+ date+ ">>>>sdate, edate"+st_date +" "+end_date);
     console.log(">>>>>this this.attributes['preIntent']" +  JSON.stringify(this.attributes['preIntent']));
     // 이전 preIntent 초기화
@@ -141,7 +138,7 @@ const getAccountTrxHandler = function() {
                 //그이외 
                 else speechOutput = CommonMessages.ERROR_NO_0009;        
                     
-                handlerThis.emit(":tellWithCard", speechOutput, Config.card_title, speechOutput);
+                this.emit(":tellWithCard", speechOutput, Config.card_title, speechOutput);
 				break;
 			case 204:
                 console.log(">>>>case 204");
@@ -181,12 +178,10 @@ const makeAccountTrxData = function(handlerThis,jsonData) {
     let pageData = handlerThis.event.request.intent.page;   
 
     console.log(">>>pageCount: "+pageCount +">>>>pageNo: "+pageNo+">>>>page_size"+page_size);
-	if(isFuture){
-        speechOutput = Messages.ACCOUNT_TRX_FUTURE_DATE;
-    }
+	
     if(pageCount>0){
         let total = "!~~total~~!";
-        speechOutput += Messages.ACCOUNT_TRX_COUNT.replace(eval("/" + total + "/gi"), pageCount);
+        speechOutput = Messages.ACCOUNT_TRX_COUNT.replace(eval("/" + total + "/gi"), pageCount);
         if(pageCount>3){
             speechOutput += Messages.ACCOUNT_TRX_SPLIT_FIRST_THREE +Messages.ACCOUNT_TRX_SPLIT_GUIDE;
         }
@@ -226,7 +221,7 @@ const makeAccountTrxData = function(handlerThis,jsonData) {
         }
 
     }else{
-        speechOutput += Messages.ACCOUNT_TRX_ZERO_COUNT;
+        speechOutput = Messages.ACCOUNT_TRX_ZERO_COUNT;
     }
 	//speechOutput += GibUtil.setSpeechOutputGridDataText(Messages.ACCOUNT_TRX_DATA,jsonData);
 		
@@ -253,6 +248,31 @@ function isSlotValid(request, slotName){
     }
     console.log(">>>>>slotValue >>" + slotValue);
     return slotValue;
+}
+
+
+function getDateFromPeriod(periodValue){    
+    console.log(">>>>getDateFromPeriod start: periodValue" + periodValue);
+    let length= periodValue.length;
+    let period = periodValue.substring(1,length-1);
+    var startDay;
+    var days=0;
+
+    if(periodValue.charAt(0)=="P"){
+        if(periodValue.charAt(length-1)=="D"){//eight days: P8D
+            days=period;
+            startDay = GibUtil.getPreNextCurrentDate(Number(days)*(-1));
+        }else if(periodValue.charAt(length-1)=="W"){//eight weeks”: P8W
+            days= period*7;
+            startDay = GibUtil.getPreNextCurrentDate(Number(days)*(-1));
+        }if(periodValue.charAt(length-1)=="M"){//eight month: P8M
+            startDay = GibUtil.getPreNextCurrentMonth(Number(period)*(-1));
+        }            
+            console.log(">>>>getDateFromPeriod daye: "+days+ " >>startDay "+startDay);
+            return startDay;
+    }else{
+        return;
+    }
 }
 
 

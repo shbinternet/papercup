@@ -34,9 +34,8 @@ const TRY_AGAIN = "please try tell me again";
 
 const SHINHAN_TITLE="SHINHAN BANK AMERICA";
 
-const SHINHAN_INFO ="After Shinhan Bank America’s inception in 1990, with your steadfast devotion and support, we have been able to spread our services to 7 branches in the New York / New Jersey region, 5 branches in California, 2 branches in Georgia and 1 branch in Texas. Furthermore, as our total asset closes in on the $1 billion, we have now grown as one of the leaders in the banking industry.";
-
-const BRANCH_INFO="There are 18 branches <break time='0.2s'/> New york<break time='0.1s'/> manhatten and more";
+const SHINHAN_INFO="The ShinhanBank is the best bank in Korean banking industry with $242.4 trillion in asset, around 890 brances in Kora, and global network of 150 branches in 19 countries. The Shinbank America is a wholly owned subsidiary of Shinhan bank. Shinhan Bank America started business in 1990 and 15 branches in USA."
+const BRANCH_INFO="Shinhan Bank America has 7 branches in the New York New Jersey region, 5 branches in California, 2 branches in Georgia and 1 branch in Texas";
 const BRANCH_GUIDE="<break time='0.1s'/>Do you want to get specific branch information? <break time='0.1s'/> Please say branch name"
 const BRANCH_NOT_EXIST ="There is no branch with that name<break time='0.2s'/>"
 

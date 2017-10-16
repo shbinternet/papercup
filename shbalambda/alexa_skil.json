@@ -51,7 +51,7 @@
         },
         {
           "name": "PERIOD",
-          "type": "AMAZON.DATE",
+          "type": "AMAZON.DURATION",
           "samples": []
         },
         {
@@ -95,7 +95,9 @@
     {
       "name": "BranchInfo",
       "samples": [
-        "Tell me about branch"
+        "Tell me about branch",
+        "Tell me about ranch",
+        "tell me about french"
       ],
       "slots": []
     },
