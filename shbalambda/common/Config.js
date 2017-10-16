@@ -25,7 +25,10 @@ var Config = {
     	"accessToken": "c462228eabea48ab9972272a01ab5d5db7882ae15c9b4ff8bec9d141fa2b82b8c764b186b6ef4a14b832b4db91a9d1096cf66b92421f4a78825f437aaf85f3b1df044c8424ba44879d7c4ee251e391eef900327e680b41c88ba7728cf15d6ad4",
     	"personKey": "",
     	"sndData": {}    	    	
-    }
+    },
+    
+    successApiCode : "1" ,
+    personalKeyApiErrorCode : "3"
 };
 
 module.exports = Config;

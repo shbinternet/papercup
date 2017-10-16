@@ -154,7 +154,7 @@ const makeAccountListGridData = function(handlerThis,jsonData) {
 	let emitSpeechOrder = "";
 	let speechOutput = "";
 	
-	if(jsonData.returnCode == '1') {
+	if(jsonData.returnCode == Config.successApiCode) {
 		
 		/***************** Alexa 메시지 조립 START *****************/
 		// 전체계좌수 조회
@@ -216,7 +216,7 @@ const makeAccountListGridData = function(handlerThis,jsonData) {
 			speechOutput = ApiErrorMessages[jsonData.returnCode];
 			
 			// personal key 틀렸을 경우 perIntent 설정
-			if(jsonData.returnCode == "3" || jsonData.returnCode == "1033") {
+			if(jsonData.returnCode == Config.personalKeyApiErrorCode) {
 				handlerThis.attributes['preIntent'] = handlerThis.event.request.intent;
 				handlerThis.attributes['preIntent'].commonIntent = CommonIntents.SET_PERSONAL_KEY;
 			}
