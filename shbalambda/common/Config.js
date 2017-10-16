@@ -27,7 +27,9 @@ var Config = {
     	"sndData": {}    	    	
     },
     
+    // API 성공코드
     successApiCode : "1" ,
+    // API personal key 오류코드
     personalKeyApiErrorCode : "3"
 };
 
