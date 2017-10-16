@@ -29,6 +29,8 @@ let gibUtil = {
 		    	value = GibAlexaStringFormatUtil.setAlexaformat(key,jsonData[key]);
 		    	messageStr = messageStr.replace(eval("/" + item + "/gi"), value);
 			}
+			
+			messageStr += "<break time='0.2s'/>";			
 			 		    
 		    return messageStr;
 		},		
@@ -57,6 +59,9 @@ let gibUtil = {
 				tmpStr = tmpStr.replace(eval("/!~~grid_json_no_count~~!/gi"), GibAlexaStringFormatUtil.setAlexaformat("grid_json_no_count",i+1));
 				
 				speechOutPut += tmpStr;				
+				
+				
+				speechOutPut += "<break time='0.2s'/>";
 			}
 
 		    return speechOutPut;
