@@ -67,12 +67,12 @@ console.log("setPersonalKeyHandler START");
 	// 이전 업무인텐트 추출
 	let preIntent = this.attributes['preIntent'];
 	
-	// 이전 업무인텐트의 공용 인텐트 호출이 동일한지 검증
-	if(preIntent.commonIntent != CommonIntents.SET_PERSONAL_KEY)
-	    this.emit(':askWithCard', CommonMessages.TRY_AGAIN, CommonMessages.TRY_AGAIN, Config.card_title, CommonMessages.TRY_AGAIN);	
-	
 	if (preIntent == undefined)
 		this.emit(':askWithCard', CommonMessages.INVALIDATE_PREINTENT, CommonMessages.INVALIDATE_PREINTENT, Config.card_title, CommonMessages.INVALIDATE_PREINTENT);	
+	
+	// 이전 업무인텐트의 공용 인텐트 호출이 동일한지 검증
+	if(preIntent.commonIntent != CommonIntents.SET_PERSONAL_KEY)
+	    this.emit(':askWithCard', CommonMessages.TRY_AGAIN, CommonMessages.TRY_AGAIN, Config.card_title, CommonMessages.TRY_AGAIN);			
 
 	// personal key 세션저장
 	this.attributes['personalKey'] = persnalKey.value;	
