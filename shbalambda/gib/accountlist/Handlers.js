@@ -36,6 +36,19 @@ const Messages = require('./Messages');
 const getAccountListGridDataHandler = function() {
     console.info("Starting getAccountListGridDataHandler()");
     
+    console.info("GibUtil.getCurrentDate=====>" + GibUtil.getCurrentDate());
+    console.info("GibUtil.getPreNextDate=====>" + GibUtil.getPreNextDate(GibUtil.getCurrentDate(),20));
+    console.info("GibUtil.getPreNextDate=====>" + GibUtil.getPreNextDate(GibUtil.getCurrentDate(),-20));     
+
+    console.info("GibUtil.getPreNextCurrentDate=====>" + GibUtil.getPreNextCurrentDate(20));
+    console.info("GibUtil.getPreNextCurrentDate=====>" + GibUtil.getPreNextCurrentDate(-20));        
+
+    console.info("GibUtil.getPreNextMonth=====>" + GibUtil.getPreNextMonth(GibUtil.getCurrentDate(),2));
+    console.info("GibUtil.getPreNextMonth=====>" + GibUtil.getPreNextMonth(GibUtil.getCurrentDate(),-10));      
+    
+    console.info("GibUtil.getPreNextCurrentMonth=====>" + GibUtil.getPreNextCurrentMonth(2));
+    console.info("GibUtil.getPreNextCurrentMonth=====>" + GibUtil.getPreNextCurrentMonth(-10));      
+    
     /***************** Personal Key 검증 START *****************/ 
     // 세션 존재여부 확인 persnal Key
     let personalKey = this.attributes['personalKey'];
