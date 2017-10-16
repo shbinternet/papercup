@@ -212,9 +212,16 @@ const makeAccountListGridData = function(handlerThis,jsonData) {
 	    console.info("jsonData.returnCode======> "  + jsonData.returnCode);
 	    console.info("ApiErrorMessages======> "  + ApiErrorMessages[jsonData.returnCode]);	    
 		
-		if(jsonData.returnCode != "" || jsonData.returnCode != undefined)
+		if(jsonData.returnCode != "" || jsonData.returnCode != undefined) {
 			speechOutput = ApiErrorMessages[jsonData.returnCode];
-		else
+			
+			// personal key 틀렸을 경우 perIntent 설정
+			if(jsonData.returnCode == "3" || jsonData.returnCode == "1033") {
+				handlerThis.attributes['preIntent'] = handlerThis.event.request.intent;
+				handlerThis.attributes['preIntent'].commonIntent = CommonIntents.SET_PERSONAL_KEY;
+			}
+			
+		} else
 			speechOutput = ApiErrorMessages["9999"];
 	}
 		

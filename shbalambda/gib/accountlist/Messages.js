@@ -11,7 +11,7 @@
  *=============================================================================*/
 
 const ACCOUNT_LIST_GUIDE = "You have !~~total~~! accounts<break time='0.2s'/>";
-const ACCOUNT_LIST_GUIDE_MORE = "You have more than 3 accounts.Do you want to listen the first 3 accounts?<break time='0.2s'/>";
+const ACCOUNT_LIST_GUIDE_MORE = "You have more than 3 accounts<break time='0.2s'/>Do you want to listen the first 3 accounts?<break time='0.2s'/>";
 const ACCOUNT_LIST_GUIDE_PAGE_MORE = "Do you want to continue to check more account?<break time='0.2s'/>";
 
 
