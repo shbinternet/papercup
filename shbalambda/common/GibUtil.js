@@ -72,7 +72,7 @@ let gibUtil = {
 		},
 		
 	    /**
-	     * 과거 or 미래일자 계산 (형식 YYYYMMDD)
+	     * 날짜 과거 or 미래일자 계산 (형식 YYYYMMDD)
 	     */
 		'getPreNextCurrentDate' : function(nextday) {
 			        
@@ -81,11 +81,29 @@ let gibUtil = {
 		},				
 		
 	    /**
-	     * 과거 or 미래일자 계산 (형식 YYYYMMDD)
+	     * 날짜 과거 or 미래일자 계산 (형식 YYYYMMDD)
 	     */
 		'getPreNextDate' : function(fixedDate,nextday) {
 			        
 	        return getPreNextDate(fixedDate,nextday);    
+	        
+		},
+		
+	    /**
+	     * 월 과거 or 미래일자 계산 (형식 YYYYMMDD)
+	     */
+		'getPreNextCurrentMonth' : function(nextmonth) {
+			        
+	        return getPreNextMonth(getCurrentDate(),nextmonth);    
+	        
+		},				
+		
+	    /**
+	     * 월 과거 or 미래일자 계산 (형식 YYYYMMDD)
+	     */
+		'getPreNextMonth' : function(fixedDate,nextmonth) {
+			        
+	        return getPreNextMonth(fixedDate,nextmonth);    
 	        
 		}		
 					
@@ -105,7 +123,7 @@ const getCurrentDate = function() {
 };
 
 /**
- * 과거 or 미래일자 계산 (형식 YYYYMMDD)
+ * 날짜 과거 or 미래일자 계산 (형식 YYYYMMDD)
  */
 const getPreNextDate = function(fixedDate,nextday) {
 	
@@ -116,6 +134,24 @@ const getPreNextDate = function(fixedDate,nextday) {
     let date = new Date(year,month,day);  
     
     date.setDate(date.getDate() + nextday);
+    
+    let str = setFillZeros(date.getFullYear(), 4) + setFillZeros(date.getMonth() + 1, 2) + setFillZeros(date.getDate(), 2);    	        
+    return str;    
+    
+};
+
+/**
+ * 월 과거 or 미래일자 계산 (형식 YYYYMMDD)
+ */
+const getPreNextMonth = function(fixedDate,nextmonth) {
+	
+	let year = Number(fixedDate.substr(0,4));
+	let month = Number(fixedDate.substr(4,2))-1;
+	let day = Number(fixedDate.substr(6,2));
+	
+    let date = new Date(year,month,day);  
+    
+    date.setMonth(date.getMonth() + nextmonth);           
     
     let str = setFillZeros(date.getFullYear(), 4) + setFillZeros(date.getMonth() + 1, 2) + setFillZeros(date.getDate(), 2);    	        
     return str;    
