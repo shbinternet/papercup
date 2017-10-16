@@ -81,7 +81,8 @@
     {
       "name": "BranchDetail",
       "samples": [
-        "I want to know more about {BRANCH_NAME}"
+        "I want to know more about {BRANCH_NAME}",
+        "{BRANCH_NAME}"
       ],
       "slots": [
         {

@@ -37,6 +37,7 @@ const SHINHAN_TITLE="SHINHAN BANK AMERICA";
 const SHINHAN_INFO ="After Shinhan Bank America’s inception in 1990, with your steadfast devotion and support, we have been able to spread our services to 7 branches in the New York / New Jersey region, 5 branches in California, 2 branches in Georgia and 1 branch in Texas. Furthermore, as our total asset closes in on the $1 billion, we have now grown as one of the leaders in the banking industry.";
 
 const BRANCH_INFO="There are 18 branches <break time='0.2s'/> New york<break time='0.1s'/> manhatten and more";
+const BRANCH_GUIDE="<break time='0.1s'/>Do you want to get specific branch information? <break time='0.1s'/> Please say branch name"
 const BRANCH_NOT_EXIST ="There is no branch with that name<break time='0.2s'/>"
 
 module.exports = {
@@ -56,6 +57,7 @@ module.exports = {
     "SHINHAN_TITLE" : SHINHAN_TITLE,
     "SHINHAN_INFO" : SHINHAN_INFO,
     "BRANCH_INFO" : BRANCH_INFO,
-    "BRANCH_NOT_EXIST": BRANCH_NOT_EXIST
+    "BRANCH_NOT_EXIST": BRANCH_NOT_EXIST,
+    "BRANCH_GUIDE" : BRANCH_GUIDE
 
 };

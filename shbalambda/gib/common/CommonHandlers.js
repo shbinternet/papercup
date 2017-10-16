@@ -133,18 +133,23 @@ console.log("setNoHandler START");
  신한은행 정보조회
 **/
 const getShinhanInfo =function (){
+	this.attributes['preIntent'] = null;
     this.emit(":askWithCard", CommonMessages.SHINHAN_INFO, "", CommonMessages.SHINHAN_TITLE, CommonMessages.SHINHAN_INFO);       
 };
 /**
 신한은행 지점조회
 **/
 const getBranchInfo = function(){
-    this.emit(":askWithCard", CommonMessages.BRANCH_INFO, "", CommonMessages.SHINHAN_TITLE, CommonMessages.BRANCH_INFO);       
+	this.attributes['preIntent'] = null;
+	var speechOutput="";
+	speechOutput= CommonMessages.BRANCH_INFO + CommonMessages.BRANCH_GUIDE;
+    this.emit(":askWithCard", speechOutput, "", CommonMessages.SHINHAN_TITLE, speechOutput);       
 };
 /**
 신한은행 지점 상세조회
 **/
 const getBranchDetail = function(){
+	this.attributes['preIntent'] = null;
 	console.log(">>>getBranchDetail starts()");
 
 	var branches = {
@@ -167,7 +172,7 @@ const getBranchDetail = function(){
         var address = branches[branch].address;
         var hour = branches[branch].hour;
         var telno = branches[branch].telno;
-        var speechOutput = branch + "branch is located at <break time='0.1s'/>"+address 
+        var speechOutput = branch + " branch is located at <break time='0.1s'/>"+address 
         				+ "<break time='0.1s'/>It is open " +hour
         				+"<break time='0.1s'/> telephone number is " +telno;
     }

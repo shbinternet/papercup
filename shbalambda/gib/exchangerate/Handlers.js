@@ -30,6 +30,7 @@ const Messages = require('./Messages');
  * Refer to the Intents.js file for documentation.
  */
 const getExchangeRateHandler = function() {
+	this.attributes['preIntent'] = null;
     console.info("Starting getExchangeRateHandler()");
     var speechOutput='';
     var date='';
