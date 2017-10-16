@@ -24,6 +24,8 @@ errormessages["1032"] = "There was an error accesstoken<break time='0.2s'/>"; //
 errormessages["1033"] = "Your personal key does not match<break time='0.2s'/> Please re-enter your personal key<break time='0.2s'/>"; // personal key 오류
 errormessages["1035"] = "Your app verification has expired<break time='0.2s'/>"; // access token 기간만료
 
+errormessages["9999"] = "An error occurred during processing<break time='0.2s'/>"; // 기타오류
+
 
 errormessages["2"] = "There was an error accesstoken"; // Access Token 오류
 errormessages["3"] = "Your personal key does not match<break time='0.2s'/> Please enter your personal key again"; // 개인인증키 오류

@@ -215,7 +215,7 @@ const makeAccountListGridData = function(handlerThis,jsonData) {
 		if(jsonData.returnCode != "" || jsonData.returnCode != undefined)
 			speechOutput = ApiErrorMessages[jsonData.returnCode];
 		else
-			speechOutput = ApiErrorMessages["1027"];			
+			speechOutput = ApiErrorMessages["9999"];
 	}
 		
 	handlerThis.emit(":askWithCard", speechOutput, CommonMessages.TRY_AGAIN, Config.card_title, speechOutput);
