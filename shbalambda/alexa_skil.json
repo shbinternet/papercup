@@ -33,8 +33,8 @@
         "I want to know my transaction history on {DATE}",
         "Tell me transaction history form my checking account on {DATE}",
         "Tell me {PERIOD} transaction",
-        "What is transaction history for my checking account on {PERIOD}",
-        "Tell me transaction history for my checking account on {PERIOD}",
+        "What is transaction history for {PERIOD}",
+        "Tell me transaction history for {PERIOD}",
         "Tell me transaction history from {START_DATE}",
         "Tell me transaction history from {START_DATE} to {END_DATE}"
       ],
@@ -106,18 +106,9 @@
       "samples": [
         "How much is {AMOUNT} {CURRENCY} {DATE}",
         "How much is {AMOUNT} {CURRENCY} on {DATE}",
-        "give me {AMOUNT} {CURRENCY} rate",
-        "I want to convert {AMOUNT} {CURRENCY} for {DATE} rate",
         "I want to know {CURRENCY} rate",
-        "I want {CURRENCY} rate",
-        "give me {CURRENCY}",
-        "give me {CURRENCY} rate",
-        "currency on {DATE}",
         "give me currency rate on {DATE}",
         "What is {CURRENCY} rate on {DATE}",
-        "{CURRENCY} {AMOUNT} {DATE}",
-        "{DATE} {AMOUNT} {CURRENCY}",
-        "{AMOUNT} {CURRENCY} {DATE}",
         "what is {AMOUNT} US dollar to Korea won",
         "what is {AMOUNT} US dollar to {CURRENCY}",
         "what is {AMOUNT} US dollar to {CURRENCY} on {DATE}"
@@ -232,36 +223,14 @@
         {
           "id": null,
           "name": {
-            "value": "AUD",
-            "synonyms": []
-          }
-        },
-        {
-          "id": null,
-          "name": {
-            "value": "CAD",
-            "synonyms": []
-          }
-        },
-        {
-          "id": null,
-          "name": {
             "value": "KRW",
-            "synonyms": []
-          }
-        },
-        {
-          "id": null,
-          "name": {
-            "value": "JPY",
-            "synonyms": []
-          }
-        },
-        {
-          "id": null,
-          "name": {
-            "value": "SGD",
-            "synonyms": []
+            "synonyms": [
+              "korea",
+              "korea won",
+              "korwa one",
+              "won",
+              "one"
+            ]
           }
         },
         {
