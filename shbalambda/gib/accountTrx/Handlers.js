@@ -125,6 +125,8 @@ const getAccountTrxHandler = function() {
                 console.log(">>>>>globalApiResponse.reqData"+JSON.stringify(globalApiResponse.reqData));
                 let returnCode=globalApiResponse.reqData.returnCode;
                 let speechOutput = "";
+                
+                /*
                 // 정상일 경우
                 if(returnCode == '1')  makeAccountTrxData(this,globalApiResponse.reqData);
                 // Access Token 오류 
@@ -137,6 +139,31 @@ const getAccountTrxHandler = function() {
                 else if(returnCode == '9') speechOutput = CommonMessages.ERROR_NO_0009;
                 //그이외 
                 else speechOutput = CommonMessages.ERROR_NO_0009;        
+                */
+                
+                // API 성공시
+                if(returnCode == Config.successApiCode) {
+                	makeAccountTrxData(this,globalApiResponse.reqData);                	
+                
+                // 에러발생시	
+            	} else {
+            		
+            	    console.info("jsonData.returnCode======> "  + returnCode);
+            	    console.info("ApiErrorMessages======> "  + ApiErrorMessages[returnCode]);	    
+            		
+            		if(returnCode != "" || returnCode != undefined) {
+            			speechOutput = ApiErrorMessages[returnCode];
+            			
+            			// personal key 틀렸을 경우 perIntent 설정
+            			if(returnCode == Config.personalKeyApiErrorCode) {
+            				this.attributes['preIntent'] = this.event.request.intent;
+            				this.attributes['preIntent'].commonIntent = CommonIntents.SET_PERSONAL_KEY;
+            			}
+            			
+            		} else
+            			speechOutput = ApiErrorMessages["9999"];
+            	}                
+                
                     
                 this.emit(":tellWithCard", speechOutput, Config.card_title, speechOutput);
 				break;
@@ -223,11 +250,10 @@ const makeAccountTrxData = function(handlerThis,jsonData) {
     }else{
         speechOutput = Messages.ACCOUNT_TRX_ZERO_COUNT;
     }
-	//speechOutput += GibUtil.setSpeechOutputGridDataText(Messages.ACCOUNT_TRX_DATA,jsonData);
+	//speechOutput += GibUtil.setSpeechOutputGridDataText(Messages.ACCOUNT_TRX_DATA,jsonData);			
 		
-	
-		
-	handlerThis.emit(":askWithCard", speechOutput, Config.card_title, speechOutput);
+    handlerThis.emit(":askWithCard", speechOutput, CommonMessages.TRY_AGAIN, Config.card_title, speechOutput);
+
 };
 
 function isSlotValid(request, slotName){

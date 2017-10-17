@@ -86,7 +86,7 @@ let DefaultHandlers = {
 		 */
 		'amazonStopHandler' : function() {
 		    console.info("Starting amazonStopHandler()");
-		    this.emit(":ask", DefaultMessages.STOP, DefaultMessages.STOP);
+		    //this.emit(":ask", DefaultMessages.STOP, DefaultMessages.STOP);
 		    console.info("Ending amazonStopHandler()");
 		}
 }
