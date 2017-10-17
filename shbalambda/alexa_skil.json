@@ -224,13 +224,7 @@
           "id": null,
           "name": {
             "value": "KRW",
-            "synonyms": [
-              "korea",
-              "korea won",
-              "korwa one",
-              "won",
-              "one"
-            ]
+            "synonyms": []
           }
         },
         {
