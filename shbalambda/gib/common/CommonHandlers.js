@@ -34,7 +34,8 @@ moduleHandlers['accountlist'] = require('../accountlist/Handlers');
 moduleHandlers['exchangerate'] = require('../exchangerate/Handlers');
 //계좌 거리내역 조회
 moduleHandlers['accountTrx'] = require('../accountTrx/Handlers');
-
+//대출 계좌 조회
+moduleHandlers['loanlist'] = require('../loanlist/Handlers');
 
 /**
  * 인텐드명으로 업무핸들러 객체 추출 

@@ -12,7 +12,7 @@
 
 //Default imports
 const GlobalApiClient = require('../../common/GlobalApiClient');
-const ApiErrorMessages = require('../../common/ApiErrorMessages.js');
+const ApiErrorMessages = require('../../common/ApiErrorMessages');
 const Config = require('../../common/Config');
 const GibUtil = require('../../common/GibUtil');
 
@@ -33,8 +33,8 @@ const Messages = require('./Messages');
 /**
  * 대출조회
  */
-const getTransactionListDataHandler = function() {
-    console.info("Starting getTransactionListDataHandler()");
+const getLoanListHandler = function() {
+    console.info("Starting getLoanListHandler()");
     
     /***************** Personal Key 검증 START *****************/ 
     // 세션 존재여부 확인 persnal Key
@@ -46,16 +46,16 @@ const getTransactionListDataHandler = function() {
     	this.attributes['preIntent'] = this.event.request.intent;
     	this.attributes['preIntent'].commonIntent = CommonIntents.SET_PERSONAL_KEY;
 	    this.emit(':askWithCard', CommonMessages.WHAT_IS_YOUR_PERSONALKEY, CommonMessages.PERSONALKEY_INFO, Config.card_title, CommonMessages.WHAT_IS_YOUR_PERSONALKEY);	    
-    }    
+    }      
     /***************** Personal Key 검증 END *****************/
-    
+
     
     /***************** Open Api 송신설정 START *****************/
     
     let globalData = Config.openApiConfig;           
-    globalData.path = "/global_api/account/list";
+    globalData.path = "/global_api/loan/list";
     globalData.personKey = personalKey;   
-
+    console.log("globalData.personKey ====================>" + globalData.personKey); 
     // accessToken 설정 (사용자 세션에 존재하지 않을경우 Config.js 설정에 있는 accessToken 설정)
     let accessToken = this.event.session.user.accessToken;    
     if(accessToken != undefined) globalData.accessToken = accessToken;
@@ -72,48 +72,36 @@ const getTransactionListDataHandler = function() {
 	// 이전조회조건 초기화
 	globalData.sndData = {};	
 	globalData.sndData.page = {"no" : pageNo,"size" : 3};
-	
-	
-	let slotAccountType = this.event.request.intent.slots["LOAN_TYPE"];
-	let slotLastFourDist = this.event.request.intent.slots["LAST_FOUR_DIST"];	
-	let filterAccountType = "";
-	let filterLastFourDist = "";	
-	
-	
-	// 슬롯 정상설정확인
-	if(slotAccountType != undefined && slotLastFourDist != undefined ) {
-	
-		// 계좌타입만 조회조건으로 올경우
-		if (slotAccountType.value != undefined && slotLastFourDist.value == undefined) {		
-				
-			if(slotAccountType.value == "checking account") filterAccountType = "CHECKING";
-			else if(slotAccountType.value == "saving account") filterAccountType = "saving";
-			
-			filterAccountType = "like %" + filterAccountType + "%";		
-			globalData.sndData.filter = {"dep_prdt_nm" : filterAccountType};
-			
-		// 4자리 계좌번호 조회조건으로 올경우
-		} else if (slotAccountType.value == undefined && slotLastFourDist.value != undefined) {
-			
-			filterLastFourDist = "like %" + slotLastFourDist.value;	
-			globalData.sndData.filter = {"lcl_ac_no" : filterLastFourDist};		
-			
-	    // 계좌타입,4자리계좌번호 모두 조회조건이 올경우 		
-		} else if (slotAccountType.value != undefined && slotLastFourDist.value != undefined) {
+		
+	var dueDate = isSlotValid(this.event.request,"LOAN_DUE_DATE");
+	var exeAmount = isSlotValid(this.event.request,"LOAN_EXE_AMT");
+	var exeDate = isSlotValid(this.event.request,"LOAN_EXE_DT");
 
-			if(slotAccountType == "checking account") filterAccountType = "CHECKING";
-			else if(slotAccountType == "saving account") filterAccountType = "saving";		
-			
-			filterAccountType = "like %" + filterAccountType + "%";		
-			filterLastFourDist = "like %" + slotLastFourDist.value;
-			
-			globalData.sndData.filter = {
-											"dep_prdt_nm" : filterAccountType,
-											"lcl_ac_no" : filterLastFourDist												                    
-										};			
-		}	
+	if(dueDate !=''){
+		var startDate=GibUtil.getPreNextMonth(dueDate,(-1)*2);
+		var endDate=GibUtil.getPreNextMonth(dueDate,2);
+		console.log("******startDate " +startDate + "***exe_due_dt " +endDate);
+		var data= '\"exe_due_dt\" : \"> '+startDate +'\", \"exe_due_dt\" : \"< '+endDate+'\"'  ;
+		globalData.sndData.filter = {data};
 	}
-	
+
+	if(exeAmount != ''){
+		var startAmount =exeAmount* 0.9;
+		var endAmount = exeAmount*1.1;
+		console.log("******lon_exe_amt " +startAmount + "***lon_exe_amt " +endAmount);
+		var data= '\"lon_exe_amt\" : \" > '+startAmount +'\", \"lon_exe_amt\" : \"< ' + endAmount +'\"';
+		globalData.sndData.filter = {data};
+	}
+
+	if(exeDate != ''){
+		var startDate=GibUtil.getPreNextMonth(exeDate,(-1)*2);
+		var endDate=GibUtil.getPreNextMonth(exeDate,2);
+		console.log("******startDate " +startDate + "***exe_due_dt " +endDate);
+		var data = '\"lon_exe_dt\" : \" > '+startDate +'\", \"lon_exe_dt\" : \"< ' + endDate +'\"';
+		globalData.sndData.filter = {data};
+	}
+
+	console.log(">>>>globalData >>>>"+JSON.stringify(globalData));
 	// 이전 preIntent 초기화
 	this.attributes['preIntent'] = null;
     /***************** Open Api 송신설정 END *****************/
@@ -123,17 +111,42 @@ const getTransactionListDataHandler = function() {
 	globalApiRequest.then((globalApiResponse) => {
 		switch(globalApiResponse.statusCode) {
 			case 200:
-				//let tmpJson = {"returnCode":"1","data":[{"ccy_c":"USD","dep_sjt_class":"1","dep_prdt_nm":"FREE CHECKING","dep_acno":"700000282662","prdt_c":"5017000001","itype_due_dt":"","dep_ac_alnm_nm":"","apl_intrt":"0.0000000","pabl_blc":"1304576.20","ttype_due_dt":"","lcl_ac_no":"700000282662","last_cus_trx_dt":"20161025","cus_snm_nm":"********"},{"ccy_c":"USD","dep_sjt_class":"1","dep_prdt_nm":"FREE CHECKING","dep_acno":"700000010609","prdt_c":"5017000001","itype_due_dt":"","dep_ac_alnm_nm":"","apl_intrt":"0.0000000","pabl_blc":"9997016932.27","ttype_due_dt":"","lcl_ac_no":"1111015658","last_cus_trx_dt":"20161101","cus_snm_nm":"********"}]};
-				//globalApiResponse.reqData = tmpJson;
-				makeTransactionListData(this,globalApiResponse.reqData);
+                console.log(">>>>status 200:::::::");
+                console.log(">>>>>globalApiResponse.reqData"+JSON.stringify(globalApiResponse.reqData));
+                let returnCode=globalApiResponse.reqData.returnCode;
+                let speechOutput = "";
+                
+                if(returnCode == Config.successApiCode) {
+                	makeLoanList(this,globalApiResponse.reqData);     // API 성공시  
+                } else {   // 에러발생시    
+                    console.info("jsonData.returnCode======> "  + returnCode);
+                    console.info("ApiErrorMessages======> "  + ApiErrorMessages[returnCode]);       
+                    
+                    if(returnCode != "" || returnCode != undefined) {
+                        speechOutput = ApiErrorMessages[returnCode];
+                        
+                        // personal key 틀렸을 경우 perIntent 설정
+                        if(returnCode == Config.personalKeyApiErrorCode) {
+                            this.attributes['preIntent'] = this.event.request.intent;
+                            this.attributes['preIntent'].commonIntent = CommonIntents.SET_PERSONAL_KEY;
+                        }
+                        
+                    } else
+                        speechOutput = ApiErrorMessages["9999"];
+                }        
+                    
+                this.emit(":tellWithCard", speechOutput, Config.card_title, speechOutput);
 				break;
 			case 204:
+                console.log(">>>>case 204");
                 this.emit(":tellWithCard", DefaultMessages.NO_DATA, Config.card_title, DefaultMessages.NO_DATA);
                 break;
             case 403:
+                console.log(">>>>case 403");
                 this.emit(":tellWithPermissionCard", DefaultMessages.NOTIFY_MISSING_PERMISSIONS, PERMISSIONS);
                 break;
             default:
+                console.log(">>>>case default");
                 this.emit(":askWithCard", DefaultMessages.GLOBAL_API_FAILURE, "", Config.card_title, DefaultMessages.GLOBAL_API_FAILURE);		
 		}
 	});
@@ -141,7 +154,7 @@ const getTransactionListDataHandler = function() {
 	globalApiRequest.catch((error) => {
         this.emit(":tellWithCard", DefaultMessages.ERROR, Config.card_title, DefaultMessages.ERROR);
         console.error(error);
-        console.info("Ending getTransactionListDataHandler()");
+        console.info("Ending getLoanListHandler()");
     });
 };
 
@@ -149,77 +162,89 @@ const getTransactionListDataHandler = function() {
 /**
  * 대출조회 텍스트 생성
  */
-const makeTransactionListData = function(handlerThis,jsonData) {
-	
+const makeLoanList = function(handlerThis,jsonData) {
+	console.log("Intent Name====================>" + handlerThis.event.request.intent.name);
+    	
 	let speechOutput = "";
-	// Access Token 오류
-	if(jsonData.returnCode == '2') speechOutput = CommonMessages.ERROR_NO_0002;
-	// 개인인증키 오류
-	else if(jsonData.returnCode == '3') speechOutput = CommonMessages.ERROR_NO_0003;
-	// Access Token 만료
-	else if(jsonData.returnCode == '5') speechOutput = CommonMessages.ERROR_NO_0005;
-	// 처리중 오류
-	else if(jsonData.returnCode == '9') speechOutput = CommonMessages.ERROR_NO_0009;
-	// 정상일 경우
-	else if(jsonData.returnCode == '1') {
-		
-		/***************** Alexa 메시지 조립 START *****************/
-		// 전체계좌수 조회
-		let pageCount = Number(jsonData.page.total);
-		
-		// 최초조회여부 검증
-		let pageData = handlerThis.event.request.intent.page;		
-		
-		if(pageCount == 0) {
-			speechOutput = Messages.LOAN_LIST_NO_DATA;			
-		} else {		
-		    // 최초조회일경우
-		    if (pageData == undefined) {   		
-			 
-				if(pageCount <= 3) {				
-					speechOutput = GibUtil.setSpeechOutputGridDataText(Messages.LOAN_LIST_GRID_DATA,jsonData);
-				} else {
-					speechOutput = GibUtil.setSpeechOutputText(Messages.LOAN_LIST_GUIDE,jsonData.page);
-					speechOutput += Messages.LOAN_LIST_GUIDE_MORE;						
-					// 이전인텐트 저장
-					handlerThis.attributes['preIntent'] = handlerThis.event.request.intent;
-					handlerThis.attributes['preIntent'].commonIntent = CommonIntents.SET_YES;
-					handlerThis.attributes['preIntent'].page = jsonData.page;				
-				}
-			// 다음내역조회일경우	
-			} else {
-				
-				speechOutput = GibUtil.setSpeechOutputGridDataText(Messages.LOAN_LIST_GRID_DATA,jsonData);			
-				
-				// 이전인텐트 저장
-				handlerThis.attributes['preIntent'] = handlerThis.event.request.intent;	
-				handlerThis.attributes['preIntent'].commonIntent = CommonIntents.SET_YES;
-				
-				// 남은 건수 계산
-				let currentCount = jsonData.page.total - (jsonData.page.no * 3);									
-				
-				// 남은 조회건수가 3건 미만이면 조회종료
-				if(currentCount <= 0) {
-					handlerThis.attributes['preIntent'] = null;
-				} else {
-					
-					// 다음페이지 조회요청
-					jsonData.page.no = jsonData.page.no + 1;
-					
-					speechOutput += Messages.LOAN_LIST_GUIDE_PAGE_MORE;			
-					handlerThis.attributes['preIntent'].page = jsonData.page;
-				}
-			}
-		}
-		/***************** Alexa 메시지 조립 END *****************/	    
+    let pageCount= Number(jsonData.page.total); // 전체거래내역수 조회
+    let pageNo=Number(jsonData.page.no);
+    let page_size=jsonData.page.size;
 
-	// 기타에러 발생시		
-	} else {
-		speechOutput = CommonMessages.ERROR_NO_0009;		
-	}
+    // 최초조회여부 검증
+    let pageData = handlerThis.event.request.intent.page;   
+
+    console.log(">>>pageCount: "+pageCount +">>>>pageNo: "+pageNo+">>>>page_size"+page_size);
+	
+    if(pageCount>0){
+        let total = "!~~total~~!";
+        speechOutput = Messages.LOAN_LIST_COUNT.replace(eval("/" + total + "/gi"), pageCount);
+        if(pageCount>3){
+            speechOutput += Messages.LOAN_LIST_SPLIT_FIRST_THREE +Messages.LOAN_LIST_SPLIT_GUIDE;
+        }
+
+         // 최초조회일경우
+        if (pageData == undefined) {        
+            speechOutput = Messages.LOAN_LIST_COUNT.replace(eval("/" + total + "/gi"), pageCount);
+            if(pageCount <= 3){
+                speechOutput += GibUtil.setSpeechOutputGridDataText(Messages.LOAN_LIST_AMOUNT+ Messages.LOAN_LIST_DATE,jsonData);
+            }else{
+                speechOutput += Messages.LOAN_LIST_SPLIT_FIRST_THREE + Messages.LOAN_LIST_SPLIT_GUIDE; //Let me tell you three recent transactions first.
+                // 이전인텐트 저장
+                handlerThis.attributes['preIntent'] = handlerThis.event.request.intent;
+                handlerThis.attributes['preIntent'].commonIntent = CommonIntents.SET_YES;
+                handlerThis.attributes['preIntent'].page = jsonData.page;
+            }
+        }else{// 다음내역조회일경우
+            speechOutput = GibUtil.setSpeechOutputGridDataText(Messages.LOAN_LIST_AMOUNT+ Messages.LOAN_LIST_DATE,jsonData);           
+                
+                // 이전인텐트 저장
+                handlerThis.attributes['preIntent'] = handlerThis.event.request.intent; 
+                handlerThis.attributes['preIntent'].commonIntent = CommonIntents.SET_YES;
+                
+                // 남은 건수 계산
+                let currentCount = pageCount - (pageNo * 3);                                    
+                
+                // 남은 조회건수가 3건 미만이면 조회종료
+                if(currentCount <= 0) {
+                    handlerThis.attributes['preIntent'] = null;
+                } else {
+                    
+                    // 다음페이지 조회요청
+                    jsonData.page.no = pageNo + 1;
+                    speechOutput += Messages.LOAN_LIST_GUIDE_PAGE_MORE;          
+                    handlerThis.attributes['preIntent'].page = jsonData.page;
+                }
+        }
+
+    }else{
+        speechOutput = Messages.LOAN_LIST_ZERO_COUNT;
+    }
+	//speechOutput += GibUtil.setSpeechOutputGridDataText(Messages.ACCOUNT_TRX_DATA,jsonData);			
 		
-	handlerThis.emit(":tellWithCard", speechOutput, Config.card_title, speechOutput);
+    handlerThis.emit(":askWithCard", speechOutput, CommonMessages.TRY_AGAIN, Config.card_title, speechOutput);
+
 };
+
+function isSlotValid(request, slotName){
+    var slot = request.intent.slots[slotName];
+    var slotValue;
+    console.log(">>>isSlotValid, slot " + JSON.stringify(slot));
+    //if we have a slot, get the text and store it into speechOutput
+    if (slot && slot.value) {
+        //we have a value in the slot
+        if(slot.name=="LOAN_EXE_AMT"){
+            slotValue=slot.value;
+        }else{
+        	slotValue=slot.value.replace(/-/g,'');
+        }       
+    } else {
+        //we didn't get a value in the slot.
+        slotValue="";
+    }
+    console.log(">>>>>slotValue >>" + slotValue);
+    return slotValue;
+}
+
 
 
 const handlers = {};
@@ -236,6 +261,6 @@ handlers[DefaultIntents.AMAZON_STOP] = DefaultHandlers.amazonStopHandler;
 handlers[DefaultIntents.AMAZON_HELP] = DefaultHandlers.amazonHelpHandler;
 
 // 사용자 intent handlers
-handlers[Intents.GET_LOAN_LIST] = getTransactionListDataHandler;
+handlers[Intents.GET_LOAN_LIST] = getLoanListHandler;
 
 module.exports = handlers;
