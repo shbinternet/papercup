@@ -33,8 +33,7 @@
         "I want to know my transaction history on {DATE}",
         "Tell me transaction history form my checking account on {DATE}",
         "Tell me {PERIOD} transaction",
-        "What is transaction history for {PERIOD}",
-        "Tell me transaction history for {PERIOD}",
+        "What is transaction history for {PERIOD} ",
         "Tell me transaction history from {START_DATE}",
         "Tell me transaction history from {START_DATE} to {END_DATE}"
       ],
@@ -95,9 +94,7 @@
     {
       "name": "BranchInfo",
       "samples": [
-        "Tell me about branch",
-        "Tell me about ranch",
-        "tell me about french"
+        "Tell me about branch"
       ],
       "slots": []
     },
@@ -111,7 +108,9 @@
         "What is {CURRENCY} rate on {DATE}",
         "what is {AMOUNT} US dollar to Korea won",
         "what is {AMOUNT} US dollar to {CURRENCY}",
-        "what is {AMOUNT} US dollar to {CURRENCY} on {DATE}"
+        "what is {AMOUNT} US dollar to {CURRENCY} on {DATE}",
+        "what is exchange rate",
+        "what is exchange rate on {DATE}"
       ],
       "slots": [
         {
@@ -127,6 +126,32 @@
         {
           "name": "AMOUNT",
           "type": "AMAZON.NUMBER",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "LoanList",
+      "samples": [
+        "tell me my loan information",
+        "tell me information of loan with principal amount around {LOAN_EXE_AMT}",
+        "tell me information of loan to terminate on around {LOAN_DUE_DATE}",
+        "tell me information of loan contracted around {LOAN_EXE_DT}"
+      ],
+      "slots": [
+        {
+          "name": "LOAN_EXE_AMT",
+          "type": "AMAZON.NUMBER",
+          "samples": []
+        },
+        {
+          "name": "LOAN_DUE_DATE",
+          "type": "AMAZON.DATE",
+          "samples": []
+        },
+        {
+          "name": "LOAN_EXE_DT",
+          "type": "AMAZON.DATE",
           "samples": []
         }
       ]
@@ -223,7 +248,35 @@
         {
           "id": null,
           "name": {
+            "value": "AUD",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "CAD",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
             "value": "KRW",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "JPY",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "SGD",
             "synonyms": []
           }
         },

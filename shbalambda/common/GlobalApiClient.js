@@ -96,8 +96,8 @@ class GlobalApiClient {
             method: 'POST',
             'headers': {
             	'Content-Type': 'application/json',
-                'X-GLOBAL-ClientId': 'alexa72991770421',
-                'X-GLOBAL-ClientSecret': 'e6797bcf5bd14617bec0ed878d170056',
+                'X-GLOBAL-ClientId': 'alexa72991770421',  //alexaTest02  alexa72991770421
+                'X-GLOBAL-ClientSecret': 'e6797bcf5bd14617bec0ed878d170056',  //alexaSecret02  e6797bcf5bd14617bec0ed878d170056
                 'X-GLOBAL-AccessToken': this.accessToken,
                 'X-GLOBAL-PersonalKey': this.personKey
             }

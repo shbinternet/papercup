@@ -81,24 +81,21 @@ const getLoanListHandler = function() {
 		var startDate=GibUtil.getPreNextMonth(dueDate,(-1)*2);
 		var endDate=GibUtil.getPreNextMonth(dueDate,2);
 		console.log("******startDate " +startDate + "***exe_due_dt " +endDate);
-		var data= '\"exe_due_dt\" : \"> '+startDate +'\", \"exe_due_dt\" : \"< '+endDate+'\"'  ;
-		globalData.sndData.filter = {data};
+		globalData.sndData.filter = {"exe_due_dt" : " > "+startDate + " && < " + endDate};
 	}
 
 	if(exeAmount != ''){
 		var startAmount =exeAmount* 0.9;
 		var endAmount = exeAmount*1.1;
 		console.log("******lon_exe_amt " +startAmount + "***lon_exe_amt " +endAmount);
-		var data= '\"lon_exe_amt\" : \" > '+startAmount +'\", \"lon_exe_amt\" : \"< ' + endAmount +'\"';
-		globalData.sndData.filter = {data};
+		globalData.sndData.filter = {"lon_exe_amt" : " > "+startAmount + " && < " + endAmount};
 	}
 
 	if(exeDate != ''){
 		var startDate=GibUtil.getPreNextMonth(exeDate,(-1)*2);
 		var endDate=GibUtil.getPreNextMonth(exeDate,2);
 		console.log("******startDate " +startDate + "***exe_due_dt " +endDate);
-		var data = '\"lon_exe_dt\" : \" > '+startDate +'\", \"lon_exe_dt\" : \"< ' + endDate +'\"';
-		globalData.sndData.filter = {data};
+		globalData.sndData.filter = {"lon_exe_dt" : " > "+startDate + " && < " + endDate};
 	}
 
 	console.log(">>>>globalData >>>>"+JSON.stringify(globalData));
